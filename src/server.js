@@ -3,6 +3,8 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 
+import { connect } from "./utils/db";
+
 export const app = express();
 
 app.use(cors());
@@ -16,9 +18,11 @@ app.get("/", (req, res) => {
 
 export const start = async () => {
   try {
-    // await connect();
-    app.listen(process.env.PORT, () => {
-      console.log(`Backend API started http://localhost:${process.env.PORT}/`);
+    await connect();
+    app.listen(process.env.PORT || 5000, () => {
+      console.log(
+        `✨     Backend API running on http://localhost:${process.env.PORT}/`
+      );
     });
   } catch (e) {
     console.error(e);
