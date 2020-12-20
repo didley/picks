@@ -3,6 +3,9 @@
   "name": "picks",
   "description": "Backend to a link sharing feed App.",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=15.3.0"
+  },
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon --experimental-specifier-resolution=node -r dotenv/config src/index.js"
