@@ -1,42 +1,23 @@
 {
-  "type": "module",
-  "name": "picks",
-  "description": "Backend to a link sharing feed App.",
-  "version": "1.0.0",
-  "engines": {
-    "node": ">=15.3.0"
-  },
+  "name": "picks-monorepo",
+  "version": "0.1.0",
   "main": "src/index.js",
-  "scripts": {
-    "start": "nodemon --experimental-specifier-resolution=node -r dotenv/config src/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DoneDidley/picks.git"
-  },
-  "author": "DoneDidley",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/DoneDidley/picks/issues"
-  },
-  "homepage": "https://github.com/DoneDidley/picks#readme",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.8",
-    "morgan": "^1.10.0",
-    "validator": "^13.5.2"
-  },
+  "repository": "https://github.com/didley/picks.git",
+  "author": "Dylan Lamont",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "client_web",
+    "backend"
+  ],
   "devDependencies": {
-    "eslint": "^7.16.0",
-    "eslint-config-prettier": "^7.1.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-security": "^1.4.0",
-    "nodemon": "^2.0.6",
-    "prettier": "^2.2.1"
+    "npm-run-all": "^4.1.5"
+  },
+  "scripts": {
+    "start": "run-p start:*",
+    "start:client": "run-s client:prestart client:start",
+    "client:prestart": "yarn --cwd client_web/ run prestart",
+    "client:start": "yarn --cwd client_web/ start",
+    "start:backend": "yarn --cwd backend/ start"
   }
 }
