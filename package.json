@@ -15,9 +15,7 @@
   },
   "scripts": {
     "start": "run-p start:*",
-    "start:client": "run-s client:prestart client:start",
-    "client:prestart": "yarn --cwd client_web/ run prestart",
-    "client:start": "yarn --cwd client_web/ start",
+    "start:client": "yarn --cwd client_web/ start",
     "start:backend": "yarn --cwd backend/ start"
   }
 }
