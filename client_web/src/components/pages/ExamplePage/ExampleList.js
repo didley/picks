@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getExamplesList } from "redux/selectors";
+import { getExamplesList } from "globalState/selectors";
 
 import Example from "./Example";
 

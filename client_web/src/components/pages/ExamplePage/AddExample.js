@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addExample } from "redux/actions";
+import { addExample } from "globalState/actions";
 
 class AddExample extends React.Component {
   constructor(props) {
