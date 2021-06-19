@@ -4,6 +4,7 @@ import helmet from "helmet";
 import mongoose from "mongoose";
 import { router } from "./components/router";
 import { db } from "./utils/db";
+import { handle404, handleErrors } from "./utils/middleware";
 
 mongoose.set("debug", process.env.MONGOOSE_DEBUG === "true" || false);
 
@@ -13,6 +14,9 @@ app.use(morgan("dev"));
 app.use(helmet());
 
 app.use("/api", router);
+
+app.use(handle404);
+app.use(handleErrors);
 
 const initializeApp = async () => {
   try {
