@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema(
     following: { type: Array },
     followers: { type: Array },
     password: "",
+    publicProfile: { type: Boolean, default: true },
     picksCards: {
       weekly: { type: Array },
       topic: { type: Array },
