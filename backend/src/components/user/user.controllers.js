@@ -1,5 +1,28 @@
 import { User } from "./user.model";
-import { genericControllers } from "../crud.controllers";
+import { generateToken } from "../../utils/auth";
+
+const getUser = (req, res, next) => {
+  if (!req.user) {
+    res.status(404);
+    return next();
+  }
+
+  return res.status(200).json({ data: req.user });
+};
+
+const updateUser = async (req, res, next) => {
+  const { name, bio, location } = req.body;
+  const updates = { name, bio, location };
+  try {
+    const user = await User.findByIdAndUpdate(req.user._id, updates, {
+      new: true,
+    }).lean();
+
+    res.status(200).json({ data: user });
+  } catch (err) {
+    next(err);
+  }
+};
 
 const createUser = async (req, res, next) => {
   const { email, username, name, password } = req.body;
@@ -31,9 +54,13 @@ const createUser = async (req, res, next) => {
 
     const user = await User.create({ email, username, name, password });
 
+    const token = generateToken(user.id);
+
     res.json({
+      token: token,
       email: user.email,
-      username: UN_TAG + user.username,
+      username: user.username,
+      taggedUsername: UN_TAG + user.username,
       name: user.name,
     });
   } catch (err) {
@@ -41,4 +68,33 @@ const createUser = async (req, res, next) => {
   }
 };
 
-export default { ...genericControllers(User), createUser };
+const loginUser = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res
+      .status(400)
+      .json({ message: "Please complete all required fields" });
+  }
+
+  try {
+    const returnFields = ["email", "password", "username"];
+    const user = await User.findOne({ email }, returnFields);
+
+    const invalidMessage = { message: "Incorrect login details, try again" };
+
+    if (!user) return res.status(401).json(invalidMessage);
+
+    const match = await user.checkPassword(password);
+
+    if (!match) return res.status(401).send(invalidMessage);
+
+    const token = generateToken(user.id);
+
+    return res.status(201).json({ token });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { getUser, updateUser, createUser, loginUser };

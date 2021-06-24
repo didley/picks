@@ -4,14 +4,11 @@ import controllers from "./user.controllers";
 
 const router = Router();
 
-// /api/user
-router
-  .route("/")
-  .get(controllers.createOne)
-  .put(controllers.updateOne)
-  .delete(controllers.removeOne);
+//api/user
+router.route("/").get(controllers.getUser).put(controllers.updateUser);
+// .delete(controllers.removeOne);
 
-router.post("/login");
+router.post("/login", controllers.loginUser);
 router.post("/logout");
 router.post("/register", controllers.createUser);
 
