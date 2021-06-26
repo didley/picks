@@ -1,9 +1,37 @@
+import chalk from "chalk";
+
 // generic CRUD controllers, supply supply model as argument
 
-export const getOne = (model) => async (req, res) => {
+const _handleIdReqTypeOpt = (optsObj = {}) => {
+  const QUERY = "query";
+  const BODY = "body";
+  const PARAMS = "params";
+
+  const { idReqType = QUERY } = optsObj;
+
+  switch (idReqType) {
+    case QUERY:
+    case BODY:
+    case PARAMS:
+      return idReqType;
+
+    default:
+      console.error(`
+      ${chalk.red.bold(
+        "Error: "
+      )}idReqType option must be query | body | params, ${chalk.red(
+        idReqType
+      )} was supplied.
+      `);
+  }
+};
+
+export const getOne = (model) => async (req, res, options) => {
+  const idReqType = _handleIdReqTypeOpt(options);
+
   try {
     const doc = await model
-      .findOne({ createdBy: req.user._id, _id: req.params.id })
+      .findOne({ createdBy: req.user._id, _id: req[idReqType].id })
       .lean()
       .exec();
 
@@ -40,19 +68,20 @@ export const createOne = (model) => async (req, res) => {
   }
 };
 
-export const updateOne = (model) => async (req, res) => {
+export const updateOne = (model) => async (req, res, options) => {
+  const idReqType = _handleIdReqTypeOpt(options);
+
   try {
     const updatedDoc = await model
       .findOneAndUpdate(
         {
           createdBy: req.user._id,
-          _id: req.params.id,
+          _id: req[idReqType]._id,
         },
         req.body,
         { new: true }
       )
-      .lean()
-      .exec();
+      .lean();
 
     if (!updatedDoc) {
       return res.status(400).end();
@@ -65,11 +94,13 @@ export const updateOne = (model) => async (req, res) => {
   }
 };
 
-export const removeOne = (model) => async (req, res) => {
+export const removeOne = (model) => async (req, res, options) => {
+  const idReqType = _handleIdReqTypeOpt(options);
+
   try {
     const removed = await model.findOneAndRemove({
       createdBy: req.user._id,
-      _id: req.params.id,
+      _id: req[idReqType].id,
     });
 
     if (!removed) {
