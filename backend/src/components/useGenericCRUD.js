@@ -2,7 +2,9 @@ import chalk from "chalk";
 import asyncHandler from "express-async-handler";
 import httpErr from "http-errors";
 
-// generic CRUD controllers, supply supply model as argument
+/**
+ *  generic CRUD controllers
+ */
 
 const _handleIdReqTypeOpt = (optsObj = {}) => {
   const PARAMS = "params";
@@ -32,7 +34,7 @@ const _handleIdReqTypeOpt = (optsObj = {}) => {
 export const getMany = (model) =>
   asyncHandler(async (req, res, next, options) => {
     try {
-      const docs = await model.find({ createdBy: req.user._id }).lean();
+      const docs = await model.find({ createdBy: req.user._id }); //.lean();
       res.status(200).json({ data: docs });
     } catch (err) {
       throw httpErr(400, err);
@@ -118,7 +120,16 @@ export const removeOne = (model) =>
     }
   });
 
-export const genericControllers = (model) => ({
+/**
+ *
+ * @param {mongooseModel} model
+ * @example
+ * const generic = useGenericCRUD(List);
+ *
+ * const getListById = (req, res, next) =>  generic.getOne(req, res, next, { idReqType: "query" });
+ *
+ */
+export const useGenericCRUD = (model) => ({
   getMany: getMany(model),
   createOne: createOne(model),
   getOne: getOne(model),
