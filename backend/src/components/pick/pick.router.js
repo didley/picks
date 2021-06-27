@@ -4,11 +4,8 @@ import controllers from "./pick.controller";
 const router = Router();
 
 //api/pick/
-router.route("/:cardId").post(controllers.addPick);
-
-router
-  .route("/:cardId/:pickIndex")
-  .delete(controllers.deletePick)
-  .put(controllers.updatePick);
+router.route("/").post(controllers.addPick);
+// router.delete("/", controllers.deletePick);
+// router.put("/", controllers.updatePick);
 
 export default router;

@@ -8,10 +8,10 @@ export const pickSchema = new mongoose.Schema(
     comments: { type: String, maxLength: 200 },
     likes: { type: Array },
     nsfw: { type: Boolean, default: false, requited: true },
-    fromCard: { type: mongoose.Types.ObjectId, ref: "Card", required: true },
-    createdBy: { type: mongoose.Types.ObjectId, ref: "User", required: true },
+    // fromCard: { type: mongoose.Types.ObjectId, ref: "Card", required: true },
+    // createdBy: { type: mongoose.Types.ObjectId, ref: "User", required: true },
   },
   { timestamp: true }
 );
 
-export const Pick = mongoose.model("Pick", pickSchema);
+// export const Pick = mongoose.model("Pick", pickSchema);

@@ -1,7 +1,7 @@
-import { genericControllers } from "../crud.controllers";
+import { useGenericCRUD } from "../useGenericCRUD";
 import { Card } from "./card.model";
 
-const generic = genericControllers(Card);
+const generic = useGenericCRUD(Card);
 
 const getAllCards = (req, res, next) => generic.getMany(req, res, next);
 
