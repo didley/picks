@@ -2,6 +2,8 @@ import React from "react";
 
 import { Switch, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
+import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
 import Feed from "./pages/Feed";
 import Create from "./pages/Create";
 import Profile from "./pages/Profile";
@@ -14,6 +16,12 @@ const App = () => {
         <ul className="flex gap-4 underline">
           <li>
             <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/signin">Sign-in</Link>
+          </li>
+          <li>
+            <Link to="/signup">Sign-up</Link>
           </li>
           <li>
             <Link to="/feed">Feed</Link>
@@ -33,6 +41,12 @@ const App = () => {
       <Switch>
         <Route exact path="/">
           <Home />
+        </Route>
+        <Route path="/signin">
+          <Signin />
+        </Route>
+        <Route path="/signup">
+          <Signup />
         </Route>
         <Route path="/feed">
           <Feed />
