@@ -5,8 +5,12 @@ const SECRET = process.env.APP_SECRET;
 
 export const generateToken = (userId) => {
   const thirtyMinInMs = String(1000 * 60 * 30);
+  const noExpInDevEnv =
+    process.env.NODE_ENV === "development"
+      ? null
+      : { expiresIn: thirtyMinInMs };
 
-  return jwt.sign({ id: userId }, SECRET, { expiresIn: thirtyMinInMs });
+  return jwt.sign({ id: userId }, SECRET, noExpInDevEnv);
 };
 
 export const authenticateToken = (token) =>
@@ -30,7 +34,8 @@ export const protectRoute = async (req, res, next) => {
     return next(err);
   }
 
-  const user = await User.findById(payload.id, "-password").lean();
+  const returnFields = ["_id", "email", "username"]; // ! ensure password is excluded
+  const user = await User.findById(payload.id, returnFields).lean();
 
   if (!user) {
     return res.status(401).json({ message: "Unauthorized" });
