@@ -1,14 +1,13 @@
 import { Router } from "express";
 import controllers from "./card.controller";
+import { useQSRouteMatcher } from "../../utils/useQSRouteMatcher";
 
 const router = Router();
 
-const matchIdQueryString = (req, res, next) => {
-  return next(req.query.id ? null : "route");
-};
+const matchOnIdQS = useQSRouteMatcher("id");
 
 //api/cards
-router.get("/", matchIdQueryString, controllers.getCardById);
+router.get("/", matchOnIdQS, controllers.getCardById);
 router.get("/", controllers.getAllCards);
 router.delete("/", controllers.deleteCardById);
 router.post("/", controllers.createCard);
