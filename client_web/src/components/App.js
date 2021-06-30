@@ -8,6 +8,7 @@ import Feed from "./pages/Feed";
 import Create from "./pages/Create";
 import Profile from "./pages/Profile";
 import ExamplePage from "./pages/ExamplePage";
+import ErrorBoundary from "./shared/ErrorBoundary";
 
 const App = () => {
   return (
@@ -38,29 +39,31 @@ const App = () => {
         </ul>
       </nav>
 
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/signin">
-          <Signin />
-        </Route>
-        <Route path="/signup">
-          <Signup />
-        </Route>
-        <Route path="/feed">
-          <Feed />
-        </Route>
-        <Route path="/create">
-          <Create />
-        </Route>
-        <Route path="/profile">
-          <Profile />
-        </Route>
-        <Route path="/example">
-          <ExamplePage />
-        </Route>
-      </Switch>
+      <ErrorBoundary>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/signin">
+            <Signin />
+          </Route>
+          <Route path="/signup">
+            <Signup />
+          </Route>
+          <Route path="/feed">
+            <Feed />
+          </Route>
+          <Route path="/create">
+            <Create />
+          </Route>
+          <Route path="/profile">
+            <Profile />
+          </Route>
+          <Route path="/example">
+            <ExamplePage />
+          </Route>
+        </Switch>
+      </ErrorBoundary>
     </div>
   );
 };
