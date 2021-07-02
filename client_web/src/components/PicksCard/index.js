@@ -1,4 +1,4 @@
-import ProfileHeader from "./PrifileHeader";
+import ProfileHeader from "./ProfileHeader";
 import PicksList from "./PicksList";
 
 const PicksCard = () => {

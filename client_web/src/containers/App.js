@@ -1,14 +1,14 @@
 import React from "react";
 
 import { Switch, Route, Link } from "react-router-dom";
-import Home from "./pages/Home";
-import Signin from "./pages/Signin";
-import Signup from "./pages/Signup";
-import Feed from "./pages/Feed";
-import Create from "./pages/Create";
-import Profile from "./pages/Profile";
-import ExamplePage from "./pages/ExamplePage";
-import ErrorBoundary from "./shared/ErrorBoundary";
+import ErrorBoundary from "./ErrorBoundary";
+
+import Home from "./HomePage";
+import LogInPage from "./LogInPage";
+import SignUpPage from "./SignUpPage";
+import FeedPage from "./FeedPage";
+import CreatePage from "./CreatePage";
+import ProfilePage from "./ProfilePage";
 
 const App = () => {
   return (
@@ -19,10 +19,10 @@ const App = () => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/signin">Sign-in</Link>
+            <Link to="/login">Log In</Link>
           </li>
           <li>
-            <Link to="/signup">Sign-up</Link>
+            <Link to="/signup">Sign Up</Link>
           </li>
           <li>
             <Link to="/feed">Feed</Link>
@@ -41,26 +41,23 @@ const App = () => {
 
       <ErrorBoundary>
         <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/signin">
-            <Signin />
+          <Route path="/login">
+            <LogInPage />
           </Route>
           <Route path="/signup">
-            <Signup />
+            <SignUpPage />
           </Route>
           <Route path="/feed">
-            <Feed />
+            <FeedPage />
           </Route>
           <Route path="/create">
-            <Create />
+            <CreatePage />
           </Route>
           <Route path="/profile">
-            <Profile />
+            <ProfilePage />
           </Route>
-          <Route path="/example">
-            <ExamplePage />
+          <Route path="/">
+            <Home />
           </Route>
         </Switch>
       </ErrorBoundary>

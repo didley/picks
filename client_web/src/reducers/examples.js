@@ -1,4 +1,4 @@
-import { ADD_EXAMPLE } from "../actionTypes";
+import { ADD_EXAMPLE } from "../actions/actionTypes";
 
 const initialState = {
   examples: [],
