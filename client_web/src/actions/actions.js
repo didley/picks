@@ -18,6 +18,7 @@ export const loginSuccessAction = (response) => {
   }, you've been successfully logged in.`;
 
   localStorage.setItem("token", token);
+
   return {
     type: LOGIN_SUCCESS,
     token,

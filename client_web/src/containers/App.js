@@ -2,6 +2,7 @@ import React from "react";
 
 import { Switch, Route, Link } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
+import PrivateRoute from "./PrivateRoute";
 
 import Home from "./HomePage";
 import LogInPage from "./LogInPage";
@@ -47,15 +48,15 @@ const App = () => {
           <Route path="/signup">
             <SignUpPage />
           </Route>
-          <Route path="/feed">
+          <PrivateRoute path="/feed">
             <FeedPage />
-          </Route>
-          <Route path="/create">
+          </PrivateRoute>
+          <PrivateRoute path="/create">
             <CreatePage />
-          </Route>
-          <Route path="/profile">
+          </PrivateRoute>
+          <PrivateRoute path="/profile">
             <ProfilePage />
-          </Route>
+          </PrivateRoute>
           <Route path="/">
             <Home />
           </Route>

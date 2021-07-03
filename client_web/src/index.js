@@ -3,11 +3,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./utils/reportWebVitals";
 
-import { BrowserRouter as Router } from "react-router-dom";
+import { Router } from "react-router-dom";
 import { configStore } from "./store/configStore";
 import { Provider } from "react-redux";
 import { rootSaga } from "sagas";
 import App from "./containers/App";
+import { history } from "utils/history";
 
 const store = configStore();
 store.runSaga(rootSaga);
@@ -15,7 +16,7 @@ store.runSaga(rootSaga);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <App />
       </Router>
     </Provider>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { logInUserAction } from "actions/actions";
 
@@ -29,6 +29,9 @@ class LogInPage extends React.Component {
 
   render() {
     const { email, password } = this.state;
+    const { isAuthenticated } = this.props;
+
+    if (isAuthenticated) return <Redirect to="/feed" />;
 
     return (
       <div>
@@ -80,4 +83,8 @@ class LogInPage extends React.Component {
   }
 }
 
-export default connect()(LogInPage);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(LogInPage);
