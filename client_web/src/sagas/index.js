@@ -1,27 +1,30 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { call, put, fork, takeLatest } from "redux-saga/effects";
+import { loginSuccessAction, loginFailureAction } from "actions/actions";
 
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
 } from "../actions/actionTypes";
-import * as actions from "../actions/actions";
-import * as api from "../utils/apiCalls/auth";
+import * as authApi from "../utils/apiCalls/auth";
 
-function* logInSaga(action) {
+function* logInSaga(payload) {
   try {
-    console.log("logInSaga run!");
-    const user = yield call(api.logInUser, [action.email, action.password]); // ! WORKING ON getting access to action
-    yield put({ type: LOGIN_SUCCESS, user });
+    const response = yield call(
+      authApi.logInUser,
+      payload.email,
+      payload.password
+    );
+    yield put(loginSuccessAction(response));
   } catch (err) {
-    yield put({ type: LOGIN_FAILURE, message: err.message });
+    yield put(loginFailureAction(err));
   }
 }
 
-function* watchLogInSaga(action) {
-  yield takeLatest(LOGIN_REQUEST, logInSaga(action));
+function* watchUserAuth() {
+  yield takeLatest(LOGIN_REQUEST, logInSaga);
 }
 
 export function* rootSaga() {
-  yield all([call(logInSaga), call(watchLogInSaga)]);
+  yield fork(watchUserAuth);
 }

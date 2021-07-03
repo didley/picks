@@ -10,7 +10,7 @@ const initialState = {
   user: null,
   isAuthenticated: false,
   isAuthenticating: false,
-  statusText: null,
+  message: null,
 };
 
 export function authReducer(state = initialState, action) {
@@ -18,32 +18,31 @@ export function authReducer(state = initialState, action) {
     case LOGIN_REQUEST: {
       return {
         isAuthenticating: true,
-        statusText: null,
+        message: null,
         ...state,
       };
     }
 
     case LOGIN_SUCCESS: {
-      const { token, user } = action.payload;
+      const { token, user, message } = action;
       return {
         token: token,
         user: user,
         isAuthenticated: true,
         isAuthenticating: false,
-        statusText: `Welcome${
-          user ? " " + user?.name : null
-        }, you've been successfully logged in.`,
+        message: message,
       };
     }
 
     case LOGIN_FAILURE: {
-      const { message = null } = action.payload;
+      console.log({ action });
+      const { message } = action;
       return {
         token: null,
         user: null,
         isAuthenticated: false,
         isAuthenticating: false,
-        statusText: `Authentication error${message ? ": " + message : "."}`,
+        message: message,
       };
     }
 
@@ -53,7 +52,7 @@ export function authReducer(state = initialState, action) {
         user: null,
         isAuthenticated: false,
         isAuthenticating: false,
-        statusText: "You have been successfully logged out.",
+        message: action.message,
       };
     }
 

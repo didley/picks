@@ -1,42 +1,46 @@
 import {
-  ADD_EXAMPLE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
 } from "./actionTypes";
 
-export const addExample = (exampleToAdd) => ({
-  type: ADD_EXAMPLE,
-  payload: {
-    text: exampleToAdd,
-    id: Date.now(),
-  },
-});
-
-export const logInUser = (email, password) => ({
+export const logInUserAction = (email, password) => ({
   type: LOGIN_REQUEST,
   email,
   password,
 });
 
-export const loginSuccess = (token) => {
+export const loginSuccessAction = (response) => {
+  const { token, user } = response;
+  const message = `Welcome${
+    user.name ? " " + user?.name : ""
+  }, you've been successfully logged in.`;
+
   localStorage.setItem("token", token);
   return {
     type: LOGIN_SUCCESS,
-    payload: { token },
+    token,
+    user,
+    message,
   };
 };
 
-export const loginFailure = (error) => {
+export const loginFailureAction = (error) => {
   localStorage.removeItem("token");
+  console.error(error);
+
+  const message = `Authentication error${
+    error.message ? ": " + error.message : "."
+  }`;
+
   return {
     type: LOGIN_FAILURE,
-    payload: { error },
+    message,
   };
 };
 
-export const logout = () => {
+export const logoutAction = () => {
   localStorage.removeItem("token");
-  return { type: LOGOUT };
+  return { type: LOGOUT, message: "You have been successfully logged out." };
 };

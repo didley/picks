@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { logInUser } from "actions/actions";
+import { connect } from "react-redux";
+import { logInUserAction } from "actions/actions";
 
 class LogInPage extends React.Component {
   constructor(props) {
@@ -22,7 +23,8 @@ class LogInPage extends React.Component {
     e.preventDefault();
     const { email, password } = this.state;
 
-    if (email && password) logInUser(email, password);
+    if (email && password)
+      this.props.dispatch(logInUserAction(email, password));
   };
 
   render() {
@@ -78,4 +80,4 @@ class LogInPage extends React.Component {
   }
 }
 
-export default LogInPage;
+export default connect()(LogInPage);
