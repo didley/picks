@@ -3,19 +3,22 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./utils/reportWebVitals";
 
-import { Router } from "react-router-dom";
-import { store } from "./store/configStore";
+import { BrowserRouter as Router } from "react-router-dom";
+import { configStore } from "./store/configStore";
 import { Provider } from "react-redux";
-import { history } from "utils/history";
+import { rootSaga } from "sagas";
 import App from "./containers/App";
+
+const store = configStore();
+store.runSaga(rootSaga);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router history={history}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <Router>
         <App />
-      </Provider>
-    </Router>
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
