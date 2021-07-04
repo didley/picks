@@ -7,7 +7,6 @@ import {
   LOGIN_FAILURE,
   LOGOUT,
 } from "./actionTypes";
-
 import { authToken } from "utils/authToken";
 
 export const checkIsAuthenticatedAction = () => ({

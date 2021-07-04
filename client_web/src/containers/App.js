@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
 import PrivateRoute from "./PrivateRoute";
-import { checkIsAuthenticatedAction } from "actions/actions";
+import { checkIsAuthenticatedAction, logoutAction } from "actions/actions";
 import { getIsAuthenticated, getIsAuthenticating } from "reducers/selectors";
 
 import NavBar from "./NavBar";
@@ -20,6 +20,8 @@ class App extends React.Component {
     this.props.dispatch(checkIsAuthenticatedAction());
   }
 
+  handleLogout = () => this.props.dispatch(logoutAction());
+
   render() {
     const { isAuthenticated, isAuthenticating } = this.props;
 
@@ -27,7 +29,10 @@ class App extends React.Component {
 
     return (
       <div>
-        <NavBar isAuthenticated={isAuthenticated} />
+        <NavBar
+          isAuthenticated={isAuthenticated}
+          onLogoutClick={this.handleLogout}
+        />
         <ErrorBoundary>
           <Switch>
             <Route path="/login">

@@ -6,7 +6,7 @@ const propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
-const NavBar = ({ isAuthenticated }) => {
+const NavBar = ({ isAuthenticated, onLogoutClick }) => {
   const authenticatedLinks = (
     <>
       <li>
@@ -19,7 +19,7 @@ const NavBar = ({ isAuthenticated }) => {
         <Link to="/profile">Profile</Link>
       </li>
       <li>
-        <Link to="/logout">Log Out</Link>
+        <button onClick={onLogoutClick}>Log Out</button>
       </li>
     </>
   );
