@@ -2,6 +2,7 @@ import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { logInUserAction } from "actions/actions";
+import { getIsAuthenticated } from "reducers/selectors";
 
 class LogInPage extends React.Component {
   constructor(props) {
@@ -83,8 +84,8 @@ class LogInPage extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
+const mapState = (state) => ({
+  isAuthenticated: getIsAuthenticated(state),
 });
 
-export default connect(mapStateToProps)(LogInPage);
+export default connect(mapState)(LogInPage);
