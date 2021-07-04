@@ -1,6 +1,11 @@
+import { authToken } from "utils/authToken";
+
 const defaults = {
   baseURL: "/api",
-  headers: { "content-type": "application/json" },
+  headers: () => ({
+    "content-type": "application/json",
+    Authorization: authToken.get() ? `Bearer ${authToken.get()}` : undefined,
+  }),
   error: {
     code: "SERVER_ERROR",
     msg: "Something went wrong. Check your network connection and refresh this page. If the issue continues contact our support.",
@@ -14,7 +19,7 @@ async function fetchWrapper(method, endpoint, { body, ...customConfig } = {}) {
     method,
     ...customConfig,
     headers: {
-      ...defaults.headers,
+      ...defaults.headers(),
       ...customConfig.headers,
     },
   };

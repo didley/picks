@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
 import PrivateRoute from "./PrivateRoute";
-import { getIsAuthenticated } from "reducers/selectors";
+import { checkIsAuthenticatedAction } from "actions/actions";
+import { getIsAuthenticated, getIsAuthenticating } from "reducers/selectors";
 
 import NavBar from "./NavBar";
 import Home from "./HomePage";
@@ -15,8 +16,14 @@ import CreatePage from "./CreatePage";
 import ProfilePage from "./ProfilePage";
 
 class App extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(checkIsAuthenticatedAction());
+  }
+
   render() {
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, isAuthenticating } = this.props;
+
+    if (isAuthenticating) return <div>Loading...</div>;
 
     return (
       <div>
@@ -48,6 +55,7 @@ class App extends React.Component {
 
 const mapState = (state) => ({
   isAuthenticated: getIsAuthenticated(state),
+  isAuthenticating: getIsAuthenticating(state),
 });
 
 export default connect(mapState)(App);

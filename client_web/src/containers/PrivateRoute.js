@@ -1,25 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
-import { getIsAuthenticated } from "reducers/selectors";
+import { getIsAuthenticated, getIsAuthenticating } from "reducers/selectors";
 
 class PrivateRoute extends React.Component {
   render() {
-    const { isAuthenticated, children, ...rest } = this.props;
+    const { isAuthenticated, isAuthenticating, children, ...rest } = this.props;
 
     return (
       <Route
         {...rest}
         render={({ location }) =>
-          isAuthenticated ? (
-            children
-          ) : (
+          !isAuthenticated && !isAuthenticated ? (
             <Redirect
               to={{
                 pathname: "/login",
                 state: { from: location },
               }}
             />
+          ) : (
+            children
           )
         }
       />
@@ -29,6 +29,7 @@ class PrivateRoute extends React.Component {
 
 const mapState = (state) => ({
   isAuthenticated: getIsAuthenticated(state),
+  isAuthenticating: getIsAuthenticating(state),
 });
 
 export default connect(mapState)(PrivateRoute);
