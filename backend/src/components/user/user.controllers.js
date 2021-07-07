@@ -91,7 +91,16 @@ const loginUser = async (req, res, next) => {
 
     const token = generateToken(user.id);
 
-    return res.status(201).json({ token });
+    const UN_TAG = "p/";
+
+    return res.status(201).json({
+      token,
+      user: {
+        email: user.email,
+        username: user.username,
+        taggedUsername: UN_TAG + user.username,
+      },
+    });
   } catch (err) {
     next(err);
   }

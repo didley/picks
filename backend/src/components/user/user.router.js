@@ -13,7 +13,7 @@ router
 // .delete(controllers.removeOne);
 
 router.post("/login", controllers.loginUser);
-router.post("/logout");
-router.post("/register", controllers.createUser);
+router.post("/signup", controllers.createUser);
+router.post("/logout"); // TODO
 
 export default router;

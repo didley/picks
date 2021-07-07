@@ -1,21 +1,25 @@
 import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import reportWebVitals from "./reportWebVitals";
+import reportWebVitals from "./utils/reportWebVitals";
 
-import { BrowserRouter as Router } from "react-router-dom";
-import { store } from "./globalState/store";
+import { Router } from "react-router-dom";
+import { configStore } from "./store/configStore";
 import { Provider } from "react-redux";
+import { rootSaga } from "sagas";
+import App from "./containers/App";
 import { history } from "utils/history";
-import App from "./components/App";
+
+const store = configStore();
+store.runSaga(rootSaga);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router history={history}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <Router history={history}>
         <App />
-      </Provider>
-    </Router>
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
