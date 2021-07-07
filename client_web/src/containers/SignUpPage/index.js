@@ -24,7 +24,7 @@ class SignUpPage extends React.Component {
     e.preventDefault();
     const { username, email, password } = this.state;
     if (username && email && password) {
-      this.props.dispatch(signUpRequestAction(username, email, password));
+      this.props.signUpRequestAction(username, email, password);
     }
   };
 
@@ -102,4 +102,4 @@ const mapState = (state) => ({
   isAuthenticated: getIsAuthenticated(state),
 });
 
-export default connect(mapState)(SignUpPage);
+export default connect(mapState, { signUpRequestAction })(SignUpPage);

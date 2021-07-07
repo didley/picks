@@ -17,10 +17,10 @@ import ProfilePage from "./ProfilePage";
 
 class App extends React.Component {
   componentDidMount() {
-    this.props.dispatch(checkIsAuthenticatedAction());
+    this.props.checkIsAuthenticatedAction();
   }
 
-  handleLogout = () => this.props.dispatch(logoutAction());
+  handleLogout = () => this.props.logoutAction();
 
   render() {
     const { isAuthenticated, isAuthenticating } = this.props;
@@ -63,4 +63,6 @@ const mapState = (state) => ({
   isAuthenticating: getIsAuthenticating(state),
 });
 
-export default connect(mapState)(App);
+export default connect(mapState, { checkIsAuthenticatedAction, logoutAction })(
+  App
+);

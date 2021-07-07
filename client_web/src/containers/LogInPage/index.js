@@ -23,8 +23,7 @@ class LogInPage extends React.Component {
     e.preventDefault();
     const { email, password } = this.state;
 
-    if (email && password)
-      this.props.dispatch(logInUserAction(email, password));
+    if (email && password) this.props.logInUserAction(email, password);
   };
 
   render() {
@@ -87,4 +86,4 @@ const mapState = (state) => ({
   isAuthenticated: getIsAuthenticated(state),
 });
 
-export default connect(mapState)(LogInPage);
+export default connect(mapState, { logInUserAction })(LogInPage);
