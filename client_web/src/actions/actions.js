@@ -5,6 +5,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  SIGN_UP_REQUEST,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAILURE,
   LOGOUT,
 } from "./actionTypes";
 import { authToken } from "utils/authToken";
@@ -55,6 +58,31 @@ export const loginFailureAction = (error) => {
 
   return {
     type: LOGIN_FAILURE,
+    message,
+  };
+};
+
+export const signUpRequestAction = (username, email, password) => ({
+  type: SIGN_UP_REQUEST,
+  username,
+  email,
+  password,
+});
+
+export const signUpSuccessAction = (response) => {
+  const { token, user } = response;
+  const message = "Welcome, you've successfully signed up to Picks.";
+
+  return { type: SIGN_UP_SUCCESS, token, user, message };
+};
+
+export const signUpFailureAction = (error) => {
+  const message = `Authentication error${
+    error.message ? ": " + error.message : "."
+  }`;
+
+  return {
+    type: SIGN_UP_FAILURE,
     message,
   };
 };

@@ -11,7 +11,6 @@ class LogInPage extends React.Component {
     this.state = {
       email: "",
       password: "",
-      submitted: false,
     };
   }
 

@@ -5,6 +5,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  SIGN_UP_REQUEST,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAILURE,
   LOGOUT,
 } from "actions/actionTypes";
 
@@ -64,6 +67,36 @@ export function authReducer(state = initialState, action) {
     }
 
     case LOGIN_FAILURE: {
+      const { message } = action;
+      return {
+        token: null,
+        user: null,
+        isAuthenticated: false,
+        isAuthenticating: false,
+        message: message,
+      };
+    }
+
+    case SIGN_UP_REQUEST: {
+      return {
+        isAuthenticating: true,
+        message: null,
+        ...state,
+      };
+    }
+
+    case SIGN_UP_SUCCESS: {
+      const { token, user, message } = action;
+      return {
+        token: token,
+        user: user,
+        isAuthenticated: true,
+        isAuthenticating: false,
+        message: message,
+      };
+    }
+
+    case SIGN_UP_FAILURE: {
       const { message } = action;
       return {
         token: null,

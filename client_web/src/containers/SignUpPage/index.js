@@ -1,5 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { signUpRequestAction } from "actions/actions";
+import { getIsAuthenticated } from "reducers/selectors";
 
 class SignUpPage extends React.Component {
   constructor(props) {
@@ -9,7 +12,6 @@ class SignUpPage extends React.Component {
       username: "",
       email: "",
       password: "",
-      submitted: "",
     };
   }
 
@@ -20,15 +22,25 @@ class SignUpPage extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    const { username, email, password } = this.state;
+    if (username && email && password) {
+      this.props.dispatch(signUpRequestAction(username, email, password));
+    }
   };
 
   render() {
-    const { username, email, password, submitted } = this.state;
+    const { username, email, password } = this.state;
+    const { isAuthenticated } = this.props;
+
+    if (isAuthenticated) return <Redirect to="/feed" />;
 
     return (
       <div>
         <Link to="login">Log In</Link>
-        <form className="container bg-green-100 rounded-lg m-5 py-10 px-20">
+        <form
+          className="container bg-green-100 rounded-lg m-5 py-10 px-20"
+          onSubmit={this.handleSubmit}
+        >
           <h1 className="font-black text-4xl p-2 m-3">Create an account</h1>
           <div>
             <label className="text-sm">
@@ -86,4 +98,8 @@ class SignUpPage extends React.Component {
   }
 }
 
-export default SignUpPage;
+const mapState = (state) => ({
+  isAuthenticated: getIsAuthenticated(state),
+});
+
+export default connect(mapState)(SignUpPage);
