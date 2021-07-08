@@ -9,7 +9,7 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
   LOGOUT,
-} from "actions/actionTypes";
+} from "actions/authTypes";
 
 const initialState = {
   token: null,

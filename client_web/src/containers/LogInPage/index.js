@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { logInUserAction } from "actions/actions";
+import { logInUserAction } from "actions/authActions";
 import { getIsAuthenticated } from "reducers/selectors";
 
 class LogInPage extends React.Component {

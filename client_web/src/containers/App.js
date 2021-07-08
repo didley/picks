@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
 import PrivateRoute from "./PrivateRoute";
-import { checkIsAuthenticatedAction, logoutAction } from "actions/actions";
+import { checkIsAuthenticatedAction, logoutAction } from "actions/authActions";
 import { getIsAuthenticated, getIsAuthenticating } from "reducers/selectors";
 
 import NavBar from "./NavBar";
@@ -14,6 +14,7 @@ import SignUpPage from "./SignUpPage";
 import FeedPage from "./FeedPage";
 import CreatePage from "./CreatePage";
 import ProfilePage from "./ProfilePage";
+import AlertBar from "components/AlertBar";
 
 class App extends React.Component {
   componentDidMount() {
@@ -25,7 +26,7 @@ class App extends React.Component {
   render() {
     const { isAuthenticated, isAuthenticating } = this.props;
 
-    if (isAuthenticating) return <div>Loading...</div>;
+    if (isAuthenticating) return <AlertBar type="LOADING" />;
 
     return (
       <div>
@@ -33,6 +34,7 @@ class App extends React.Component {
           isAuthenticated={isAuthenticated}
           onLogoutClick={this.handleLogout}
         />
+        <AlertBar />
         <ErrorBoundary>
           <Switch>
             <Route path="/login">
