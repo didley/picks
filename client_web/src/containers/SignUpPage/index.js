@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { signUpRequestAction } from "actions/actions";
+import { signUpRequestAction } from "actions/authActions";
 import { getIsAuthenticated } from "reducers/selectors";
 
 class SignUpPage extends React.Component {
