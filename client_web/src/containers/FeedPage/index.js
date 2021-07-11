@@ -1,4 +1,4 @@
-import PicksCard from "components/PicksCard";
+import PicksCard from "components/PicksCards";
 
 const FeedPage = () => (
   <div>

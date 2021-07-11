@@ -49,9 +49,9 @@ export function authReducer(state = initialState, action) {
 
     case LOGIN_REQUEST: {
       return {
+        ...state,
         isAuthenticating: true,
         message: null,
-        ...state,
       };
     }
 
@@ -79,9 +79,9 @@ export function authReducer(state = initialState, action) {
 
     case SIGN_UP_REQUEST: {
       return {
+        ...state,
         isAuthenticating: true,
         message: null,
-        ...state,
       };
     }
 

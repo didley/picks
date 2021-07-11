@@ -8,6 +8,7 @@ const cardSchema = new mongoose.Schema(
     tags: { type: Array, maxLength: 5 },
     createdBy: { type: mongoose.Types.ObjectId, ref: "User", required: true },
     picks: [pickSchema],
+    comments: { type: String, maxLength: 200 },
   },
   { timestamp: true }
 );
