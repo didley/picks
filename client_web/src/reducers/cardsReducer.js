@@ -8,17 +8,18 @@ import {
 import { combineReducers } from "redux";
 import { normaliseArray } from "utils/normaliseArray";
 
-const initialState = { cards: {} };
-
-const cardsReducer = (state = initialState, action) => {
+const cardsReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_CARDS.success:
-      return { ...state, cards: normaliseArray(action.cards) };
+      return normaliseArray(action.cards);
 
     case GET_CARD.success:
       return { ...state, cards: action.card };
     case CREATE_CARD.success:
-      return { ...state, cards: { ...action.card, ...state.cards } };
+      return {
+        ...{ [action.card._id]: action.card },
+        ...state,
+      };
     case EDIT_CARD.success:
       return {
         ...state,
@@ -39,63 +40,63 @@ const cardsReducer = (state = initialState, action) => {
     case CREATE_CARD.failure:
     case EDIT_CARD.failure:
     case DELETE_CARD.failure:
-      return { ...state };
+      return state;
 
     case GET_CARDS.reset:
     case GET_CARD.reset:
     case CREATE_CARD.reset:
     case EDIT_CARD.reset:
     case DELETE_CARD.reset:
-      return { ...state, ...initialState };
+      return {};
 
     default:
       return state;
   }
 };
 
-const statusReducer = (state = { status: "idle" }, action) => {
+const statusReducer = (state = "idle", action) => {
   switch (action.type) {
     case GET_CARDS.request:
     case GET_CARD.request:
     case CREATE_CARD.request:
     case EDIT_CARD.request:
     case DELETE_CARD.request:
-      return { ...state, status: "loading" };
+      return "loading";
 
     case GET_CARDS.success:
     case GET_CARD.success:
     case CREATE_CARD.success:
     case EDIT_CARD.success:
     case DELETE_CARD.success:
-      return { ...state, status: "succeeded" };
+      return "succeeded";
 
     case GET_CARDS.failure:
     case GET_CARD.failure:
     case CREATE_CARD.failure:
     case EDIT_CARD.failure:
     case DELETE_CARD.failure:
-      return { ...state, status: "failed" };
+      return "failed";
 
     case GET_CARDS.reset:
     case GET_CARD.reset:
     case CREATE_CARD.reset:
     case EDIT_CARD.reset:
     case DELETE_CARD.reset:
-      return { ...state, status: "idle" };
+      return "idle";
 
     default:
       return state;
   }
 };
 
-const errorReducer = (state = { error: null }, action) => {
+const errorReducer = (state = null, action) => {
   switch (action.type) {
     case GET_CARDS.failure:
     case GET_CARD.failure:
     case CREATE_CARD.failure:
     case EDIT_CARD.failure:
     case DELETE_CARD.failure:
-      return { ...state, error: action.error };
+      return { ...state, ...action.error };
 
     case GET_CARDS.request:
     case GET_CARD.request:
@@ -110,7 +111,7 @@ const errorReducer = (state = { error: null }, action) => {
     case CREATE_CARD.reset:
     case EDIT_CARD.reset:
     case DELETE_CARD.reset:
-      return { ...state, error: null };
+      return { ...state, ...null };
 
     default:
       return state;

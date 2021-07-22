@@ -4,7 +4,7 @@ import { Formik, Form, Field, FieldArray, ErrorMessage, insert } from "formik";
 
 const CardForm = ({ onSubmit }) => {
   const initialPickValues = {
-    pickTitle: "",
+    title: "",
     url: "",
     pickComments: "",
     nsfw: false,
@@ -15,8 +15,6 @@ const CardForm = ({ onSubmit }) => {
     cardComments: "",
     picks: [initialPickValues],
   };
-
-  const hanadleSortUp = () => {};
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
@@ -34,6 +32,7 @@ const CardForm = ({ onSubmit }) => {
               className="w-full"
             />
           </label>
+
           <hr className="my-4" />
           <h4 className="font-normal">Picks</h4>
           <FieldArray name="picks">
@@ -49,7 +48,7 @@ const CardForm = ({ onSubmit }) => {
                         Title{" "}
                         <Field
                           className="w-full"
-                          name={`picks.${index}.pickTitle`}
+                          name={`picks.${index}.title`}
                         />
                       </label>
                       <label className="font-normal">

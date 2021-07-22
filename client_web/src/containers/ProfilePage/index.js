@@ -19,10 +19,15 @@ class ProfilePage extends React.Component {
 
   handleHideCreateForm = () => this.setState({ showCreateForm: false });
 
-  handleSubmit = (values) => alert(JSON.stringify(values));
+  handleSubmit = (card) => {
+    card.picksType = "topic"; // replace when weekly/topic types implements
+    this.props.createCard(card);
+
+    this.handleHideCreateForm();
+  };
 
   render() {
-    const { cards, status, error } = this.props.profile;
+    const { cards, status, error } = this.props.profile.profileCards;
     const { showCreateForm } = this.state;
 
     return (
@@ -30,7 +35,7 @@ class ProfilePage extends React.Component {
         {showCreateForm ? (
           <div className="rounded-lg w-1/2 p-4 m-4 border-2 border-blue-500 text-xs">
             <div className="flex justify-between">
-              <h5>Create a weekly pick</h5>
+              <h5>Create a picks post</h5>
               <button onClick={this.handleHideCreateForm}>X</button>
             </div>
             <CardForm onSubmit={this.handleSubmit} />
@@ -55,6 +60,7 @@ const mapState = (state) => ({
   profile: getProfile(state),
 });
 
-export default connect(mapState, { getAllCards: card.getAll.request })(
-  ProfilePage
-);
+export default connect(mapState, {
+  getAllCards: card.getAll.request,
+  createCard: card.create.request,
+})(ProfilePage);

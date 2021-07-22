@@ -48,12 +48,11 @@ const Pick = ({ pick }) => {
   const { title, url, comments, nsfw, likes } = pick;
 
   return (
-    <div className="grid m-2">
+    <div className="grid my-2 border-l-2 border-red-400 px-2">
       <p>
         {nsfw && <small className="text-red-500 font-bold">NSFW </small>}
         <ExternalLink to={url}>{title}</ExternalLink>
       </p>
-      <small>comments: {comments}</small>
       <div className="flex justify-between">
         <small className="text-gray-500 inline-block align-middle">
           {parseDomain(url)}
@@ -68,6 +67,7 @@ const Pick = ({ pick }) => {
           </button>
         </div>
       </div>
+      {comments && <small>comments: {comments}</small>}
     </div>
   );
 };
