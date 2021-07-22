@@ -44,13 +44,22 @@ const CardForm = ({ onSubmit }) => {
                       className="border border-gray-300 rounded-md p-4 my-2"
                       key={index}
                     >
-                      <label className="font-normal">
-                        Title{" "}
-                        <Field
-                          className="w-full"
-                          name={`picks.${index}.title`}
-                        />
-                      </label>
+                      <div className="flex justify-between">
+                        <label
+                          htmlFor={`picks.${index}.title`}
+                          className="font-normal"
+                        >
+                          Title
+                        </label>
+                        <small className="text-gray-500">{`${
+                          index + 1
+                        } of 5`}</small>
+                      </div>
+                      <Field
+                        className="w-full"
+                        id={`picks.${index}.title`}
+                        name={`picks.${index}.title`}
+                      />
                       <label className="font-normal">
                         URL{" "}
                         <Field
@@ -58,7 +67,7 @@ const CardForm = ({ onSubmit }) => {
                           type="url"
                           name={`picks.${index}.url`}
                         />
-                      </label>{" "}
+                      </label>
                       <label className="font-normal">
                         Comments
                         <Field
