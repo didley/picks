@@ -24,6 +24,7 @@ const Card = ({ card }) => {
         <small className="inline-block align-middle text-gray-500">
           UNPlaceholder
         </small>
+        <button>Edit</button>
       </div>
       <small>{comments}</small>
       <hr className="my-4" />

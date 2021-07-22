@@ -3,18 +3,49 @@ import { connect } from "react-redux";
 import { card } from "actions/cardActions";
 import { getProfile } from "reducers/selectors";
 import PicksCards from "components/PicksCards";
+import CardForm from "components/CardForm";
 
 class ProfilePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { showCreateForm: true };
+  }
+
   componentDidMount() {
     this.props.getAllCards();
   }
 
+  handleShowCreateForm = () => this.setState({ showCreateForm: true });
+
+  handleHideCreateForm = () => this.setState({ showCreateForm: false });
+
+  handleSubmit = (values) => alert(JSON.stringify(values));
+
   render() {
     const { cards, status, error } = this.props.profile;
+    const { showCreateForm } = this.state;
 
     return (
       <div>
-        <PicksCards cards={cards} />
+        {showCreateForm ? (
+          <div className="rounded-lg w-1/2 p-4 m-4 border-2 border-blue-500 text-xs">
+            <div className="flex justify-between">
+              <h5>Create a weekly pick</h5>
+              <button onClick={this.handleHideCreateForm}>X</button>
+            </div>
+            <CardForm onSubmit={this.handleSubmit} />
+          </div>
+        ) : (
+          <button
+            onClick={this.handleShowCreateForm}
+            className="border rounded-lg w-1/2 p-4 m-4 bg-red-400 text-xs"
+          >
+            + Create
+          </button>
+        )}
+        <div>
+          <PicksCards cards={cards} />
+        </div>
       </div>
     );
   }
