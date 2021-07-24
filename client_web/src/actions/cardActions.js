@@ -4,6 +4,7 @@ import {
   CREATE_CARD,
   EDIT_CARD,
   DELETE_CARD,
+  CARD_FORM,
 } from "actionTypes";
 
 const action = (type, payload = {}) => ({ type, ...payload });
@@ -39,4 +40,14 @@ export const card = {
   //   failure: (error) => action(DELETE_CARD.failure, { error }),
   //   reset: () => action(DELETE_CARD.reset),
   // },
+  form: {
+    create: {
+      show: () => action(CARD_FORM.create.show),
+      hide: () => action(CARD_FORM.create.hide),
+    },
+    edit: {
+      set: (cardId) => action(CARD_FORM.edit.set, { cardId }),
+      clear: () => action(CARD_FORM.edit.clear),
+    },
+  },
 };

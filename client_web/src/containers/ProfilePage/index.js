@@ -6,51 +6,47 @@ import PicksCards from "components/PicksCards";
 import CardForm from "components/CardForm";
 
 class ProfilePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { showCreateForm: true };
-  }
-
   componentDidMount() {
     this.props.getAllCards();
   }
 
-  handleShowCreateForm = () => this.setState({ showCreateForm: true });
-
-  handleHideCreateForm = () => this.setState({ showCreateForm: false });
-
   handleSubmit = (card) => {
     card.picksType = "topic"; // replace when weekly/topic types implements
     this.props.createCard(card);
-
-    this.handleHideCreateForm();
   };
 
   render() {
-    const { cards, status, error } = this.props.profile.profileCards;
-    const { showCreateForm } = this.state;
+    const {
+      cards,
+      cardStatus,
+      cardError,
+      form: { createFromVisible },
+    } = this.props.profile.profileCards;
+
+    const { showCreateForm, hideCreateForm, setEditable } = this.props;
 
     return (
-      <div>
-        {showCreateForm ? (
-          <div className="rounded-lg w-1/2 p-4 m-4 border-2 border-blue-500 text-xs">
-            <div className="flex justify-between">
-              <h5>Create a picks post</h5>
-              <button onClick={this.handleHideCreateForm}>X</button>
+      <div className="max-w-6xl m-auto">
+        <div className="max-w-6xl m-auto">
+          {createFromVisible ? (
+            <div className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs">
+              <div className="flex justify-between">
+                <h5 className="font-bold">Create a picks post</h5>
+                <button onClick={hideCreateForm}>X</button>
+              </div>
+              <CardForm onSubmit={this.handleSubmit} />
             </div>
-            <CardForm onSubmit={this.handleSubmit} />
-          </div>
-        ) : (
-          <button
-            onClick={this.handleShowCreateForm}
-            className="border rounded-lg w-1/2 p-4 m-4 bg-red-400 text-xs"
-          >
-            + Create
-          </button>
-        )}
-        <div>
-          <PicksCards cards={cards} />
+          ) : (
+            <button
+              onClick={showCreateForm}
+              className="m-auto my-2 rounded-lg bg-red-400 flex py-4 px-8 text-white text-xs"
+            >
+              + New Picks
+            </button>
+          )}
         </div>
+
+        <PicksCards cards={cards} handleEditClick={setEditable} />
       </div>
     );
   }
@@ -63,4 +59,8 @@ const mapState = (state) => ({
 export default connect(mapState, {
   getAllCards: card.getAll.request,
   createCard: card.create.request,
+  showCreateForm: card.form.create.show,
+  hideCreateForm: card.form.create.hide,
+  setEditable: card.form.edit.set,
+  clearEditable: card.form.edit.clear,
 })(ProfilePage);

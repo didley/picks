@@ -4,6 +4,7 @@ import {
   CREATE_CARD,
   EDIT_CARD,
   DELETE_CARD,
+  CARD_FORM,
 } from "actionTypes";
 import { combineReducers } from "redux";
 import { normaliseArray } from "utils/normaliseArray";
@@ -118,8 +119,29 @@ const errorReducer = (state = null, action) => {
   }
 };
 
+const formReducer = (
+  state = { createFromVisible: false, editingId: null },
+  action
+) => {
+  switch (action.type) {
+    case CARD_FORM.create.show:
+      return { ...state, createFromVisible: true, editingId: null };
+    case CARD_FORM.create.hide:
+      return { ...state, createFromVisible: false };
+
+    case CARD_FORM.edit.set:
+      return { ...state, editingId: action.cardId, createFromVisible: false };
+    case CARD_FORM.edit.clear:
+      return { ...state, editingId: null };
+
+    default:
+      return state;
+  }
+};
+
 export const cardsRootReducer = combineReducers({
   cards: cardsReducer,
   cardStatus: statusReducer,
   cardError: errorReducer,
+  form: formReducer,
 });
