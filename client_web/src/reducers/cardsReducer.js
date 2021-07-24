@@ -126,11 +126,16 @@ const formReducer = (
   switch (action.type) {
     case CARD_FORM.create.show:
       return { ...state, createFromVisible: true, editingId: null };
+
     case CARD_FORM.create.hide:
+    case CREATE_CARD.success:
       return { ...state, createFromVisible: false };
 
     case CARD_FORM.edit.set:
+    case EDIT_CARD.success:
+    case DELETE_CARD.success:
       return { ...state, editingId: action.cardId, createFromVisible: false };
+
     case CARD_FORM.edit.clear:
       return { ...state, editingId: null };
 

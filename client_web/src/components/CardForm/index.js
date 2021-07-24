@@ -2,7 +2,7 @@ import React from "react";
 
 import { Formik, Form, Field, FieldArray, ErrorMessage, insert } from "formik";
 
-const CardForm = ({ onSubmit, editingCard, onDelete }) => {
+const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
   const initialPickValues = {
     title: "",
     url: "",
@@ -143,7 +143,9 @@ const CardForm = ({ onSubmit, editingCard, onDelete }) => {
             )}
           </FieldArray>
           <div className="flex justify-end">
-            {editingView ? (
+            {isLoading ? (
+              <small className="text-gray-400 p-2 m-1">Loading...</small>
+            ) : editingView ? (
               <>
                 <button
                   type="button"

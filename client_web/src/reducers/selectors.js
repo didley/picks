@@ -12,6 +12,9 @@ export const getProfile = (state) => {
 export const getEditingId = (state) =>
   state.profile.profileCards.form.editingId;
 
+export const getCardFormIsLoading = (state) =>
+  state.profile.profileCards.cardStatus === "loading" ? true : false;
+
 // export getCardForm = (state) => {
 //   state.profile.
 // }

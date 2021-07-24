@@ -6,7 +6,7 @@ import { parseDomain } from "utils/parseDomain";
 import ShareIcon from "components/ShareIcon";
 import { connect } from "react-redux";
 import { card } from "actions/cardActions";
-import { getEditingId } from "reducers/selectors";
+import { getEditingId, getCardFormIsLoading } from "reducers/selectors";
 import CardForm from "components/CardForm";
 
 const PicksCards = ({ cards }) => (
@@ -22,7 +22,8 @@ const PicksCards = ({ cards }) => (
 
 class _Card extends React.Component {
   render() {
-    const { card, editingId, setEditable, clearEditable } = this.props;
+    const { card, editingId, setEditable, clearEditable, isLoading } =
+      this.props;
     const { title, createdBy, picksType, picks, comments, _id } = card;
 
     if (editingId === _id) {
@@ -36,6 +37,7 @@ class _Card extends React.Component {
             editingCard={card}
             onDelete={() => console.log({ _id })}
             onSubmit={(value) => console.log({ value })}
+            isLoading={isLoading}
           />
         </div>
       );
@@ -62,10 +64,16 @@ class _Card extends React.Component {
   }
 }
 
-const Card = connect((state) => ({ editingId: getEditingId(state) }), {
-  setEditable: card.form.edit.set,
-  clearEditable: card.form.edit.clear,
-})(_Card);
+const Card = connect(
+  (state) => ({
+    editingId: getEditingId(state),
+    isLoading: getCardFormIsLoading(state),
+  }),
+  {
+    setEditable: card.form.edit.set,
+    clearEditable: card.form.edit.clear,
+  }
+)(_Card);
 
 const Picks = ({ picks }) => (
   <>

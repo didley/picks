@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { card } from "actions/cardActions";
-import { getProfile } from "reducers/selectors";
+import { getProfile, getCardFormIsLoading } from "reducers/selectors";
 import PicksCards from "components/PicksCards";
 import CardForm from "components/CardForm";
 
@@ -23,7 +23,8 @@ class ProfilePage extends React.Component {
       form: { createFromVisible },
     } = this.props.profile.profileCards;
 
-    const { showCreateForm, hideCreateForm, setEditable } = this.props;
+    const { showCreateForm, hideCreateForm, setEditable, isLoading } =
+      this.props;
 
     return (
       <div className="max-w-6xl m-auto">
@@ -34,7 +35,7 @@ class ProfilePage extends React.Component {
                 <h5 className="font-bold">Create a picks post</h5>
                 <button onClick={hideCreateForm}>X</button>
               </div>
-              <CardForm onSubmit={this.handleSubmit} />
+              <CardForm onSubmit={this.handleSubmit} isLoading={isLoading} />
             </div>
           ) : (
             <button
@@ -54,6 +55,7 @@ class ProfilePage extends React.Component {
 
 const mapState = (state) => ({
   profile: getProfile(state),
+  isLoading: getCardFormIsLoading(state),
 });
 
 export default connect(mapState, {
