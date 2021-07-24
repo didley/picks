@@ -6,7 +6,7 @@ const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
   const initialPickValues = {
     title: "",
     url: "",
-    pickComments: "",
+    comments: "",
     nsfw: false,
   };
 
@@ -14,7 +14,7 @@ const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
     ? editingCard
     : {
         title: "",
-        cardComments: "",
+        comments: "",
         picks: [initialPickValues],
       };
 
@@ -25,17 +25,13 @@ const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
       {({ values }) => (
         <Form>
           <div className="grid md:grid-cols-2 gap-2">
-            <label className="font-normal">
+            {/* <label className="font-normal">
               Post Title <Field name="title" className="w-full" />
-            </label>
+            </label> */}
 
             <label className="font-normal">
               Post Comments{" "}
-              <Field
-                name="cardComments"
-                component="textarea"
-                className="w-full"
-              />
+              <Field name="comments" component="textarea" className="w-full" />
             </label>
           </div>
 
@@ -83,7 +79,7 @@ const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
                           <Field
                             className="w-full"
                             component="textarea"
-                            name={`picks.${index}.pickComments`}
+                            name={`picks.${index}.comments`}
                           />
                         </label>
                         <div className="flex justify-between">

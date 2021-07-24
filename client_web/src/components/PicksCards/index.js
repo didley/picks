@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { card } from "actions/cardActions";
 import { getEditingId, getCardFormIsLoading } from "reducers/selectors";
 import CardForm from "components/CardForm";
+import { updateCard } from "utils/apiCalls/cards";
 
 const PicksCards = ({ cards }) => (
   <ul className="max-w-6xl m-auto">
@@ -29,6 +30,7 @@ class _Card extends React.Component {
       clearEditable,
       isLoading,
       deleteCard,
+      updateCard,
     } = this.props;
     const { title, createdBy, picksType, picks, comments, _id } = card;
 
@@ -42,7 +44,7 @@ class _Card extends React.Component {
           <CardForm
             editingCard={card}
             onDelete={() => deleteCard(_id)}
-            onSubmit={(value) => console.log({ value })}
+            onSubmit={(value) => updateCard(value)}
             isLoading={isLoading}
           />
         </div>
@@ -79,6 +81,7 @@ const Card = connect(
     setEditable: card.form.edit.set,
     clearEditable: card.form.edit.clear,
     deleteCard: card.delete.request,
+    updateCard: card.update.request,
   }
 )(_Card);
 
