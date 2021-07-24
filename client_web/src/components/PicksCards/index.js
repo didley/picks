@@ -22,8 +22,14 @@ const PicksCards = ({ cards }) => (
 
 class _Card extends React.Component {
   render() {
-    const { card, editingId, setEditable, clearEditable, isLoading } =
-      this.props;
+    const {
+      card,
+      editingId,
+      setEditable,
+      clearEditable,
+      isLoading,
+      deleteCard,
+    } = this.props;
     const { title, createdBy, picksType, picks, comments, _id } = card;
 
     if (editingId === _id) {
@@ -35,7 +41,7 @@ class _Card extends React.Component {
           </div>
           <CardForm
             editingCard={card}
-            onDelete={() => console.log({ _id })}
+            onDelete={() => deleteCard(_id)}
             onSubmit={(value) => console.log({ value })}
             isLoading={isLoading}
           />
@@ -72,6 +78,7 @@ const Card = connect(
   {
     setEditable: card.form.edit.set,
     clearEditable: card.form.edit.clear,
+    deleteCard: card.delete.request,
   }
 )(_Card);
 

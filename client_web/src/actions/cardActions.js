@@ -2,7 +2,7 @@ import {
   GET_CARDS,
   GET_CARD,
   CREATE_CARD,
-  EDIT_CARD,
+  UPDATE_CARD,
   DELETE_CARD,
   CARD_FORM,
 } from "actionTypes";
@@ -28,18 +28,18 @@ export const card = {
     failure: (error) => action(CREATE_CARD.failure, { error }),
     reset: () => action(CREATE_CARD.reset),
   },
-  // update: {
-  //   request: (updatedCard) => action(EDIT_CARD.request, { updatedCard }),
-  //   success: (updatedCard) => action(EDIT_CARD.success, { updatedCard }),
-  //   failure: (error) => action(EDIT_CARD.failure, { error }),
-  //   reset: () => action(EDIT_CARD.reset),
-  // },
-  // delete: {
-  //   request: (cardId) => action(DELETE_CARD.request, { cardId }),
-  //   success: (deletedCardId) => action(DELETE_CARD.success, { deletedCardId }),
-  //   failure: (error) => action(DELETE_CARD.failure, { error }),
-  //   reset: () => action(DELETE_CARD.reset),
-  // },
+  update: {
+    request: (updatedCard) => action(UPDATE_CARD.request, { updatedCard }),
+    success: (updatedCard) => action(UPDATE_CARD.success, { updatedCard }),
+    failure: (error) => action(UPDATE_CARD.failure, { error }),
+    reset: () => action(UPDATE_CARD.reset),
+  },
+  delete: {
+    request: (id) => action(DELETE_CARD.request, { id }),
+    success: (deletedCardId) => action(DELETE_CARD.success, { deletedCardId }),
+    failure: (error) => action(DELETE_CARD.failure, { error }),
+    reset: () => action(DELETE_CARD.reset),
+  },
   form: {
     create: {
       show: () => action(CARD_FORM.create.show),

@@ -18,8 +18,6 @@ class ProfilePage extends React.Component {
   render() {
     const {
       cards,
-      cardStatus,
-      cardError,
       form: { createFromVisible },
     } = this.props.profile.profileCards;
 
