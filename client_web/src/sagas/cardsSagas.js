@@ -40,12 +40,12 @@ function* createCardWatcher() {
 
 function* updateCard(payload) {
   try {
-    const { data } = yield call(api.updateCard, payload.card);
+    const { data } = yield call(api.updateCard, payload.updatedCard);
     yield put(setSuccessAlert({ message: "Picks updated", timeout: 3000 }));
     yield put(card.update.success(data));
   } catch (error) {
     yield put(setErrorAlert({ message: error.message, timeout: 3000 }));
-    yield put(card.create.failure(error));
+    yield put(card.update.failure(error));
   }
 }
 
