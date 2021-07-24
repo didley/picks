@@ -2,7 +2,7 @@ import { alertTypes } from "actions/alertActions";
 
 const initialState = {
   style: "GENERAL",
-  message: "welcome",
+  message: null,
   details: null,
 };
 
