@@ -8,6 +8,6 @@ const router = Router();
 
 router.use("/user", userRoutes);
 router.use("/cards", cardRoutes);
-router.use("/pick", protectRoute, pickRoutes);
+// router.use("/pick", protectRoute, pickRoutes);
 
 export { router };
