@@ -3,25 +3,10 @@ import { Card } from "./card.model";
 
 const generic = useGenericCRUD(Card);
 
-// const getCards = (req, res, next) => {
-//   /**
 //    * if has id query string findOne by id
 //    * if has user query string findMany by userName
 //    * if no query string return findMany by userId
 //    */
-
-//   const { id, user } = req.query;
-
-//   export const getMany = (model) =>
-//     asyncHandler(async (req, res, next, options) => {
-//       try {
-//         const docs = await model.find({ createdBy: req.user._id }); //.lean();
-//         res.status(200).json({ data: docs });
-//       } catch (err) {
-//         throw httpErr(400, err);
-//       }
-//     });
-// };
 
 const getAllCards = (req, res, next) => generic.getMany(req, res, next);
 
@@ -35,10 +20,6 @@ const updateCard = (req, res, next) =>
 
 const deleteCardById = (req, res, next) =>
   generic.removeOne(req, res, next, { idReqType: "query" });
-
-//  const getAllWeeklyCards = (...args) => {};
-
-//  const getAllTopicCards = (...args) => {};
 
 export default {
   // getCards,

@@ -56,8 +56,6 @@ export const getOne = (model) =>
   asyncHandler(async (req, res, next, options) => {
     const [idReqType, id] = _handleIdReqTypeOpt(options);
 
-    console.log({ idReqType, id });
-
     try {
       const doc = await model
         .findOne({ createdBy: req.user._id, _id: req[idReqType][id] })
