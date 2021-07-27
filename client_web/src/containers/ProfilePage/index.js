@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { card } from "actions/cardActions";
 import { getProfile, getCardFormIsLoading } from "reducers/selectors";
-import PicksCards from "components/PicksCards";
+import CardList from "components/CardList";
 import CardForm from "components/CardForm";
 
 class ProfilePage extends React.Component {
@@ -45,7 +45,7 @@ class ProfilePage extends React.Component {
           )}
         </div>
 
-        <PicksCards cards={cards} handleEditClick={setEditable} />
+        <CardList cards={cards} handleEditClick={setEditable} />
       </div>
     );
   }
