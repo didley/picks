@@ -11,7 +11,7 @@ export const pickSchema = new mongoose.Schema(
     // fromCard: { type: mongoose.Types.ObjectId, ref: "Card", required: true },
     // createdBy: { type: mongoose.Types.ObjectId, ref: "User", required: true },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 // export const Pick = mongoose.model("Pick", pickSchema);

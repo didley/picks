@@ -123,6 +123,7 @@ const getPublicProfileSummary = async (req, res, next) => {
       "displayPicture",
       "location",
       "bio",
+      "-_id",
     ];
     const doc = await User.findOne(
       { username: usernameQueryString },

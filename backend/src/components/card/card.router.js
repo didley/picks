@@ -6,15 +6,14 @@ import { protectRoute } from "../../utils/auth";
 const router = Router();
 
 const matchOnIdQS = useQSRouteMatcher("id");
+const matchOnUnQS = useQSRouteMatcher("un");
 
 //api/cards
-router.get("/", protectRoute, matchOnIdQS, controllers.getCardById);
+router.get("/", matchOnIdQS, controllers.getCardById);
+router.get("/", matchOnUnQS, controllers.getCardsByUsername);
 router.get("/", protectRoute, controllers.getAllCards);
 router.delete("/", protectRoute, controllers.deleteCardById);
 router.post("/", protectRoute, controllers.createCard);
 router.put("/", protectRoute, controllers.updateCard);
-
-// router.route("/weekly").get(controllers.getAllWeeklyCards);
-// router.route("/topic").get(controllers.getAllTopicCards);
 
 export default router;
