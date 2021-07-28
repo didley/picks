@@ -19,10 +19,9 @@ export const skipAuthCheck = () => ({
   type: SKIP_AUTH_CHECK,
 });
 
-export const isAuthenticatedSuccessAction = (response) => ({
+export const isAuthenticatedSuccessAction = (user) => ({
   type: IS_AUTHENTICATED_SUCCESS,
-  token: response.token,
-  user: response.user,
+  user,
 });
 
 export const logInUserAction = (email, password) => ({
@@ -31,9 +30,9 @@ export const logInUserAction = (email, password) => ({
   password,
 });
 
-export const loginSuccessAction = ({ token, user, message }) => ({
+export const loginSuccessAction = ({ user, message }) => ({
   type: LOGIN_SUCCESS,
-  token,
+
   user,
   message,
 });
@@ -50,9 +49,9 @@ export const signUpRequestAction = (username, email, password) => ({
   password,
 });
 
-export const signUpSuccessAction = ({ token, user, message }) => ({
+export const signUpSuccessAction = ({ user, message }) => ({
   type: SIGN_UP_SUCCESS,
-  token,
+
   user,
   message,
 });

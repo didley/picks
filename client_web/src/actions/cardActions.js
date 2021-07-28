@@ -11,7 +11,7 @@ const action = (type, payload = {}) => ({ type, ...payload });
 
 export const card = {
   getAll: {
-    request: (userName) => action(GET_CARDS.request, { userName }),
+    request: (username) => action(GET_CARDS.request, { username }),
     success: (cards) => action(GET_CARDS.success, { cards }),
     failure: (error) => action(GET_CARDS.failure, { error }),
     reset: () => action(GET_CARDS.reset),

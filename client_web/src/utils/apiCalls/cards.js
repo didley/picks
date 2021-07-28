@@ -1,6 +1,7 @@
 import { client } from "./_client";
 
-export const getUsersCards = () => client.get("/cards");
+export const getCardsByUsername = (username) =>
+  client.get(`/cards?un=${username}`);
 
 export const getCard = (cardId) => client.get(`/cards?id=${cardId}`);
 

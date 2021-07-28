@@ -8,9 +8,9 @@ import {
   setGeneralAlert,
 } from "actions/alertActions";
 
-function* getCards() {
+function* getCards(payload) {
   try {
-    const { data } = yield call(api.getUsersCards);
+    const { data } = yield call(api.getCardsByUsername, payload.username);
 
     yield put(card.getAll.success(data));
   } catch (error) {

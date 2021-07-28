@@ -6,8 +6,9 @@ import CardList from "components/CardList";
 import CardForm from "components/CardForm";
 
 class ProfilePage extends React.Component {
-  componentDidMount() {
-    this.props.getAllCards();
+  componentDidMount(props) {
+    const { username } = this.props.match.params;
+    this.props.getAllCards(username);
   }
 
   handleSubmit = (card) => {
