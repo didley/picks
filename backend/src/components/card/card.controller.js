@@ -17,9 +17,9 @@ const getCardsByUsername = async (req, res, next) => {
 
   try {
     const user = await User.findOne({ username: usernameQueryString });
-    const docs = await Card.find({ createdBy: user._id }, ["-createdBy"]).sort(
-      "-createdAt"
-    );
+    const docs = await Card.find({ createdBy: user._id })
+      .sort("-createdAt")
+      .populate("createdBy", "username -_id");
 
     res.status(200).json({ data: docs });
   } catch (err) {
