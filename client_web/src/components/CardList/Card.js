@@ -16,7 +16,7 @@ class Card extends React.Component {
       deleteCard,
       updateCard,
     } = this.props;
-    const { title, createdBy, picksType, picks, comments, _id } = card;
+    const { createdBy, picks, comments, _id, title, picksType } = card;
 
     if (editingId === _id) {
       return (
@@ -44,7 +44,7 @@ class Card extends React.Component {
           Edit
         </button>
         <div className="mb-3">
-          <small className="text-gray-500">UserName Picks #4</small>
+          <small className="text-gray-500">{createdBy?.username}</small>
           <br />
           <small>{comments}</small>
         </div>
