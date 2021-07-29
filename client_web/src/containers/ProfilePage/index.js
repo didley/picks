@@ -1,13 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import { card } from "actions/cardActions";
+import { profile } from "actions/profileActions";
 import { getProfile, getCardFormIsLoading } from "reducers/selectors";
+import ProfileHeader from "components/ProfileHeader";
 import CardList from "components/CardList";
 import CardForm from "components/CardForm";
 
 class ProfilePage extends React.Component {
-  componentDidMount(props) {
+  componentDidMount() {
     const { username } = this.props.match.params;
+    this.props.getProfileHeader(username);
     this.props.getAllCards(username);
   }
 
@@ -17,16 +20,19 @@ class ProfilePage extends React.Component {
   };
 
   render() {
+    const { profileHeader, profileCards } = this.props.profile;
+
     const {
       cards,
       form: { createFromVisible },
-    } = this.props.profile.profileCards;
+    } = profileCards;
 
     const { showCreateForm, hideCreateForm, setEditable, isLoading } =
       this.props;
 
     return (
       <div className="max-w-6xl m-auto">
+        <ProfileHeader profileHeader={profileHeader} ownProfile={false} />
         <div className="max-w-6xl m-auto">
           {createFromVisible ? (
             <div className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs">
@@ -45,8 +51,11 @@ class ProfilePage extends React.Component {
             </button>
           )}
         </div>
-
-        <CardList cards={cards} handleEditClick={setEditable} />
+        {profileCards.cardStatus === "loading" ? (
+          <small>Loading cards...</small>
+        ) : (
+          <CardList cards={cards} handleEditClick={setEditable} />
+        )}
       </div>
     );
   }
@@ -58,6 +67,7 @@ const mapState = (state) => ({
 });
 
 export default connect(mapState, {
+  getProfileHeader: profile.getSummary.request,
   getAllCards: card.getAll.request,
   createCard: card.create.request,
   showCreateForm: card.form.create.show,

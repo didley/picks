@@ -1,9 +1,8 @@
 import { combineReducers } from "redux";
-
-import { userHeaderReducer } from "./userHeaderReducer";
 import { cardsRootReducer } from "./cardsReducer";
+import { profileHeaderReducer } from "./profileHeaderReducer";
 
 export const profileReducer = combineReducers({
-  // userHeader: userHeaderReducer,
+  profileHeader: profileHeaderReducer,
   profileCards: cardsRootReducer,
 });

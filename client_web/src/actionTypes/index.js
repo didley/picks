@@ -19,3 +19,5 @@ export const CARD_FORM = {
   create: { show: "card/showCreateForm", hide: "card/hideCreateForm" },
   edit: { set: "card/setEditable", clear: "card/clearEditable" },
 };
+
+export const GET_PROFILE_SUMMARY = createRequestTypes("profile/getSummary");

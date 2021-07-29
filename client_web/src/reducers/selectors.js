@@ -5,7 +5,9 @@ export const selectUser = (state) => state.auth.user;
 export const getProfile = (state) => {
   const { cards, cardStatus, cardError, form } = state.profile.profileCards;
   const denormalizedCards = Object.values(cards);
+
   return {
+    profileHeader: state.profile.profileHeader,
     profileCards: { cards: denormalizedCards, cardStatus, cardError, form },
   };
 };
