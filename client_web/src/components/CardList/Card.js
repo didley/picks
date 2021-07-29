@@ -36,21 +36,22 @@ class Card extends React.Component {
     }
 
     return (
-      <div className="relative border rounded-lg p-3 m-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="relative border rounded-lg p-3 m-2">
         <button
           className="absolute top-0 right-0 mr-3 md:mr-5 mt-4 md:mt-3 text-sm text-gray-500"
           onClick={() => setEditable(_id)}
         >
           Edit
         </button>
-        <div className="mb-3">
-          <small className="text-gray-500">{createdBy?.username}</small>
-          <br />
-          <small>{comments}</small>
-        </div>
-        <hr className="md:hidden" />
-
-        <PickList picks={picks} />
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mb-3">
+            <small className="text-gray-500">{createdBy?.username}</small>
+            <br />
+            <small>{comments}</small>
+            <hr className="md:hidden" />
+          </div>
+          <PickList picks={picks} />
+        </ul>
       </div>
     );
   }

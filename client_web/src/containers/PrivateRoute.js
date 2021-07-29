@@ -5,23 +5,39 @@ import { getIsAuthenticated, getIsAuthenticating } from "reducers/selectors";
 
 class PrivateRoute extends React.Component {
   render() {
-    const { isAuthenticated, isAuthenticating, children, ...rest } = this.props;
+    const {
+      isAuthenticated,
+      isAuthenticating,
+      render,
+      component: Component,
+      children,
+      ...rest
+    } = this.props;
+
+    if (render)
+      throw new TypeError(
+        "render prop has not been implemented in PrivateRoute.js, use component or children props instead or implement it"
+      );
 
     return (
       <Route
         {...rest}
-        render={({ location }) =>
-          !isAuthenticated && !isAuthenticated ? (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: location },
-              }}
-            />
-          ) : (
-            children
-          )
-        }
+        render={(routeProps) => {
+          if (!isAuthenticated && !isAuthenticated) {
+            return (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { from: routeProps.location },
+                }}
+              />
+            );
+          }
+
+          if (Component) return <Component {...routeProps} />;
+
+          return children;
+        }}
       />
     );
   }
