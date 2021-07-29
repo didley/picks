@@ -12,7 +12,6 @@ import {
 } from "actions/authTypes";
 
 const initialState = {
-  token: null,
   user: null,
   isAuthenticated: false,
   isAuthenticating: true,
@@ -29,9 +28,8 @@ export function authReducer(state = initialState, action) {
       };
 
     case IS_AUTHENTICATED_SUCCESS:
-      const { token, user } = action;
+      const { user } = action;
       return {
-        token: token,
         user: user,
         isAuthenticated: true,
         isAuthenticating: false,
@@ -40,7 +38,6 @@ export function authReducer(state = initialState, action) {
 
     case SKIP_AUTH_CHECK:
       return {
-        token: null,
         user: null,
         isAuthenticating: false,
         isAuthenticated: false,
@@ -49,16 +46,15 @@ export function authReducer(state = initialState, action) {
 
     case LOGIN_REQUEST: {
       return {
+        ...state,
         isAuthenticating: true,
         message: null,
-        ...state,
       };
     }
 
     case LOGIN_SUCCESS: {
       const { token, user, message } = action;
       return {
-        token: token,
         user: user,
         isAuthenticated: true,
         isAuthenticating: false,
@@ -69,7 +65,6 @@ export function authReducer(state = initialState, action) {
     case LOGIN_FAILURE: {
       const { message } = action;
       return {
-        token: null,
         user: null,
         isAuthenticated: false,
         isAuthenticating: false,
@@ -79,16 +74,15 @@ export function authReducer(state = initialState, action) {
 
     case SIGN_UP_REQUEST: {
       return {
+        ...state,
         isAuthenticating: true,
         message: null,
-        ...state,
       };
     }
 
     case SIGN_UP_SUCCESS: {
       const { token, user, message } = action;
       return {
-        token: token,
         user: user,
         isAuthenticated: true,
         isAuthenticating: false,
@@ -99,7 +93,6 @@ export function authReducer(state = initialState, action) {
     case SIGN_UP_FAILURE: {
       const { message } = action;
       return {
-        token: null,
         user: null,
         isAuthenticated: false,
         isAuthenticating: false,
@@ -109,7 +102,6 @@ export function authReducer(state = initialState, action) {
 
     case LOGOUT: {
       return {
-        token: null,
         user: null,
         isAuthenticated: false,
         isAuthenticating: false,

@@ -5,7 +5,11 @@ import { Switch, Route } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
 import PrivateRoute from "./PrivateRoute";
 import { checkIsAuthenticatedAction, logoutAction } from "actions/authActions";
-import { getIsAuthenticated, getIsAuthenticating } from "reducers/selectors";
+import {
+  getIsAuthenticated,
+  getIsAuthenticating,
+  selectUser,
+} from "reducers/selectors";
 
 import NavBar from "./NavBar";
 import Home from "./HomePage";
@@ -24,7 +28,7 @@ class App extends React.Component {
   handleLogout = () => this.props.logoutAction();
 
   render() {
-    const { isAuthenticated, isAuthenticating } = this.props;
+    const { isAuthenticated, isAuthenticating, user } = this.props;
 
     if (isAuthenticating) return <AlertBar type="LOADING" />;
 
@@ -33,6 +37,7 @@ class App extends React.Component {
         <NavBar
           isAuthenticated={isAuthenticated}
           onLogoutClick={this.handleLogout}
+          user={user}
         />
         <AlertBar />
         <ErrorBoundary>
@@ -49,9 +54,9 @@ class App extends React.Component {
             <PrivateRoute path="/create">
               <CreatePage />
             </PrivateRoute>
-            <PrivateRoute path="/profile">
-              <ProfilePage />
-            </PrivateRoute>
+
+            <PrivateRoute path="/profile/:username" component={ProfilePage} />
+
             <Route path="/">{isAuthenticated ? <FeedPage /> : <Home />}</Route>
           </Switch>
         </ErrorBoundary>
@@ -63,6 +68,7 @@ class App extends React.Component {
 const mapState = (state) => ({
   isAuthenticated: getIsAuthenticated(state),
   isAuthenticating: getIsAuthenticating(state),
+  user: selectUser(state),
 });
 
 export default connect(mapState, { checkIsAuthenticatedAction, logoutAction })(

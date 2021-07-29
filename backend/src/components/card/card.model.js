@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { pickSchema } from "../pick/pick.model";
+import { pickSchema } from "./pick.model";
 
 const cardSchema = new mongoose.Schema(
   {
@@ -8,8 +8,9 @@ const cardSchema = new mongoose.Schema(
     tags: { type: Array, maxLength: 5 },
     createdBy: { type: mongoose.Types.ObjectId, ref: "User", required: true },
     picks: [pickSchema],
+    comments: { type: String, maxLength: 200 },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 cardSchema.pre("save", function (next) {

@@ -14,6 +14,8 @@ router
 
 router.post("/login", controllers.loginUser);
 router.post("/signup", controllers.createUser);
-router.post("/logout"); // TODO
+// router.post("/logout");
+
+router.get("/profile", controllers.getPublicProfileSummary); // "un" query string with display username
 
 export default router;

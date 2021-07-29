@@ -1,5 +1,6 @@
 import { User } from "./user.model";
 import { generateToken } from "../../utils/auth";
+import httpErr from "http-errors";
 
 const getUser = (req, res, next) => {
   if (!req.user) {
@@ -106,4 +107,44 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-export default { getUser, updateUser, createUser, loginUser };
+const getPublicProfileSummary = async (req, res, next) => {
+  const { un: usernameQueryString } = req.query;
+
+  if (!usernameQueryString)
+    throw httpErr(
+      400,
+      "Username required as 'un' query string to getPublicProfileSummary controller"
+    );
+
+  try {
+    const returnFields = [
+      "name",
+      "username",
+      "displayPicture",
+      "location",
+      "bio",
+      "-_id",
+    ];
+    const doc = await User.findOne(
+      { username: usernameQueryString },
+      returnFields
+    )
+      .lean()
+      .exec();
+
+    console.log({ doc });
+    if (!doc) return httpErr(404, "Profile not found");
+
+    res.status(200).json({ data: doc });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default {
+  getUser,
+  updateUser,
+  createUser,
+  loginUser,
+  getPublicProfileSummary,
+};

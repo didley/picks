@@ -1,9 +1,9 @@
-import PicksCard from "components/PicksCard";
+import CardList from "components/CardList";
 
 const FeedPage = () => (
   <div>
     Feed page
-    <PicksCard />
+    <CardList />
   </div>
 );
 

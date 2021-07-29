@@ -28,8 +28,8 @@ function* checkIsLoggedIn() {
   try {
     const token = yield authToken.get();
     if (token) {
-      const res = yield call(authApi.getUser);
-      yield put(isAuthenticatedSuccessAction(res));
+      const { data } = yield call(authApi.getUser);
+      yield put(isAuthenticatedSuccessAction(data));
     } else {
       yield put(skipAuthCheck());
     }
