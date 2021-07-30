@@ -16,7 +16,7 @@ const NavBar = ({ isAuthenticated, onLogoutClick, user }) => {
         <Link to="/create">Create</Link>
       </li>
       <li>
-        <Link to={`/profile/${user.username}`}>Profile</Link>
+        <Link to={`/profile/${user?.username}`}>Profile</Link>
       </li>
       <li>
         <button onClick={onLogoutClick}>Log Out</button>
