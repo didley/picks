@@ -2,7 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { card } from "actions/cardActions";
 import { profile } from "actions/profileActions";
-import { getProfile, getCardFormIsLoading } from "reducers/selectors";
+import {
+  getProfile,
+  getCardFormIsLoading,
+  selectUser,
+} from "reducers/selectors";
 import ProfileHeader from "components/ProfileHeader";
 import CardList from "components/CardList";
 import CardForm from "components/CardForm";
@@ -27,12 +31,15 @@ class ProfilePage extends React.Component {
       form: { createFromVisible },
     } = profileCards;
 
-    const { showCreateForm, hideCreateForm, setEditable, isLoading } =
+    const { showCreateForm, hideCreateForm, setEditable, isLoading, user } =
       this.props;
 
     return (
       <div className="max-w-6xl m-auto">
-        <ProfileHeader profileHeader={profileHeader} ownProfile={false} />
+        <ProfileHeader
+          profileHeader={profileHeader}
+          loggedInUsername={user?.username}
+        />
         <div className="max-w-6xl m-auto">
           {createFromVisible ? (
             <div className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs">
@@ -54,7 +61,11 @@ class ProfilePage extends React.Component {
         {profileCards.cardStatus === "loading" ? (
           <small>Loading cards...</small>
         ) : (
-          <CardList cards={cards} handleEditClick={setEditable} />
+          <CardList
+            cards={cards}
+            handleEditClick={setEditable}
+            loggedInUsername={user?.username}
+          />
         )}
       </div>
     );
@@ -64,6 +75,7 @@ class ProfilePage extends React.Component {
 const mapState = (state) => ({
   profile: getProfile(state),
   isLoading: getCardFormIsLoading(state),
+  user: selectUser(state),
 });
 
 export default connect(mapState, {
