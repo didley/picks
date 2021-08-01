@@ -2,9 +2,16 @@ import { combineReducers } from "redux";
 import { authReducer } from "./authReducer";
 import { alertReducer } from "./alertReducer";
 import { profileReducer } from "./profileReducer";
+import { LOGOUT } from "actions/authTypes";
 
-export const rootReducer = combineReducers({
+const appReducer = combineReducers({
   auth: authReducer,
   alert: alertReducer,
   profile: profileReducer,
 });
+
+export const rootReducer = (state, action) => {
+  if (action.type === LOGOUT) return appReducer(undefined, action);
+
+  return appReducer(state, action);
+};
