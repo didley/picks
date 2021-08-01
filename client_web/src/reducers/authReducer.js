@@ -44,34 +44,7 @@ export function authReducer(state = initialState, action) {
         message: null,
       };
 
-    case LOGIN_REQUEST: {
-      return {
-        ...state,
-        isAuthenticating: true,
-        message: null,
-      };
-    }
-
-    case LOGIN_SUCCESS: {
-      const { token, user, message } = action;
-      return {
-        user: user,
-        isAuthenticated: true,
-        isAuthenticating: false,
-        message: message,
-      };
-    }
-
-    case LOGIN_FAILURE: {
-      const { message } = action;
-      return {
-        user: null,
-        isAuthenticated: false,
-        isAuthenticating: false,
-        message: message,
-      };
-    }
-
+    case LOGIN_REQUEST:
     case SIGN_UP_REQUEST: {
       return {
         ...state,
@@ -80,8 +53,9 @@ export function authReducer(state = initialState, action) {
       };
     }
 
+    case LOGIN_SUCCESS:
     case SIGN_UP_SUCCESS: {
-      const { token, user, message } = action;
+      const { user, message } = action;
       return {
         user: user,
         isAuthenticated: true,
@@ -90,6 +64,7 @@ export function authReducer(state = initialState, action) {
       };
     }
 
+    case LOGIN_FAILURE:
     case SIGN_UP_FAILURE: {
       const { message } = action;
       return {

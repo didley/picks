@@ -59,10 +59,12 @@ const createUser = async (req, res, next) => {
 
     res.json({
       token: token,
-      email: user.email,
-      username: user.username,
-      taggedUsername: UN_TAG + user.username,
-      name: user.name,
+      user: {
+        email: user.email,
+        username: user.username,
+        taggedUsername: UN_TAG + user.username,
+        name: user.name,
+      },
     });
   } catch (err) {
     return next(err);
