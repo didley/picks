@@ -6,6 +6,7 @@ const EditProfileForm = ({
   initialValues,
   onSubmit,
   handleSetProfileEditHidden,
+  isLoading,
 }) => {
   const { name = "", bio = "", location = "" } = initialValues;
   const controlledInitialValues = { name, bio, location };
@@ -43,7 +44,7 @@ const EditProfileForm = ({
                     : "border-gray-300 text-gray-300 cursor-not-allowed"
                 }`}
               >
-                Update Profile
+                {isLoading ? "Updating..." : "Update Profile"}
               </button>
             </div>
           </Form>

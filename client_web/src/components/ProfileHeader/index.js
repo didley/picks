@@ -9,11 +9,8 @@ const ProfileHeader = ({
   handleSetProfileEditHidden,
 }) => {
   const { name, username, location, bio, displayPicture } = profileHeader.data;
-
+  const isLoading = profileHeader.status === "loading";
   const isOwnProfile = loggedInUsername === username;
-
-  if (profileHeader.status === "loading")
-    return <small>Loading profile...</small>;
 
   if (profileEditFormVisible)
     return (
@@ -21,8 +18,11 @@ const ProfileHeader = ({
         initialValues={profileHeader.data}
         onSubmit={handleProfileUpdateSubmit}
         handleSetProfileEditHidden={handleSetProfileEditHidden}
+        isLoading={isLoading}
       />
     );
+
+  if (isLoading) return <small>Loading profile...</small>;
 
   return (
     <div className="m-2 relative md:m-auto max-w-md p-8 rounded-lg border border-gray-500">
