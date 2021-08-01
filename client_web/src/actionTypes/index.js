@@ -21,3 +21,7 @@ export const CARD_FORM = {
 };
 
 export const GET_PROFILE_SUMMARY = createRequestTypes("profile/getSummary");
+
+export const UPDATE_PROFILE_SUMMARY = createRequestTypes(
+  "profile/updateSummary"
+);
