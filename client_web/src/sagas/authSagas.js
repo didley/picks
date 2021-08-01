@@ -49,7 +49,7 @@ function* logInSaga(payload) {
     yield put(setSuccessAlert({ message: res.message, timeout: 3000 }));
   } catch (err) {
     authToken.remove();
-    yield put(setErrorAlert({ message: err.message, timeout: 3000 }));
+    yield put(setErrorAlert({ message: err.message, timeout: 10000 }));
     yield put(loginFailureAction(err));
   }
 }
@@ -63,10 +63,12 @@ function* signUpSaga(payload) {
       payload.password
     );
     res.message = "Welcome, you've successfully signed up to Picks.";
+
+    authToken.set(res.token);
     yield put(signUpSuccessAction(res));
     yield put(setSuccessAlert({ message: res.message, timeout: 3000 }));
   } catch (err) {
-    yield put(setErrorAlert({ message: err.message, timeout: 3000 }));
+    yield put(setErrorAlert({ message: err.message, timeout: 10000 }));
     yield put(signUpFailureAction(err));
   }
 }
