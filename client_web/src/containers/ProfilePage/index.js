@@ -12,16 +12,30 @@ import CardList from "components/CardList";
 import CardForm from "components/CardForm";
 
 class ProfilePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { profileEditFormVisible: false };
+  }
+
   componentDidMount() {
     const { username } = this.props.match.params;
     this.props.getProfileHeader(username);
     this.props.getAllCards(username);
   }
 
-  handleSubmit = (card) => {
+  handlePostSubmit = (card) => {
     card.picksType = "topic"; // replace when weekly/topic types implements
     this.props.createCard(card);
   };
+
+  handleProfileUpdateSubmit = (values) =>
+    this.props.updateProfile(values, this.handleSetProfileEditHidden);
+
+  handleSetProfileEditVisible = () =>
+    this.setState({ profileEditFormVisible: true });
+
+  handleSetProfileEditHidden = () =>
+    this.setState({ profileEditFormVisible: false });
 
   render() {
     const { profileHeader, profileCards } = this.props.profile;
@@ -39,6 +53,10 @@ class ProfilePage extends React.Component {
         <ProfileHeader
           profileHeader={profileHeader}
           loggedInUsername={user?.username}
+          handleProfileUpdateSubmit={this.handleProfileUpdateSubmit}
+          profileEditFormVisible={this.state.profileEditFormVisible}
+          handleSetProfileEditVisible={this.handleSetProfileEditVisible}
+          handleSetProfileEditHidden={this.handleSetProfileEditHidden}
         />
         <div className="max-w-6xl m-auto">
           {createFromVisible ? (
@@ -47,7 +65,10 @@ class ProfilePage extends React.Component {
                 <h5 className="font-bold">Create a picks post</h5>
                 <button onClick={hideCreateForm}>X</button>
               </div>
-              <CardForm onSubmit={this.handleSubmit} isLoading={isLoading} />
+              <CardForm
+                onSubmit={this.handlePostSubmit}
+                isLoading={isLoading}
+              />
             </div>
           ) : (
             <button
@@ -80,6 +101,7 @@ const mapState = (state) => ({
 
 export default connect(mapState, {
   getProfileHeader: profile.getSummary.request,
+  updateProfile: profile.updateSummary.request,
   getAllCards: card.getAll.request,
   createCard: card.create.request,
   showCreateForm: card.form.create.show,

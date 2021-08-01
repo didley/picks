@@ -1,4 +1,4 @@
-import { GET_PROFILE_SUMMARY } from "actionTypes";
+import { GET_PROFILE_SUMMARY, UPDATE_PROFILE_SUMMARY } from "actionTypes";
 import { combineReducers } from "redux";
 
 const profileSummaryReducer = (state = {}, action) => {
@@ -6,8 +6,16 @@ const profileSummaryReducer = (state = {}, action) => {
     case GET_PROFILE_SUMMARY.success:
       return action.profileSummary;
 
+    case UPDATE_PROFILE_SUMMARY.success:
+      return action.updatedData;
+
     case GET_PROFILE_SUMMARY.failure:
+    case GET_PROFILE_SUMMARY.reset:
       return {};
+
+    case UPDATE_PROFILE_SUMMARY.failure:
+    case UPDATE_PROFILE_SUMMARY.reset:
+      return state;
 
     default:
       return state;
@@ -17,15 +25,19 @@ const profileSummaryReducer = (state = {}, action) => {
 const statusReducer = (state = "idle", action) => {
   switch (action.type) {
     case GET_PROFILE_SUMMARY.request:
+    case UPDATE_PROFILE_SUMMARY.request:
       return "loading";
 
     case GET_PROFILE_SUMMARY.success:
+    case UPDATE_PROFILE_SUMMARY.success:
       return "succeeded";
 
     case GET_PROFILE_SUMMARY.failure:
+    case UPDATE_PROFILE_SUMMARY.failure:
       return "failed";
 
     case GET_PROFILE_SUMMARY.reset:
+    case UPDATE_PROFILE_SUMMARY.reset:
       return "idle";
 
     default:
@@ -36,10 +48,13 @@ const statusReducer = (state = "idle", action) => {
 const errorReducer = (state = null, action) => {
   switch (action.type) {
     case GET_PROFILE_SUMMARY.failure:
+    case UPDATE_PROFILE_SUMMARY.failure:
       return { ...state, ...action.error };
 
     case GET_PROFILE_SUMMARY.request:
     case GET_PROFILE_SUMMARY.reset:
+    case UPDATE_PROFILE_SUMMARY.request:
+    case UPDATE_PROFILE_SUMMARY.reset:
       return { ...state, ...null };
 
     default:
