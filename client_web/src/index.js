@@ -13,6 +13,14 @@ import { history } from "utils/history";
 const store = configStore();
 store.runSaga(rootSaga);
 
+if (
+  process.env.NODE_ENV === "development" &&
+  process.env.REACT_APP_ENABLE_MSW === "true"
+) {
+  const { worker } = require("./mocks/browser");
+  worker.start();
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

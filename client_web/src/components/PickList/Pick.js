@@ -19,7 +19,7 @@ const Pick = ({ pick }) => {
         <div>
           <button className="inline-block align-middle">
             <small className="text-red-400">♥︎</small>{" "}
-            <small>{likes.length} </small>
+            <small>{likes?.length} </small>
           </button>
           <button className="w-5 inline-block align-middle">
             <ShareIcon />
