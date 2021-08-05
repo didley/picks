@@ -206,4 +206,11 @@ export const cardsMockControllers = {
       })
     );
   },
+  updateCard: (req, res, ctx) => {
+    return res(ctx.json({ data: req.body }));
+  },
+  deleteCardById: (req, res, ctx) => {
+    const idParam = req.url.searchParams.get("id");
+    return res(ctx.json({ data: { _id: idParam } }));
+  },
 };

@@ -13,7 +13,7 @@ const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
   const initialValues = editingCard
     ? editingCard
     : {
-        title: "",
+        // title: "",
         comments: "",
         picks: [initialPickValues],
       };
