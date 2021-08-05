@@ -134,7 +134,6 @@ const getPublicProfileSummary = async (req, res, next) => {
       .lean()
       .exec();
 
-    console.log({ doc });
     if (!doc) return httpErr(404, "Profile not found");
 
     res.status(200).json({ data: doc });

@@ -106,7 +106,7 @@ export const removeOne = (model) => async (req, res, next, options) => {
       return res.status(400).end();
     }
 
-    return res.status(200).json({ data: removed });
+    return res.status(200).json({ data: { _id: removed._id } });
   } catch (err) {
     next(httpErr(400, err));
   }

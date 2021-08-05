@@ -57,7 +57,7 @@ function* deleteCard(payload) {
   try {
     const { data } = yield call(api.deleteCard, payload.id);
     yield put(setGeneralAlert({ message: "Card deleted", timeout: 3000 }));
-    yield put(card.delete.success(data));
+    yield put(card.delete.success(data._id));
   } catch (error) {
     yield put(setErrorAlert({ message: error.message, timeout: 3000 }));
     yield put(card.delete.failure(error));
