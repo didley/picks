@@ -22,7 +22,6 @@ const cardsReducer = (state = {}, action) => {
         ...state,
       };
     case UPDATE_CARD.success:
-      console.log({ action });
       return {
         ...state,
         ...{ [action.updatedCard._id]: action.updatedCard },
