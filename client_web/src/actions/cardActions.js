@@ -36,7 +36,7 @@ export const card = {
   },
   delete: {
     request: (id) => action(DELETE_CARD.request, { id }),
-    success: (deletedCardId) => action(DELETE_CARD.success, { deletedCardId }),
+    success: (id) => action(DELETE_CARD.success, { id }),
     failure: (error) => action(DELETE_CARD.failure, { error }),
     reset: () => action(DELETE_CARD.reset),
   },
