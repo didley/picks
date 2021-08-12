@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { Card } from "testing/stubs/card";
 
 import CardForm from "./index";
 
@@ -14,17 +15,7 @@ describe("<CardForm />", () => {
       />
     );
 
-    const cardMock = {
-      comments: "I love all of these links",
-      picks: [
-        {
-          title: "How to use picks",
-          url: "http://howToPicks.com",
-          comments: "such great article about creating picks",
-          nsfw: true,
-        },
-      ],
-    };
+    const cardStub = Card();
 
     const expectedSubmitVals = {
       comments: "I love all of these links",
@@ -64,7 +55,7 @@ describe("<CardForm />", () => {
 
     // adds comment to card
     const postCommentsField = screen.getByLabelText(/^post comments$/i);
-    userEvent.type(postCommentsField, cardMock.comments);
+    userEvent.type(postCommentsField, cardStub.comments);
 
     // attempts to add 6 empty pick fields
     const addPickBtn = screen.getByRole("button", { name: /add pick/i });
@@ -79,9 +70,9 @@ describe("<CardForm />", () => {
 
     // enters mockPick into 5 pick fields
     for (let i = 0; i < 5; i++) {
-      userEvent.type(pickTitleField[i], cardMock.picks[0].title);
-      userEvent.type(pickUrlField[i], cardMock.picks[0].url);
-      userEvent.type(pickCommentsField[i], cardMock.picks[0].comments);
+      userEvent.type(pickTitleField[i], cardStub.picks[0].title);
+      userEvent.type(pickUrlField[i], cardStub.picks[0].url);
+      userEvent.type(pickCommentsField[i], cardStub.picks[0].comments);
       userEvent.click(pickNsfwToggle[i]);
     }
 
