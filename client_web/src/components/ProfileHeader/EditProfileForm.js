@@ -42,7 +42,7 @@ const EditProfileForm = ({
                   className={`border-2 p-2 m-1 rounded-md ${
                     dirty
                       ? "border-green-400 text-green-400 hover:bg-green-400 hover:text-white"
-                      : "border-gray-300 text-gray-300 cursor-not-allowed"
+                      : "border-gray-300 text-gray-400 cursor-not-allowed"
                   }`}
                 >
                   {isLoading ? "Updating..." : "Update Profile"}
