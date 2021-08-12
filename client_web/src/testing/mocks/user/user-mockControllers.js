@@ -1,6 +1,7 @@
 export const userMockControllers = {
   loginUser: (req, res, ctx) => {
     return res(
+      ctx.delay(),
       ctx.json({
         token: "fakeToken207v09-sf7gjsfljfglhjd-0dfhlkj",
         user: { username: "fakeUser1", email: "fakeUser1@gmail.com" },
@@ -10,6 +11,7 @@ export const userMockControllers = {
 
   registerUser: (req, res, ctx) => {
     return res(
+      ctx.delay(),
       ctx.json({
         token: "fakeToken207v09-sf7gjsfljfglhjd-0dfhlkj",
         user: { username: "fakeUser1", email: "fakeUser1@gmail.com" },
@@ -18,7 +20,9 @@ export const userMockControllers = {
   },
 
   getUser: (req, res, ctx) => {
+    console.log("getUser mock controller run");
     return res(
+      ctx.delay(),
       ctx.json({
         data: {
           _id: "fakeIdf7gjsfljfglhjd0dfhlkj",
@@ -32,6 +36,7 @@ export const userMockControllers = {
   getProfileSummary: (req, res, ctx) => {
     const unParam = req.url.searchParams.get("un");
     return res(
+      ctx.delay(),
       ctx.json({
         data: {
           username: unParam,
@@ -47,6 +52,7 @@ export const userMockControllers = {
     const { name, bio, location } = req.body;
 
     return res(
+      ctx.delay(),
       ctx.json({
         data: {
           name,

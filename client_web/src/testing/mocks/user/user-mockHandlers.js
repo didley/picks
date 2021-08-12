@@ -14,5 +14,5 @@ export const userMockHandlers = [
   rest.post("/api/user/signup", registerUser),
   rest.get("/api/user", getUser),
   rest.get("/api/user/profile", getProfileSummary),
-  rest.put("/api/user/profile", updateProfileSummary),
+  rest.put("/api/user", updateProfileSummary),
 ];
