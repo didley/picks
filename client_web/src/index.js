@@ -17,7 +17,7 @@ if (
   process.env.NODE_ENV === "development" &&
   process.env.REACT_APP_ENABLE_MSW === "true"
 ) {
-  const { worker } = require("./mocks/browser");
+  const { worker } = require("./testing/mocks/browser");
   worker.start();
 }
 
