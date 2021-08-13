@@ -5,19 +5,30 @@ import { AuthProvider } from "testing/stubs/authProvider";
 
 import ProfilePage from "./index";
 
+const renderUsersProfilePage = () => {
+  const authProviderStub = AuthProvider();
+  const routePropsMock = {
+    params: { username: "fakeUser1" },
+  };
+  render(<ProfilePage match={routePropsMock} />, {
+    initialState: authProviderStub,
+  });
+};
+
+const renderDIFFERENTUsersProfilePage = () => {
+  const authProviderStub = AuthProvider();
+  const routePropsMock = {
+    params: { username: "NOT_AUTHED_USERS_USERNAME" },
+  };
+  render(<ProfilePage match={routePropsMock} />, {
+    initialState: authProviderStub,
+  });
+};
+
 describe("<ProfilePage />", () => {
   describe("Profile section", () => {
     describe("Profile of authenticated user", () => {
-      beforeEach(() => {
-        // renders authenticated profile with matching username queryString and authenticated user
-        const authProviderStub = AuthProvider();
-        const routePropsMock = {
-          params: { username: "fakeUser1" },
-        };
-        render(<ProfilePage match={routePropsMock} />, {
-          initialState: authProviderStub,
-        });
-      });
+      beforeEach(renderUsersProfilePage);
 
       it("displays update profile button if users profile", async () => {
         // awaits loaded profile
@@ -86,7 +97,7 @@ describe("<ProfilePage />", () => {
         // );
       });
       it("can cancel editing", async () => {
-        const usernameText = await screen.findByLabelText(/profile-username/i);
+        await screen.findByLabelText(/profile-username/i);
 
         const editBtn = screen.getByRole("button", { name: /edit profile/i });
         userEvent.click(editBtn);
@@ -101,16 +112,7 @@ describe("<ProfilePage />", () => {
     });
 
     describe("Not profile of authenticated user", () => {
-      beforeAll(() => {
-        // renders authenticated profile with not matching username queryString and authenticated users username
-        const authProviderStub = AuthProvider();
-        const routePropsMock = {
-          params: { username: "NOT_AUTHED_USERS_USERNAME" },
-        };
-        render(<ProfilePage match={routePropsMock} />, {
-          initialState: authProviderStub,
-        });
-      });
+      beforeEach(renderDIFFERENTUsersProfilePage);
 
       it("does not display update profile button if not users profile", async () => {
         // awaits loaded profile
@@ -129,8 +131,7 @@ describe("<ProfilePage />", () => {
     //
     it.todo("does not display create button if not users profile");
     it.todo("can create card with no more than 5 picks");
-    it.todo("can remove picks");
-    it.todo("can reorder picks");
+    it.todo("can delete picks");
     it.todo("can not create card with zero picks");
     it.todo("can cancel creating card");
   });

@@ -82,4 +82,7 @@ describe("<CardForm />", () => {
       expect(handleSubmit).toHaveBeenCalledWith(expectedSubmitVals)
     );
   });
+
+  it.todo("can remove picks");
+  it.todo("can reorder picks");
 });
