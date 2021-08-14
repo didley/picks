@@ -1,6 +1,11 @@
 import React from "react";
+import {
+  queryByText,
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from "testing/testUtils";
 import userEvent from "@testing-library/user-event";
-import { render, screen, waitForElementToBeRemoved } from "testing/testUtils";
 import { AuthProvider } from "testing/stubs/authProvider";
 
 import ProfilePage from "./index";
@@ -128,12 +133,63 @@ describe("<ProfilePage />", () => {
   });
 
   describe("Create card section", () => {
-    //
-    it.todo("does not display create button if not users profile");
-    it.todo("can create card with no more than 5 picks");
-    it.todo("can delete picks");
-    it.todo("can not create card with zero picks");
-    it.todo("can cancel creating card");
+    describe("Profile of authenticated user", () => {
+      beforeEach(renderUsersProfilePage);
+
+      it("can create card and add to profile", async () => {
+        // it awaits loaded profile and cards
+        await screen.findByRole("img", { name: "compass" });
+        await screen.findAllByRole("button", { name: "share icon" });
+
+        // it opens form
+        const newPostBtn = await screen.findByText("+ New Picks");
+        userEvent.click(newPostBtn);
+
+        // form field selectors
+        const postCommentField = await screen.findByText(/post comments/i);
+        const titleField = await screen.findByRole("textbox", {
+          name: /title/i,
+        });
+        const urlField = await screen.findByRole("textbox", { name: /url/i });
+        const picksCommentField = await screen.findByRole("textbox", {
+          name: "Comments",
+          exact: true,
+        });
+        const submitBtn = await screen.findByRole("button", {
+          name: /post picks/i,
+        });
+
+        userEvent.type(postCommentField, "CREATE_CARD_TEST1");
+        userEvent.type(titleField, "CREATE_CARD_TEST2");
+        userEvent.type(urlField, "http://www.CREATE_CARD_TEST.com");
+        userEvent.type(picksCommentField, "CREATE_CARD_TEST3");
+
+        userEvent.click(submitBtn);
+
+        // it displays created post on page
+        const postCommentText = await screen.findByText("CREATE_CARD_TEST1");
+        expect(postCommentText).toBeInTheDocument();
+
+        const titleText = await screen.findByText("CREATE_CARD_TEST2");
+        expect(titleText).toBeInTheDocument();
+
+        const picksCommentText = await screen.findByText(
+          "comments: CREATE_CARD_TEST3"
+        );
+        expect(picksCommentText).toBeInTheDocument();
+
+        // it no longer displays create form
+        expect(
+          screen.queryByText("Create a picks post")
+        ).not.toBeInTheDocument();
+      });
+      it.todo("can delete picks");
+      it.todo("can not create card with zero picks");
+      it.todo("can cancel creating card");
+    });
+    describe("Not profile of authenticated user", () => {
+      it.todo("does not display create button if not users profile");
+    });
   });
 
   describe("Card list section", () => {

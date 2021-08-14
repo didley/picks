@@ -18,7 +18,7 @@ describe("<CardForm />", () => {
     const cardStub = Card();
 
     const expectedSubmitVals = {
-      comments: "I love all of these links",
+      comments: "I've found some really interesting links this week",
       picks: [
         {
           title: "How to use picks",

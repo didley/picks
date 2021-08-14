@@ -72,6 +72,7 @@ class ProfilePage extends React.Component {
             </div>
           ) : (
             <button
+              aria-label="create-post"
               onClick={showCreateForm}
               className="m-auto my-2 rounded-lg bg-red-400 flex py-4 px-8 text-white text-xs"
             >
