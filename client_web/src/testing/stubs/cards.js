@@ -5,21 +5,86 @@ import { responseWrapper } from "./helpers/responseWrapper";
 
 const user = User();
 
-const ownCard = { createdBy: { username: user.username } };
+const ownCard = { username: user.username };
 
-const notOwnedCard = { createdBy: { username: "Some_other_user" } };
+const notOwnedCard = { username: "Some_other_user" };
 
-export const Cards = (params = []) => [
-  Card(ownCard, { picks: Pick() }),
-  Card(notOwnedCard),
-  Card(ownCard),
-  ...params,
-];
-
-export const CardsResponse = (params = []) =>
+export const Cards = (params = []) =>
   responseWrapper([
-    CardResponse(ownCard),
-    CardResponse(notOwnedCard),
-    CardResponse(ownCard),
+    {
+      createdBy: ownCard,
+      comments: "I've found some really interesting links this week",
+      picks: responseWrapper([
+        {
+          title: "How to use picks",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks",
+          nsfw: false,
+        },
+        {
+          title: "How to use picks",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks",
+          nsfw: false,
+        },
+        {
+          title: "How to use picks",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks",
+          nsfw: true,
+        },
+      ]),
+      ...params,
+    },
+    {
+      createdBy: notOwnedCard,
+      comments: "I've found some really interesting links this week",
+      picks: responseWrapper([
+        {
+          title: "How to use picks",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks",
+          nsfw: false,
+        },
+        {
+          title: "How to use picks",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks",
+          nsfw: false,
+        },
+        {
+          title: "How to use picks",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks",
+          nsfw: true,
+        },
+      ]),
+      ...params,
+    },
+    {
+      createdBy: ownCard,
+      comments: "I've found some really interesting links this week",
+      picks: responseWrapper([
+        {
+          title: "How to use picks",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks",
+          nsfw: false,
+        },
+        {
+          title: "How to use picks",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks",
+          nsfw: false,
+        },
+        {
+          title: "How to use picks",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks",
+          nsfw: true,
+        },
+      ]),
+      ...params,
+    },
     ...params,
   ]);
