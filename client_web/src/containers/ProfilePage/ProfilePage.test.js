@@ -183,9 +183,17 @@ describe("<ProfilePage />", () => {
           screen.queryByText("Create a picks post")
         ).not.toBeInTheDocument();
       });
-      it.todo("can delete picks");
+      it("can cancel creating card", async () => {
+        const newPostBtn = await screen.findByText("+ New Picks");
+        userEvent.click(newPostBtn);
+
+        const cancelBtn = await screen.findByText("Cancel");
+        userEvent.click(cancelBtn);
+
+        expect(await screen.findByText("+ New Picks")).toBeInTheDocument();
+        expect(screen.queryByText("Cancel")).not.toBeInTheDocument();
+      });
       it.todo("can not create card with zero picks");
-      it.todo("can cancel creating card");
     });
     describe("Not profile of authenticated user", () => {
       it.todo("does not display create button if not users profile");
@@ -193,6 +201,7 @@ describe("<ProfilePage />", () => {
   });
 
   describe("Card list section", () => {
+    it.todo("can delete picks");
     it.todo("does not show edit button if is not users card");
     it.todo("can update users card");
     it.todo("can cancel updating users card");

@@ -63,7 +63,7 @@ class ProfilePage extends React.Component {
             <div className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs">
               <div className="flex justify-between">
                 <h5 className="font-bold">Create a picks post</h5>
-                <button onClick={hideCreateForm}>X</button>
+                <button onClick={hideCreateForm}>Cancel</button>
               </div>
               <CardForm
                 onSubmit={this.handlePostSubmit}
