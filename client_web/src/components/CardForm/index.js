@@ -93,6 +93,7 @@ const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
                           <div>
                             {index > 0 && (
                               <button
+                                aria-label="move-up"
                                 type="button"
                                 onClick={() => move(index, index - 1)}
                                 className="mx-2"
@@ -102,6 +103,7 @@ const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
                             )}
                             {values.picks.length - 1 !== index && (
                               <button
+                                aria-label="move-down"
                                 type="button"
                                 onClick={() => move(index, index + 1)}
                                 className="mx-2"
@@ -122,16 +124,15 @@ const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
                     ))}
                 </div>
                 {values.picks.length < 5 ? (
-                  <div className="bg-blue-400 text-white rounded-md w-full my-4 p-1 text-center">
-                    <button
-                      type="button"
-                      onClick={() => push(initialPickValues)}
-                    >
-                      {`Add Pick ${values.picks.length + 1} of 5`}
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    className="bg-blue-400 text-white rounded-md w-full my-4 p-2 text-center"
+                    onClick={() => push(initialPickValues)}
+                  >
+                    {`Add Pick ${values.picks.length + 1} of 5`}
+                  </button>
                 ) : (
-                  <div className="bg-gray-300 text-white rounded-md w-full my-4 p-1 text-center">
+                  <div className="bg-gray-300 text-white rounded-md w-full my-4 p-2 text-center">
                     <small className="text-white">Total 5 picks created</small>
                   </div>
                 )}
