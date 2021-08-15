@@ -93,14 +93,13 @@ describe("<ProfilePage />", () => {
           locationText.innerHTML + "CHANGED"
         );
 
-        // TODO to fix in component - username is not rendering after update
-        // it is visible and not changed
-        // const usernameTextAfterUpdate = await screen.findByLabelText(
-        //   /profile-username/i
-        // );
-        // expect(usernameTextAfterUpdate.innerHTML).toMatch(
-        //   usernameText.innerHTML
-        // );
+        // is displays username visible and unchanged
+        const usernameTextAfterUpdate = await screen.findByLabelText(
+          /profile-username/i
+        );
+        expect(usernameTextAfterUpdate.innerHTML).toMatch(
+          usernameText.innerHTML
+        );
       });
       it("can cancel editing", async () => {
         await screen.findByLabelText(/profile-username/i);

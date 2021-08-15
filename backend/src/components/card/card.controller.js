@@ -27,7 +27,16 @@ const getCardsByUsername = async (req, res, next) => {
   }
 };
 
-const createCard = (req, res, next) => generic.createOne(req, res, next);
+const createCard = async (req, res, next) => {
+  const createdBy = req.user._id;
+  try {
+    let doc = await Card.create({ ...req.body, createdBy });
+    doc = await doc.populate("createdBy", "username -_id").execPopulate();
+    res.status(201).json({ data: doc });
+  } catch (err) {
+    next(httpErr(400, err));
+  }
+};
 
 const getCardById = (req, res, next) =>
   generic.getOne(req, res, next, { idReqType: "query" });
