@@ -205,10 +205,43 @@ describe("<ProfilePage />", () => {
   });
 
   describe("Card list section", () => {
-    it.todo("can delete picks");
+    beforeEach(renderUsersProfilePage);
+
+    it("can delete users card", async () => {
+      await waitForElementToBeRemoved(() =>
+        screen.queryByText(/loading cards/i)
+      );
+
+      // it starts with 3 cards
+      expect(
+        screen.getByRole("list", {
+          name: /card-list/i,
+        }).children.length
+      ).toBe(3);
+
+      const editBtn = await screen.findAllByRole("button", {
+        name: "Edit",
+        exact: true,
+      });
+      userEvent.click(editBtn[0]);
+
+      const deleteBtn = await screen.findByRole("button", {
+        name: /delete post/i,
+      });
+      userEvent.click(deleteBtn);
+
+      await waitForElementToBeRemoved(() =>
+        screen.queryByText(/loading cards/i)
+      );
+
+      expect(
+        screen.getByRole("list", {
+          name: /card-list/i,
+        }).children.length
+      ).toBe(2);
+    });
     it.todo("does not show edit button if is not users card");
     it.todo("can update users card");
     it.todo("can cancel updating users card");
-    it.todo("can delete users card");
   });
 });
