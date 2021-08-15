@@ -1,5 +1,12 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import {
+  findAllByRole,
+  findAllByText,
+  findByRole,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Card } from "testing/stubs/card";
 
@@ -18,7 +25,7 @@ describe("<CardForm />", () => {
     const cardStub = Card();
 
     const expectedSubmitVals = {
-      comments: "I love all of these links",
+      comments: "I've found some really interesting links this week",
       picks: [
         {
           title: "How to use picks",
@@ -83,6 +90,185 @@ describe("<CardForm />", () => {
     );
   });
 
-  it.todo("can remove picks");
-  it.todo("can reorder picks");
+  it("can reorder picks", async () => {
+    const handleSubmit = jest.fn();
+    render(
+      <CardForm
+        isEditing={false}
+        onSubmit={(vals, _fomikBag) => handleSubmit(vals)}
+      />
+    );
+
+    const cardStub = {
+      comments: "I've found some really interesting links this week",
+      picks: [
+        {
+          title: "first",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks1",
+          nsfw: true,
+        },
+        {
+          title: "second",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks2",
+          nsfw: true,
+        },
+        {
+          title: "third",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks3",
+          nsfw: true,
+        },
+      ],
+    };
+
+    const expectedSubmitVals = {
+      comments: "I've found some really interesting links this week",
+      picks: [
+        {
+          title: "third",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks3",
+          nsfw: true,
+        },
+        {
+          title: "first",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks1",
+          nsfw: true,
+        },
+        {
+          title: "second",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks2",
+          nsfw: true,
+        },
+      ],
+    };
+
+    // adds comment to card
+    const postCommentsField = screen.getByLabelText(/^post comments$/i);
+    userEvent.type(postCommentsField, cardStub.comments);
+
+    // adds 3 empty pick fields
+    const addPickBtn = screen.getByRole("button", { name: /add pick/i });
+    for (let i = 0; i < 2; i++) userEvent.click(addPickBtn);
+
+    // picks queries
+    const pickTitleField = await screen.findAllByLabelText(/title/i);
+    const pickUrlField = await screen.findAllByLabelText(/url/i);
+    const pickCommentsField = await screen.findAllByLabelText(/^comments$/i);
+    const pickNsfwToggle = await screen.findAllByLabelText(/nsfw/i);
+    const postPicksBtn = await screen.findByRole("button", {
+      name: /post picks/i,
+    });
+
+    // enters 3 pick fields
+    for (let i = 0; i < 3; i++) {
+      userEvent.type(pickTitleField[i], cardStub.picks[i].title);
+      userEvent.type(pickUrlField[i], cardStub.picks[i].url);
+      userEvent.type(pickCommentsField[i], cardStub.picks[i].comments);
+      userEvent.click(pickNsfwToggle[i]);
+    }
+
+    const moveUpButtons = await screen.findAllByRole("button", {
+      name: "move-up",
+    });
+    const moveDownButtons = await screen.findAllByRole("button", {
+      name: "move-down",
+    });
+    userEvent.click(moveUpButtons[0]);
+    userEvent.click(moveUpButtons[1]);
+    userEvent.click(moveDownButtons[0]);
+    userEvent.click(moveDownButtons[1]);
+
+    userEvent.click(postPicksBtn);
+
+    await waitFor(() =>
+      expect(handleSubmit).toHaveBeenCalledWith(expectedSubmitVals)
+    );
+  });
+  it("can remove picks", async () => {
+    const handleSubmit = jest.fn();
+    render(
+      <CardForm
+        isEditing={false}
+        onSubmit={(vals, _fomikBag) => handleSubmit(vals)}
+      />
+    );
+
+    const cardStub = {
+      comments: "I've found some really interesting links this week",
+      picks: [
+        {
+          title: "first",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks1",
+          nsfw: true,
+        },
+        {
+          title: "second",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks2",
+          nsfw: true,
+        },
+        {
+          title: "third",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks3",
+          nsfw: true,
+        },
+      ],
+    };
+
+    const expectedSubmitVals = {
+      comments: "I've found some really interesting links this week",
+      picks: [
+        {
+          title: "third",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks3",
+          nsfw: true,
+        },
+      ],
+    };
+
+    // adds comment to card
+    const postCommentsField = screen.getByLabelText(/^post comments$/i);
+    userEvent.type(postCommentsField, cardStub.comments);
+
+    // adds 3 empty pick fields
+    const addPickBtn = screen.getByRole("button", { name: /add pick/i });
+    for (let i = 0; i < 2; i++) userEvent.click(addPickBtn);
+
+    // picks queries
+    const pickTitleField = await screen.findAllByLabelText(/title/i);
+    const pickUrlField = await screen.findAllByLabelText(/url/i);
+    const pickCommentsField = await screen.findAllByLabelText(/^comments$/i);
+    const pickNsfwToggle = await screen.findAllByLabelText(/nsfw/i);
+    const postPicksBtn = await screen.findByRole("button", {
+      name: /post picks/i,
+    });
+
+    // enters 3 pick fields
+    for (let i = 0; i < 3; i++) {
+      userEvent.type(pickTitleField[i], cardStub.picks[i].title);
+      userEvent.type(pickUrlField[i], cardStub.picks[i].url);
+      userEvent.type(pickCommentsField[i], cardStub.picks[i].comments);
+      userEvent.click(pickNsfwToggle[i]);
+    }
+
+    const removeButtons = await screen.findAllByRole("button", {
+      name: /remove/i,
+    });
+    userEvent.click(removeButtons[0]);
+    userEvent.click(removeButtons[0]);
+
+    userEvent.click(postPicksBtn);
+
+    await waitFor(() =>
+      expect(handleSubmit).toHaveBeenCalledWith(expectedSubmitVals)
+    );
+  });
 });

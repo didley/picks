@@ -1,7 +1,4 @@
 import { responseWrapper } from "./responseWrapper";
-import { v4 as uuid } from "uuid";
-
-jest.mock("uuid");
 
 const singleStubStub = {
   title: "get milk",
@@ -27,15 +24,11 @@ const multiStubStub = [
 
 describe("responseWrapper.js - testing stub helper", () => {
   describe("single item stub (object)", () => {
-    it("appends _id if no options supplied", () => {
-      uuid.mockImplementation(() => "spiedUUIDmock123");
-
+    it("appends _id property", () => {
       const instance = responseWrapper(singleStubStub);
 
-      expect(uuid).toHaveBeenCalled();
-
       expect(instance).toEqual(
-        expect.objectContaining({ _id: "spiedUUIDmock123" })
+        expect.objectContaining({ _id: expect.any(String) })
       );
     });
     it("appends createdBy/updatedAt if options.timestamps is true", () => {
@@ -90,23 +83,14 @@ describe("responseWrapper.js - testing stub helper", () => {
 
   describe("multiple item stub (array)", () => {
     it("appends unique _id if no options supplied to all items", () => {
-      let uuidIndex = 0;
-      uuid.mockImplementation(() => {
-        const uniqueUuid = uuidIndex + "spiedUUIDmock123";
-        uuidIndex += 1;
-        return uniqueUuid;
-      });
-
       const instance = responseWrapper(multiStubStub);
 
-      expect(uuid).toHaveBeenCalledTimes(instance.length);
-
       expect(instance[0]).toEqual(
-        expect.objectContaining({ _id: "0spiedUUIDmock123" })
+        expect.objectContaining({ _id: expect.any(String) })
       );
 
       expect(instance[1]).toEqual(
-        expect.objectContaining({ _id: "1spiedUUIDmock123" })
+        expect.objectContaining({ _id: expect.any(String) })
       );
     });
     it("appends createdBy/updatedAt if options.timestamp is true to all items", () => {

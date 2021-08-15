@@ -20,7 +20,6 @@ export const userMockControllers = {
   },
 
   getUser: (req, res, ctx) => {
-    console.log("getUser mock controller run");
     return res(
       ctx.delay(),
       ctx.json({
