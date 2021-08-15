@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  getByTestId,
   queryByText,
   render,
   screen,
@@ -196,15 +197,62 @@ describe("<ProfilePage />", () => {
       it.todo("can not create card with zero picks");
     });
     describe("Not profile of authenticated user", () => {
-      it.todo("does not display create button if not users profile");
+      beforeEach(renderDIFFERENTUsersProfilePage);
+
+      it("does not display create button if not users profile", async () => {
+        expect(screen.queryByText("+ New Picks")).not.toBeInTheDocument();
+      });
     });
   });
 
   describe("Card list section", () => {
-    it.todo("can delete picks");
-    it.todo("does not show edit button if is not users card");
+    beforeEach(renderUsersProfilePage);
+
+    it("can delete users card", async () => {
+      await waitForElementToBeRemoved(() =>
+        screen.queryByText(/loading cards/i)
+      );
+
+      // it starts with 3 cards
+      expect(
+        screen.getByRole("list", {
+          name: /card-list/i,
+        }).children.length
+      ).toBe(3);
+
+      const editBtn = await screen.findAllByRole("button", {
+        name: "Edit",
+        exact: true,
+      });
+      userEvent.click(editBtn[0]);
+
+      const deleteBtn = await screen.findByRole("button", {
+        name: /delete post/i,
+      });
+      userEvent.click(deleteBtn);
+
+      await waitForElementToBeRemoved(() =>
+        screen.queryByText(/loading cards/i)
+      );
+
+      expect(
+        screen.getByRole("list", {
+          name: /card-list/i,
+        }).children.length
+      ).toBe(2);
+    });
+    it("does not show edit button if is not users card", async () => {
+      const usersCard = await screen.findAllByRole("listitem", {
+        name: /card by fakeuser1/i,
+      });
+      expect(usersCard[0]).toContainHTML("Edit</button>");
+
+      const otherUsersCard = await screen.findByRole("listitem", {
+        name: /card by some_other_user/i,
+      });
+      expect(otherUsersCard).not.toContainHTML("Edit</button>");
+    });
     it.todo("can update users card");
     it.todo("can cancel updating users card");
-    it.todo("can delete users card");
   });
 });
