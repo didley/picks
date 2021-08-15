@@ -57,6 +57,7 @@ export const userMockControllers = {
           name,
           bio,
           location,
+          username: "fakeUser1",
         },
       })
     );

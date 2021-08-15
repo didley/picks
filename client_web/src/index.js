@@ -13,18 +13,26 @@ import { history } from "utils/history";
 const store = configStore();
 store.runSaga(rootSaga);
 
+let mswWarnActive = false;
+const mswWarnComponent = (
+  <div className="bg-yellow-500 text-white text-center p-2">
+    MSW Mock data active
+  </div>
+);
 if (
   process.env.NODE_ENV === "development" &&
-  process.env.REACT_APP_ENABLE_MSW === "true"
+  process.env.REACT_APP_ENABLE_BROWSER_MSW === "true"
 ) {
   const { worker } = require("./testing/mocks/browser");
   worker.start();
+  mswWarnActive = true;
 }
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router history={history}>
+        {mswWarnActive && mswWarnComponent}
         <App />
       </Router>
     </Provider>
