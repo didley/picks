@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  getByTestId,
   queryByText,
   render,
   screen,
@@ -240,7 +241,17 @@ describe("<ProfilePage />", () => {
         }).children.length
       ).toBe(2);
     });
-    it.todo("does not show edit button if is not users card");
+    it("does not show edit button if is not users card", async () => {
+      const usersCard = await screen.findAllByRole("listitem", {
+        name: /card by fakeuser1/i,
+      });
+      expect(usersCard[0]).toContainHTML("Edit</button>");
+
+      const otherUsersCard = await screen.findByRole("listitem", {
+        name: /card by some_other_user/i,
+      });
+      expect(otherUsersCard).not.toContainHTML("Edit</button>");
+    });
     it.todo("can update users card");
     it.todo("can cancel updating users card");
   });
