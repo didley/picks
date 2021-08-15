@@ -189,5 +189,86 @@ describe("<CardForm />", () => {
       expect(handleSubmit).toHaveBeenCalledWith(expectedSubmitVals)
     );
   });
-  it.todo("can remove picks");
+  it("can remove picks", async () => {
+    const handleSubmit = jest.fn();
+    render(
+      <CardForm
+        isEditing={false}
+        onSubmit={(vals, _fomikBag) => handleSubmit(vals)}
+      />
+    );
+
+    const cardStub = {
+      comments: "I've found some really interesting links this week",
+      picks: [
+        {
+          title: "first",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks1",
+          nsfw: true,
+        },
+        {
+          title: "second",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks2",
+          nsfw: true,
+        },
+        {
+          title: "third",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks3",
+          nsfw: true,
+        },
+      ],
+    };
+
+    const expectedSubmitVals = {
+      comments: "I've found some really interesting links this week",
+      picks: [
+        {
+          title: "third",
+          url: "http://howToPicks.com",
+          comments: "such great article about creating picks3",
+          nsfw: true,
+        },
+      ],
+    };
+
+    // adds comment to card
+    const postCommentsField = screen.getByLabelText(/^post comments$/i);
+    userEvent.type(postCommentsField, cardStub.comments);
+
+    // adds 3 empty pick fields
+    const addPickBtn = screen.getByRole("button", { name: /add pick/i });
+    for (let i = 0; i < 2; i++) userEvent.click(addPickBtn);
+
+    // picks queries
+    const pickTitleField = await screen.findAllByLabelText(/title/i);
+    const pickUrlField = await screen.findAllByLabelText(/url/i);
+    const pickCommentsField = await screen.findAllByLabelText(/^comments$/i);
+    const pickNsfwToggle = await screen.findAllByLabelText(/nsfw/i);
+    const postPicksBtn = await screen.findByRole("button", {
+      name: /post picks/i,
+    });
+
+    // enters 3 pick fields
+    for (let i = 0; i < 3; i++) {
+      userEvent.type(pickTitleField[i], cardStub.picks[i].title);
+      userEvent.type(pickUrlField[i], cardStub.picks[i].url);
+      userEvent.type(pickCommentsField[i], cardStub.picks[i].comments);
+      userEvent.click(pickNsfwToggle[i]);
+    }
+
+    const removeButtons = await screen.findAllByRole("button", {
+      name: /remove/i,
+    });
+    userEvent.click(removeButtons[0]);
+    userEvent.click(removeButtons[0]);
+
+    userEvent.click(postPicksBtn);
+
+    await waitFor(() =>
+      expect(handleSubmit).toHaveBeenCalledWith(expectedSubmitVals)
+    );
+  });
 });
