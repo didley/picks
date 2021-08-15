@@ -48,6 +48,8 @@ class ProfilePage extends React.Component {
     const { showCreateForm, hideCreateForm, setEditable, isLoading, user } =
       this.props;
 
+    const isOwnProfile = this.props.match?.params?.username === user.username;
+
     return (
       <div className="max-w-6xl m-auto">
         <ProfileHeader
@@ -59,26 +61,27 @@ class ProfilePage extends React.Component {
           handleSetProfileEditHidden={this.handleSetProfileEditHidden}
         />
         <div className="max-w-6xl m-auto">
-          {createFromVisible ? (
-            <div className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs">
-              <div className="flex justify-between">
-                <h5 className="font-bold">Create a picks post</h5>
-                <button onClick={hideCreateForm}>Cancel</button>
+          {isOwnProfile &&
+            (createFromVisible ? (
+              <div className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs">
+                <div className="flex justify-between">
+                  <h5 className="font-bold">Create a picks post</h5>
+                  <button onClick={hideCreateForm}>Cancel</button>
+                </div>
+                <CardForm
+                  onSubmit={this.handlePostSubmit}
+                  isLoading={isLoading}
+                />
               </div>
-              <CardForm
-                onSubmit={this.handlePostSubmit}
-                isLoading={isLoading}
-              />
-            </div>
-          ) : (
-            <button
-              aria-label="create-post"
-              onClick={showCreateForm}
-              className="m-auto my-2 rounded-lg bg-red-400 flex py-4 px-8 text-white text-xs"
-            >
-              + New Picks
-            </button>
-          )}
+            ) : (
+              <button
+                aria-label="create-post"
+                onClick={showCreateForm}
+                className="m-auto my-2 rounded-lg bg-red-400 flex py-4 px-8 text-white text-xs"
+              >
+                + New Picks
+              </button>
+            ))}
         </div>
         {profileCards.cardStatus === "loading" ? (
           <small>Loading cards...</small>

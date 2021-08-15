@@ -196,7 +196,11 @@ describe("<ProfilePage />", () => {
       it.todo("can not create card with zero picks");
     });
     describe("Not profile of authenticated user", () => {
-      it.todo("does not display create button if not users profile");
+      beforeEach(renderDIFFERENTUsersProfilePage);
+
+      it("does not display create button if not users profile", async () => {
+        expect(screen.queryByText("+ New Picks")).not.toBeInTheDocument();
+      });
     });
   });
 
