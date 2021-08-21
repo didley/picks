@@ -6,6 +6,7 @@ import {
   getProfile,
   getCardFormIsLoading,
   selectUser,
+  selectPicks,
 } from "reducers/selectors";
 import ProfileHeader from "components/ProfileHeader";
 import CardList from "components/CardList";
@@ -45,8 +46,14 @@ class ProfilePage extends React.Component {
       form: { createFromVisible },
     } = profileCards;
 
-    const { showCreateForm, hideCreateForm, setEditable, isLoading, user } =
-      this.props;
+    const {
+      showCreateForm,
+      hideCreateForm,
+      setEditable,
+      isLoading,
+      user,
+      picks,
+    } = this.props;
 
     const isOwnProfile = this.props.match?.params?.username === user.username;
 
@@ -71,6 +78,7 @@ class ProfilePage extends React.Component {
                 <CardForm
                   onSubmit={this.handlePostSubmit}
                   isLoading={isLoading}
+                  // picks={picks}
                 />
               </div>
             ) : (
@@ -90,6 +98,7 @@ class ProfilePage extends React.Component {
             cards={cards}
             handleEditClick={setEditable}
             loggedInUsername={user?.username}
+            // picks={picks}
           />
         )}
       </div>
@@ -101,6 +110,7 @@ const mapState = (state) => ({
   profile: getProfile(state),
   isLoading: getCardFormIsLoading(state),
   user: selectUser(state),
+  picks: selectPicks(state),
 });
 
 export default connect(mapState, {

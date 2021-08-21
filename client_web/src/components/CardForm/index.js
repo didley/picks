@@ -1,8 +1,9 @@
 import React from "react";
+import Picks from "./Picks";
 
 import { Formik, Form, Field, FieldArray, ErrorMessage, insert } from "formik";
 
-const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
+const CardForm = ({ onSubmit, editingCard, onDelete, isLoading, picks }) => {
   const initialPickValues = {
     title: "",
     url: "",
@@ -37,7 +38,8 @@ const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
 
           <hr className="my-4" />
           <h6 className="font-normal">Picks</h6>
-          <FieldArray name="picks">
+          <Picks picks={picks} />
+          {/* <FieldArray name="picks">
             {({ move, remove, push }) => (
               <div>
                 <div>
@@ -138,7 +140,7 @@ const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
                 )}
               </div>
             )}
-          </FieldArray>
+          </FieldArray> */}
           <div className="flex justify-end">
             {isLoading ? (
               <small className="text-gray-400 p-2 m-1">Loading...</small>
