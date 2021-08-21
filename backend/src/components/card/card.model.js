@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { pickSchema } from "./pick.model";
+import { pickSchema } from "../pick/pick.model";
 
 const cardSchema = new mongoose.Schema(
   {

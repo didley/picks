@@ -5,11 +5,6 @@ import httpErr from "http-errors";
 
 const generic = useGenericCRUD(Card);
 
-//    * if has id query string findOne by id
-//    * if has user query string findMany by userName
-//    * if no query string return findMany by userId
-//    */
-
 const getAllCards = (req, res, next) => generic.getMany(req, res, next);
 
 const getCardsByUsername = async (req, res, next) => {
