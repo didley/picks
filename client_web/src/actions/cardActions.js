@@ -46,7 +46,7 @@ export const card = {
       hide: () => action(CARD_FORM.create.hide),
     },
     edit: {
-      set: (cardId) => action(CARD_FORM.edit.set, { cardId }),
+      set: (card) => action(CARD_FORM.edit.set, { card }),
       clear: () => action(CARD_FORM.edit.clear),
     },
   },

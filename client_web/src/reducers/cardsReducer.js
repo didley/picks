@@ -5,6 +5,11 @@ import {
   UPDATE_CARD,
   DELETE_CARD,
   CARD_FORM,
+  SET_PICKS,
+  ADD_PICK,
+  REMOVE_PICK,
+  GET_LINK_PREVIEW,
+  LINK_PREVIEW_NOT_FOUND,
 } from "actionTypes";
 import { combineReducers } from "redux";
 import { normaliseArray } from "utils/normaliseArray";
@@ -132,7 +137,7 @@ const formReducer = (
       return { ...state, createFromVisible: false };
 
     case CARD_FORM.edit.set:
-      return { ...state, editingId: action.cardId, createFromVisible: false };
+      return { ...state, editingId: action.card._id, createFromVisible: false };
 
     case CARD_FORM.edit.clear:
     case UPDATE_CARD.success:
@@ -144,9 +149,99 @@ const formReducer = (
   }
 };
 
+const picksReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CARD_FORM.create.show:
+      return {
+        initialCardFormShowID123: {
+          url: "",
+          preview: null,
+          status: "idle",
+          _id: "initialCardFormShowID123",
+        },
+      };
+    case CARD_FORM.edit.set:
+      return normaliseArray(action.card.picks);
+
+    case CARD_FORM.create.hide:
+    case CREATE_CARD.success:
+    case CARD_FORM.edit.clear:
+    case UPDATE_CARD.success:
+    case DELETE_CARD.success:
+      return {};
+
+    case SET_PICKS:
+      return normaliseArray(action.picks);
+
+    case ADD_PICK:
+      return {
+        ...state,
+        ...{
+          [action.id]: {
+            url: "",
+            preview: null,
+            status: "idle",
+            _id: action.id,
+          },
+        },
+      };
+    case REMOVE_PICK: {
+      let { [action.id]: _, ...rest } = state;
+      return { ...rest };
+    }
+
+    case GET_LINK_PREVIEW.request: {
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          url: action.url,
+          preview: null,
+          status: "loading",
+        },
+      };
+    }
+
+    case GET_LINK_PREVIEW.success:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          preview: action.preview,
+          status: "succeeded",
+        },
+      };
+
+    case LINK_PREVIEW_NOT_FOUND:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          preview: null,
+          status: "notFound",
+        },
+      };
+
+    case GET_LINK_PREVIEW.failure:
+      return {
+        ...state,
+        [action.id]: { ...state[action.id], status: "failed" },
+      };
+
+    case GET_LINK_PREVIEW.reset:
+      return {
+        ...state,
+        [action.id]: { url: "", preview: null, status: "idle" },
+      };
+    default:
+      return state;
+  }
+};
+
 export const cardsRootReducer = combineReducers({
   cards: cardsReducer,
   cardStatus: statusReducer,
   cardError: errorReducer,
   form: formReducer,
+  picks: picksReducer,
 });

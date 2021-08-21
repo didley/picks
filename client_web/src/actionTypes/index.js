@@ -25,3 +25,9 @@ export const GET_PROFILE_SUMMARY = createRequestTypes("profile/getSummary");
 export const UPDATE_PROFILE_SUMMARY = createRequestTypes(
   "profile/updateSummary"
 );
+
+export const SET_PICKS = "picks/setPicks";
+export const ADD_PICK = "picks/addPick";
+export const REMOVE_PICK = "picks/removePick";
+export const GET_LINK_PREVIEW = createRequestTypes("picks/getLinkPreview");
+export const LINK_PREVIEW_NOT_FOUND = "picks/linkPreviewNotFound";
