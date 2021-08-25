@@ -8,7 +8,8 @@ const defaults = {
   }),
   error: {
     code: "SERVER_ERROR",
-    msg: "Something went wrong. Check your network connection and refresh this page. If the issue continues contact our support.",
+    message:
+      "Something went wrong. Check your network connection and refresh this page. If the issue continues contact our support.",
     status: 503,
     data: {},
   },
@@ -30,9 +31,11 @@ async function fetchWrapper(method, endpoint, { body, ...customConfig } = {}) {
     .then(async (res) => {
       const data = await res.json();
       if (res.ok) {
-        return data;
+        return { ...data, status: res.status };
       } else {
-        return Promise.reject(data || defaults.error);
+        return data
+          ? Promise.reject({ ...data, status: res.status })
+          : Promise.reject(defaults.error);
       }
     });
 }
