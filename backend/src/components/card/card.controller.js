@@ -2,6 +2,7 @@ import { useGenericCRUD } from "../useGenericCRUD";
 import { Card } from "./card.model";
 import { User } from "../user/user.model";
 import httpErr from "http-errors";
+import { truncStr } from "../../utils/truncateString";
 
 const generic = useGenericCRUD(Card);
 
@@ -24,8 +25,43 @@ const getCardsByUsername = async (req, res, next) => {
 
 const createCard = async (req, res, next) => {
   const createdBy = req.user._id;
+
+  let card = req.body;
+
+  const truncPreview = ({
+    ogImage,
+    ogTitle,
+    ogDescription,
+    ogType,
+    ogLocale,
+  }) => {
+    ogImage.url = truncStr(ogImage?.url, 250);
+    ogTitle = truncStr(ogTitle, 200, { ellipsis: true });
+    ogDescription = truncStr(ogDescription, 200, { ellipsis: true });
+    ogType = truncStr(ogType, 120);
+    ogLocale = truncStr(ogLocale, 10);
+
+    return {
+      ogImage: { url: ogImage.url },
+      ogTitle,
+      ogDescription,
+      ogType,
+      ogLocale,
+    };
+  };
+
+  const truncatedPicks = card.picks.map((pick) => {
+    if (!pick.preview) return pick;
+
+    const truncatedPreview = truncPreview(pick.preview);
+
+    return { ...pick, preview: truncatedPreview };
+  });
+
+  const truncatedCard = { ...card, picks: truncatedPicks };
+
   try {
-    let doc = await Card.create({ ...req.body, createdBy });
+    let doc = await Card.create({ ...truncatedCard, createdBy });
     doc = await doc.populate("createdBy", "username -_id").execPopulate();
     res.status(201).json({ data: doc });
   } catch (err) {

@@ -2,16 +2,16 @@ import mongoose from "mongoose";
 
 export const pickSchema = new mongoose.Schema(
   {
-    image: { type: String, maxLength: 200 },
-    title: { type: String, maxLength: 60, required: true },
-    url: { type: String, maxLength: 200, required: true },
-    comments: { type: String, maxLength: 200 },
-    likes: { type: Array },
+    url: { type: String, maxLength: 250, required: true, trim: true },
     nsfw: { type: Boolean, default: false, requited: true },
-    // fromCard: { type: mongoose.Types.ObjectId, ref: "Card", required: true },
-    // createdBy: { type: mongoose.Types.ObjectId, ref: "User", required: true },
+    userTitle: { type: String, maxLength: 60 },
+    preview: {
+      ogImage: { url: { type: String, maxLength: 250 } },
+      ogTitle: { type: String, maxLength: 200 },
+      ogDescription: { type: String, maxLength: 200 },
+      ogType: { type: String, maxLength: 120 },
+      ogLocale: { type: String, maxLength: 10 },
+    },
   },
   { timestamps: true }
 );
-
-// export const Pick = mongoose.model("Pick", pickSchema);
