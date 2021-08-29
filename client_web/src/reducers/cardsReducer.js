@@ -198,6 +198,7 @@ const picksReducer = (state = {}, action) => {
           url: action.url,
           preview: null,
           status: "loading",
+          error: null,
         },
       };
     }
@@ -209,6 +210,7 @@ const picksReducer = (state = {}, action) => {
           ...state[action.id],
           preview: action.preview,
           status: "succeeded",
+          error: null,
         },
       };
 
@@ -219,19 +221,24 @@ const picksReducer = (state = {}, action) => {
           ...state[action.id],
           preview: null,
           status: "notFound",
+          error: action.error,
         },
       };
 
     case GET_LINK_PREVIEW.failure:
       return {
         ...state,
-        [action.id]: { ...state[action.id], status: "failed" },
+        [action.id]: {
+          ...state[action.id],
+          status: "failed",
+          error: action.error,
+        },
       };
 
     case GET_LINK_PREVIEW.reset:
       return {
         ...state,
-        [action.id]: { url: "", preview: null, status: "idle" },
+        [action.id]: { url: "", preview: null, status: "idle", error: null },
       };
     default:
       return state;

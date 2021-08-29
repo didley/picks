@@ -16,7 +16,7 @@ export const picks = {
   getLinkPreview: {
     request: (url, id) => action(GET_LINK_PREVIEW.request, { url, id }),
     success: (preview, id) => action(GET_LINK_PREVIEW.success, { preview, id }),
-    failure: (error) => action(GET_LINK_PREVIEW.failure, { error }),
+    failure: (error, id) => action(GET_LINK_PREVIEW.failure, { error, id }),
     reset: () => action(GET_LINK_PREVIEW.reset),
     notFound: (id) => action(LINK_PREVIEW_NOT_FOUND, { id }),
   },

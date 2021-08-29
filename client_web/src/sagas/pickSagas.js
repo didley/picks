@@ -19,21 +19,20 @@ function* getLinkPreview(payload) {
   try {
     const res = yield call(api.getLinkPreview, payload.url);
 
-    const previewNotFound = res.status === 404;
-    if (previewNotFound) {
-      yield put(picks.getLinkPreview.notFound, payload.id);
-    } else {
-      yield put(picks.getLinkPreview.success(res.data, payload.id));
-    }
+    yield put(picks.getLinkPreview.success(res.data, payload.id));
   } catch (error) {
-    yield put(setErrorAlert({ message: error.message, timeout: 3000 }));
-    yield put(picks.getLinkPreview.failure(error));
+    const previewNotFound = error.status === 404;
+    if (previewNotFound) {
+      yield put(picks.getLinkPreview.notFound(payload.id));
+    } else {
+      const errMsg = "URL error, check it's correct.";
+      yield put(picks.getLinkPreview.failure(errMsg, payload.id));
+    }
   }
 }
 
 function* getLinkPreviewWatcher() {
-  const halfMs = 500;
-  yield debounce(halfMs, GET_LINK_PREVIEW.request, getLinkPreview);
+  yield debounce(2000, GET_LINK_PREVIEW.request, getLinkPreview);
 }
 
 export function* picksRoot() {
