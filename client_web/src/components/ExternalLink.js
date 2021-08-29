@@ -9,6 +9,7 @@ const linkStyle = {
   margin: 0,
   padding: 0,
   color: "blue",
+  textAlign: "left",
 };
 
 export const ExternalLink = ({ to, title, children }) => (

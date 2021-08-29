@@ -17,7 +17,8 @@ class Card extends React.Component {
       deleteCard,
       updateCard,
     } = this.props;
-    const { createdBy, picks, comments, _id, title, picksType } = card;
+
+    const { createdBy, picks, comments, _id } = card;
 
     const isOwnCard = loggedInUsername === createdBy.username;
 
