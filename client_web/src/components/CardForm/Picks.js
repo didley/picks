@@ -1,9 +1,8 @@
 import React from "react";
 import Pick from "./Pick";
 import { connect } from "react-redux";
-import { selectPicks } from "reducers/selectors";
-import { picks } from "actions/pickActions";
-import { getLinkPreview } from "utils/apiCalls/picks";
+import { selectFormPicks } from "reducers/selectors";
+import { card as cardActions } from "actions/cardActions";
 
 class Picks extends React.Component {
   render() {
@@ -36,16 +35,12 @@ class Picks extends React.Component {
   }
 }
 
-// const Picks = ({ picks }) => {
-//   return picks.map((pick) => <Pick pick={pick} key={pick._id} />);
-// };
-
-const mapState = (state) => ({ picks: selectPicks(state) });
+const mapState = (state) => ({ picks: selectFormPicks(state) });
 
 const mapDispatch = {
-  addPick: picks.add,
-  removePick: picks.remove,
-  getLinkPreview: picks.getLinkPreview.request,
+  addPick: cardActions.form.picks.add,
+  removePick: cardActions.form.picks.remove,
+  getLinkPreview: cardActions.form.picks.getLinkPreview.request,
 };
 
 export default connect(mapState, mapDispatch)(Picks);

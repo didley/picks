@@ -6,7 +6,8 @@ import {
   getProfile,
   getCardFormIsLoading,
   selectUser,
-  selectPicks,
+  selectCardFormVisibility,
+  selectFormPicks,
 } from "reducers/selectors";
 import ProfileHeader from "components/ProfileHeader";
 import CardList from "components/CardList";
@@ -24,9 +25,14 @@ class ProfilePage extends React.Component {
     this.props.getAllCards(username);
   }
 
-  handlePostSubmit = (card) => {
-    card.picksType = "topic"; // replace when weekly/topic types implements
-    this.props.createCard(card);
+  handleCreateCardSubmit = (localFormState) => {
+    const { formPicks, createCard } = this.props;
+    const picksStrippedIds = formPicks.map(({ _id, ...rest }) => rest);
+
+    createCard({
+      comments: localFormState.comments,
+      picks: picksStrippedIds,
+    });
   };
 
   handleProfileUpdateSubmit = (values) =>
@@ -42,17 +48,12 @@ class ProfilePage extends React.Component {
     const { profileHeader, profileCards } = this.props.profile;
 
     const {
-      cards,
-      form: { createFromVisible },
-    } = profileCards;
-
-    const {
+      cardFormVisibility,
       showCreateForm,
       hideCreateForm,
       setEditable,
       isLoading,
       user,
-      picks,
     } = this.props;
 
     const isOwnProfile = this.props.match?.params?.username === user.username;
@@ -69,16 +70,15 @@ class ProfilePage extends React.Component {
         />
         <div className="max-w-6xl m-auto">
           {isOwnProfile &&
-            (createFromVisible ? (
+            (cardFormVisibility.createFromVisible ? (
               <div className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs">
                 <div className="flex justify-between">
                   <h5 className="font-bold">Create a picks post</h5>
                   <button onClick={hideCreateForm}>Cancel</button>
                 </div>
                 <CardForm
-                  onSubmit={this.handlePostSubmit}
+                  onSubmit={this.handleCreateCardSubmit}
                   isLoading={isLoading}
-                  // picks={picks}
                 />
               </div>
             ) : (
@@ -95,10 +95,9 @@ class ProfilePage extends React.Component {
           <small>Loading cards...</small>
         ) : (
           <CardList
-            cards={cards}
+            cards={profileCards.cards}
             handleEditClick={setEditable}
             loggedInUsername={user?.username}
-            // picks={picks}
           />
         )}
       </div>
@@ -110,7 +109,8 @@ const mapState = (state) => ({
   profile: getProfile(state),
   isLoading: getCardFormIsLoading(state),
   user: selectUser(state),
-  picks: selectPicks(state),
+  cardFormVisibility: selectCardFormVisibility(state),
+  formPicks: selectFormPicks(state),
 });
 
 export default connect(mapState, {
