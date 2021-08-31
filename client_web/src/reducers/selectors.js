@@ -15,14 +15,13 @@ export const getProfile = (state) => {
 };
 
 export const getEditingId = (state) =>
-  state.profile.profileCards.form.editingId;
+  state.profile.profileCards.form.visibility.editingId;
 
 export const getCardFormIsLoading = (state) =>
   state.profile.profileCards.cardStatus === "loading";
 
-export const selectPicks = (state) =>
-  denormalize(state.profile.profileCards.picks);
+export const selectFormPicks = (state) =>
+  denormalize(state.profile.profileCards.form.picks);
 
-// export getCardForm = (state) => {
-//   state.profile.
-// }
+export const selectCardFormVisibility = (state) =>
+  state.profile.profileCards.form.visibility;

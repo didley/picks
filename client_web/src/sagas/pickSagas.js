@@ -1,19 +1,9 @@
-import {
-  takeLatest,
-  put,
-  all,
-  call,
-  takeLeading,
-  debounce,
-} from "redux-saga/effects";
+import { put, all, call, debounce } from "redux-saga/effects";
 import { GET_LINK_PREVIEW } from "actionTypes";
-import { picks } from "actions/pickActions";
+import { card as cardActions } from "actions/cardActions";
 import * as api from "utils/apiCalls/picks";
-import {
-  setSuccessAlert,
-  setErrorAlert,
-  setGeneralAlert,
-} from "actions/alertActions";
+
+const { picks } = cardActions.form;
 
 function* getLinkPreview(payload) {
   try {

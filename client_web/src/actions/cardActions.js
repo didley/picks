@@ -1,3 +1,4 @@
+import { uuid } from "utils/uuid";
 import {
   GET_CARDS,
   GET_CARD,
@@ -5,6 +6,11 @@ import {
   UPDATE_CARD,
   DELETE_CARD,
   CARD_FORM,
+  ADD_PICK,
+  GET_LINK_PREVIEW,
+  LINK_PREVIEW_NOT_FOUND,
+  REMOVE_PICK,
+  SET_PICKS,
 } from "actionTypes";
 
 const action = (type, payload = {}) => ({ type, ...payload });
@@ -48,6 +54,19 @@ export const card = {
     edit: {
       set: (card) => action(CARD_FORM.edit.set, { card }),
       clear: () => action(CARD_FORM.edit.clear),
+    },
+    picks: {
+      set: (picks) => action(SET_PICKS, { picks }),
+      add: () => action(ADD_PICK, { id: uuid() }),
+      remove: (id) => action(REMOVE_PICK, { id }),
+      getLinkPreview: {
+        request: (url, id) => action(GET_LINK_PREVIEW.request, { url, id }),
+        success: (preview, id) =>
+          action(GET_LINK_PREVIEW.success, { preview, id }),
+        failure: (error, id) => action(GET_LINK_PREVIEW.failure, { error, id }),
+        reset: () => action(GET_LINK_PREVIEW.reset),
+        notFound: (id) => action(LINK_PREVIEW_NOT_FOUND, { id }),
+      },
     },
   },
 };

@@ -124,7 +124,7 @@ const errorReducer = (state = null, action) => {
   }
 };
 
-const formReducer = (
+const formVisibilityReducer = (
   state = { createFromVisible: false, editingId: null },
   action
 ) => {
@@ -245,10 +245,14 @@ const picksReducer = (state = {}, action) => {
   }
 };
 
+const formReducers = combineReducers({
+  visibility: formVisibilityReducer,
+  picks: picksReducer,
+});
+
 export const cardsRootReducer = combineReducers({
   cards: cardsReducer,
   cardStatus: statusReducer,
   cardError: errorReducer,
-  form: formReducer,
-  picks: picksReducer,
+  form: formReducers,
 });
