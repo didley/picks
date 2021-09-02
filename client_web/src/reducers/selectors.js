@@ -1,10 +1,12 @@
+const denormalize = (normalizedObject) => Object.values(normalizedObject);
+
 export const getIsAuthenticated = (state) => state.auth.isAuthenticated;
 export const getIsAuthenticating = (state) => state.auth.isAuthenticating;
 export const selectUser = (state) => state.auth.user;
 
 export const getProfile = (state) => {
   const { cards, cardStatus, cardError, form } = state.profile.profileCards;
-  const denormalizedCards = Object.values(cards);
+  const denormalizedCards = denormalize(cards);
 
   return {
     profileHeader: state.profile.profileHeader,
@@ -13,11 +15,13 @@ export const getProfile = (state) => {
 };
 
 export const getEditingId = (state) =>
-  state.profile.profileCards.form.editingId;
+  state.profile.profileCards.form.visibility.editingId;
 
 export const getCardFormIsLoading = (state) =>
   state.profile.profileCards.cardStatus === "loading";
 
-// export getCardForm = (state) => {
-//   state.profile.
-// }
+export const selectFormPicks = (state) =>
+  denormalize(state.profile.profileCards.form.picks);
+
+export const selectCardFormVisibility = (state) =>
+  state.profile.profileCards.form.visibility;

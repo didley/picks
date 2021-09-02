@@ -1,7 +1,15 @@
-import { takeLatest, put, all, call, takeLeading } from "redux-saga/effects";
+import {
+  takeLatest,
+  put,
+  all,
+  call,
+  takeLeading,
+  select,
+} from "redux-saga/effects";
 import { GET_CARDS, CREATE_CARD, UPDATE_CARD, DELETE_CARD } from "actionTypes";
 import { card } from "actions/cardActions";
 import * as api from "utils/apiCalls/cards";
+import { selectFormPicks, getEditingId } from "reducers/selectors";
 import {
   setSuccessAlert,
   setErrorAlert,
@@ -39,8 +47,14 @@ function* createCardWatcher() {
 }
 
 function* updateCard(payload) {
+  const localStateValues = payload.updatedCard;
+  const formPicks = yield select(selectFormPicks);
+  const editingId = yield select(getEditingId);
+
+  const updatedCard = { ...localStateValues, _id: editingId, picks: formPicks };
+
   try {
-    const { data } = yield call(api.updateCard, payload.updatedCard);
+    const { data } = yield call(api.updateCard, updatedCard);
     yield put(setSuccessAlert({ message: "Picks updated", timeout: 3000 }));
     yield put(card.update.success(data));
   } catch (error) {

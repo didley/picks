@@ -5,6 +5,12 @@ const createRequestTypes = (base) => ({
   reset: `${base}_RESET`,
 });
 
+// profile summary
+export const GET_PROFILE_SUMMARY = createRequestTypes("profile/getSummary");
+export const UPDATE_PROFILE_SUMMARY = createRequestTypes(
+  "profile/updateSummary"
+);
+
 // card
 export const GET_CARDS = createRequestTypes("card/getCards");
 export const GET_CARD = createRequestTypes("card/getCards");
@@ -16,12 +22,12 @@ export const UPDATE_CARD = createRequestTypes("card/updateCard");
 // export const DELETE_PICK = createRequestTypes("card/deletePick");
 
 export const CARD_FORM = {
-  create: { show: "card/showCreateForm", hide: "card/hideCreateForm" },
-  edit: { set: "card/setEditable", clear: "card/clearEditable" },
+  create: { show: "cardForm/showCreateForm", hide: "cardForm/hideCreateForm" },
+  edit: { set: "cardForm/setEditable", clear: "cardForm/clearEditable" },
 };
-
-export const GET_PROFILE_SUMMARY = createRequestTypes("profile/getSummary");
-
-export const UPDATE_PROFILE_SUMMARY = createRequestTypes(
-  "profile/updateSummary"
-);
+export const SET_PICKS = "cardForm/setPicks";
+export const ADD_PICK = "cardForm/addPick";
+export const REMOVE_PICK = "cardForm/removePick";
+export const UPDATE_PICK = "cardForm/updatePick";
+export const GET_LINK_PREVIEW = createRequestTypes("cardForm/getLinkPreview");
+export const LINK_PREVIEW_NOT_FOUND = "cardForm/linkPreviewNotFound";

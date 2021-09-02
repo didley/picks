@@ -2,13 +2,9 @@ import { useGenericCRUD } from "../useGenericCRUD";
 import { Card } from "./card.model";
 import { User } from "../user/user.model";
 import httpErr from "http-errors";
+import { truncatePicksWithinCard } from "../../utils/truncatePicksWithinCard";
 
 const generic = useGenericCRUD(Card);
-
-//    * if has id query string findOne by id
-//    * if has user query string findMany by userName
-//    * if no query string return findMany by userId
-//    */
 
 const getAllCards = (req, res, next) => generic.getMany(req, res, next);
 
@@ -29,8 +25,13 @@ const getCardsByUsername = async (req, res, next) => {
 
 const createCard = async (req, res, next) => {
   const createdBy = req.user._id;
+
+  const card = req.body;
+
+  const truncatedCard = truncatePicksWithinCard(card);
+
   try {
-    let doc = await Card.create({ ...req.body, createdBy });
+    let doc = await Card.create({ ...truncatedCard, createdBy });
     doc = await doc.populate("createdBy", "username -_id").execPopulate();
     res.status(201).json({ data: doc });
   } catch (err) {
@@ -41,8 +42,34 @@ const createCard = async (req, res, next) => {
 const getCardById = (req, res, next) =>
   generic.getOne(req, res, next, { idReqType: "query" });
 
-const updateCard = (req, res, next) =>
-  generic.updateOne(req, res, next, { idReqType: "body" });
+const updateCard = async (req, res, next) => {
+  const card = req.body;
+
+  const truncatedCard = truncatePicksWithinCard(card);
+
+  try {
+    let updatedDoc = await Card.findOneAndUpdate(
+      {
+        createdBy: req.user._id,
+        _id: req.body._id,
+      },
+      truncatedCard,
+      { new: true }
+    );
+
+    updatedDoc = await updatedDoc
+      .populate("createdBy", "username -_id")
+      .execPopulate();
+
+    if (!updatedDoc) {
+      return res.status(400).end();
+    }
+
+    res.status(200).json({ data: updatedDoc });
+  } catch (err) {
+    next(httpErr(400, err));
+  }
+};
 
 const deleteCardById = (req, res, next) =>
   generic.removeOne(req, res, next, { idReqType: "query" });

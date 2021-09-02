@@ -8,7 +8,7 @@ const ProfileHeader = ({
   handleSetProfileEditVisible,
   handleSetProfileEditHidden,
 }) => {
-  const { name, username, location, bio, displayPicture } = profileHeader.data;
+  const { name, username, location, bio } = profileHeader.data;
   const isLoading = profileHeader.status === "loading";
   const isOwnProfile = loggedInUsername === username;
 
