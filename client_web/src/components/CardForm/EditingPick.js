@@ -1,18 +1,34 @@
 import React from "react";
 import Preview from "./Preview";
 
-const Pick = ({ pick, removePick, handleUrlChange }) => {
+const EditingPick = ({ pick, removePick, handlePickChange }) => {
   const loadingPreview = pick.status === "loading";
 
-  const previewNotFound = pick.status === "notFound";
+  const displayPreviewNotFound =
+    (!pick.status && !pick.preview) || pick.status === "notFound";
+
+  const _handlePickChange = (e) => {
+    const target = e.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    handlePickChange(name, value, pick._id);
+  };
+
   const notFoundForm = (
     <div>
       <div className="text-center bg-gray-100 border border-gray-300 rounded-xl p-1">
-        <p className="text-gray-500 font-bold">No preview found</p>
+        <p className="text-gray-500 font-bold">Preview not found</p>
         <p className="text-gray-500">Enter a title</p>
       </div>
       <label>
-        Title <input className="w-full" />
+        Title{" "}
+        <input
+          className="w-full"
+          name="userTitle"
+          onChange={_handlePickChange}
+          value={pick.userTitle}
+        />
       </label>
     </div>
   );
@@ -23,7 +39,9 @@ const Pick = ({ pick, removePick, handleUrlChange }) => {
         <label>
           Pick URL
           <input
-            onChange={(e) => handleUrlChange(e.target.value, pick._id)}
+            onChange={_handlePickChange}
+            name="url"
+            value={pick.url}
             placeholder="Past your Pick URL here"
             type="url"
             className="w-full"
@@ -34,12 +52,18 @@ const Pick = ({ pick, removePick, handleUrlChange }) => {
         {loadingPreview && <p>Loading preview...</p>}
         {pick.error && <small className="text-red-500">{pick.error}</small>}
         {pick.preview && <Preview preview={pick.preview} url={pick.url} />}
-        {previewNotFound && notFoundForm}
+        {displayPreviewNotFound && notFoundForm}
       </div>
 
       <div className="flex justify-between">
         <label className="font-normal">
-          NSFW <input type="checkbox" />
+          NSFW{" "}
+          <input
+            type="checkbox"
+            name="nsfw"
+            onChange={_handlePickChange}
+            checked={pick.nsfw}
+          />
         </label>
         <div>
           <button aria-label="move-up" type="button" className="mx-2">
@@ -63,4 +87,4 @@ const Pick = ({ pick, removePick, handleUrlChange }) => {
   );
 };
 
-export default Pick;
+export default EditingPick;

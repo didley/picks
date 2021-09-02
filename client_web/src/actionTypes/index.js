@@ -28,5 +28,6 @@ export const CARD_FORM = {
 export const SET_PICKS = "cardForm/setPicks";
 export const ADD_PICK = "cardForm/addPick";
 export const REMOVE_PICK = "cardForm/removePick";
+export const UPDATE_PICK = "cardForm/updatePick";
 export const GET_LINK_PREVIEW = createRequestTypes("cardForm/getLinkPreview");
 export const LINK_PREVIEW_NOT_FOUND = "cardForm/linkPreviewNotFound";

@@ -10,6 +10,7 @@ import {
   GET_LINK_PREVIEW,
   LINK_PREVIEW_NOT_FOUND,
   REMOVE_PICK,
+  UPDATE_PICK,
   SET_PICKS,
 } from "actionTypes";
 
@@ -59,6 +60,8 @@ export const card = {
       set: (picks) => action(SET_PICKS, { picks }),
       add: () => action(ADD_PICK, { id: uuid() }),
       remove: (id) => action(REMOVE_PICK, { id }),
+      update: (fieldName, newValue, id) =>
+        action(UPDATE_PICK, { fieldName, newValue, id }),
       getLinkPreview: {
         request: (url, id) => action(GET_LINK_PREVIEW.request, { url, id }),
         success: (preview, id) =>

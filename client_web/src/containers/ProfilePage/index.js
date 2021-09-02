@@ -51,7 +51,6 @@ class ProfilePage extends React.Component {
       cardFormVisibility,
       showCreateForm,
       hideCreateForm,
-      setEditable,
       isLoading,
       user,
     } = this.props;
@@ -96,7 +95,6 @@ class ProfilePage extends React.Component {
         ) : (
           <CardList
             cards={profileCards.cards}
-            handleEditClick={setEditable}
             loggedInUsername={user?.username}
           />
         )}
@@ -120,6 +118,5 @@ export default connect(mapState, {
   createCard: card.create.request,
   showCreateForm: card.form.create.show,
   hideCreateForm: card.form.create.hide,
-  setEditable: card.form.edit.set,
   clearEditable: card.form.edit.clear,
 })(ProfilePage);

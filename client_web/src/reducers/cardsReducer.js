@@ -8,6 +8,7 @@ import {
   SET_PICKS,
   ADD_PICK,
   REMOVE_PICK,
+  UPDATE_PICK,
   GET_LINK_PREVIEW,
   LINK_PREVIEW_NOT_FOUND,
 } from "actionTypes";
@@ -60,7 +61,7 @@ const cardsReducer = (state = {}, action) => {
   }
 };
 
-const statusReducer = (state = "idle", action) => {
+const cardStatusReducer = (state = "idle", action) => {
   switch (action.type) {
     case GET_CARDS.request:
     case GET_CARD.request:
@@ -163,15 +164,15 @@ const picksReducer = (state = {}, action) => {
     case CARD_FORM.edit.set:
       return normaliseArray(action.card.picks);
 
+    case SET_PICKS:
+      return normaliseArray(action.picks);
+
     case CARD_FORM.create.hide:
     case CREATE_CARD.success:
     case CARD_FORM.edit.clear:
     case UPDATE_CARD.success:
     case DELETE_CARD.success:
       return {};
-
-    case SET_PICKS:
-      return normaliseArray(action.picks);
 
     case ADD_PICK:
       return {
@@ -188,6 +189,20 @@ const picksReducer = (state = {}, action) => {
     case REMOVE_PICK: {
       let { [action.id]: _, ...rest } = state;
       return { ...rest };
+    }
+
+    case UPDATE_PICK: {
+      const { id, fieldName, newValue } = action;
+
+      return {
+        ...state,
+        ...{
+          [id]: {
+            ...state[id],
+            [fieldName]: newValue,
+          },
+        },
+      };
     }
 
     case GET_LINK_PREVIEW.request: {
@@ -252,7 +267,7 @@ const formReducers = combineReducers({
 
 export const cardsRootReducer = combineReducers({
   cards: cardsReducer,
-  cardStatus: statusReducer,
+  cardStatus: cardStatusReducer,
   cardError: errorReducer,
   form: formReducers,
 });

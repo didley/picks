@@ -1,10 +1,12 @@
 import React from "react";
-import Picks from "./Picks";
+import EditingPicks from "./EditingPicks";
 
 import { Formik, Form, Field } from "formik";
 
 const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
-  const initialValues = editingCard ? editingCard : { comments: "" };
+  const initialValues = editingCard
+    ? { comments: editingCard.comments }
+    : { comments: "" };
 
   const editingView = editingCard ? true : false;
 
@@ -21,7 +23,7 @@ const CardForm = ({ onSubmit, editingCard, onDelete, isLoading }) => {
 
           <hr className="my-4" />
           <h6 className="font-normal">Picks</h6>
-          <Picks />
+          <EditingPicks />
 
           <div className="flex justify-end">
             {isLoading ? (

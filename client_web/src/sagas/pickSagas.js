@@ -1,5 +1,5 @@
-import { put, all, call, debounce } from "redux-saga/effects";
-import { GET_LINK_PREVIEW } from "actionTypes";
+import { put, all, call, debounce, takeEvery } from "redux-saga/effects";
+import { GET_LINK_PREVIEW, UPDATE_PICK } from "actionTypes";
 import { card as cardActions } from "actions/cardActions";
 import * as api from "utils/apiCalls/picks";
 
@@ -25,6 +25,16 @@ function* getLinkPreviewWatcher() {
   yield debounce(2000, GET_LINK_PREVIEW.request, getLinkPreview);
 }
 
+// intercepts any pick url field changes and dispatches getLinkPreview action
+function* updatePickUrl(payload) {
+  const { fieldName, newValue: url, id } = payload;
+  if (fieldName === "url") yield put(picks.getLinkPreview.request(url, id));
+}
+
+function* updatePickUrlWatcher() {
+  yield takeEvery(UPDATE_PICK, updatePickUrl);
+}
+
 export function* picksRoot() {
-  yield all([getLinkPreviewWatcher()]);
+  yield all([getLinkPreviewWatcher(), updatePickUrlWatcher()]);
 }

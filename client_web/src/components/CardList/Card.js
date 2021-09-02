@@ -32,7 +32,7 @@ class Card extends React.Component {
           <CardForm
             editingCard={card}
             onDelete={() => deleteCard(_id)}
-            onSubmit={(value) => updateCard(value)}
+            onSubmit={(localStateValues) => updateCard(localStateValues)}
             isLoading={isLoading}
           />
         </div>
@@ -44,7 +44,7 @@ class Card extends React.Component {
         {isOwnCard && (
           <button
             className="absolute top-0 right-0 mr-3 md:mr-5 mt-4 md:mt-3 text-sm text-gray-500"
-            onClick={() => setEditable(_id)}
+            onClick={() => setEditable(card)}
           >
             Edit
           </button>
