@@ -2,7 +2,7 @@ import { useGenericCRUD } from "../useGenericCRUD";
 import { Card } from "./card.model";
 import { User } from "../user/user.model";
 import httpErr from "http-errors";
-import { truncStr } from "../../utils/truncateString";
+import { truncatePicksWithinCard } from "../../utils/truncatePicksWithinCard";
 
 const generic = useGenericCRUD(Card);
 
@@ -26,39 +26,9 @@ const getCardsByUsername = async (req, res, next) => {
 const createCard = async (req, res, next) => {
   const createdBy = req.user._id;
 
-  let card = req.body;
+  const card = req.body;
 
-  const truncPreview = ({
-    ogImage,
-    ogTitle,
-    ogDescription,
-    ogType,
-    ogLocale,
-  }) => {
-    ogImage.url = truncStr(ogImage?.url, 250);
-    ogTitle = truncStr(ogTitle, 200, { ellipsis: true });
-    ogDescription = truncStr(ogDescription, 200, { ellipsis: true });
-    ogType = truncStr(ogType, 120);
-    ogLocale = truncStr(ogLocale, 10);
-
-    return {
-      ogImage: { url: ogImage.url },
-      ogTitle,
-      ogDescription,
-      ogType,
-      ogLocale,
-    };
-  };
-
-  const truncatedPicks = card.picks.map((pick) => {
-    if (!pick.preview) return pick;
-
-    const truncatedPreview = truncPreview(pick.preview);
-
-    return { ...pick, preview: truncatedPreview };
-  });
-
-  const truncatedCard = { ...card, picks: truncatedPicks };
+  const truncatedCard = truncatePicksWithinCard(card);
 
   try {
     let doc = await Card.create({ ...truncatedCard, createdBy });
@@ -72,8 +42,34 @@ const createCard = async (req, res, next) => {
 const getCardById = (req, res, next) =>
   generic.getOne(req, res, next, { idReqType: "query" });
 
-const updateCard = (req, res, next) =>
-  generic.updateOne(req, res, next, { idReqType: "body" });
+const updateCard = async (req, res, next) => {
+  const card = req.body;
+
+  const truncatedCard = truncatePicksWithinCard(card);
+
+  try {
+    let updatedDoc = await Card.findOneAndUpdate(
+      {
+        createdBy: req.user._id,
+        _id: req.body._id,
+      },
+      truncatedCard,
+      { new: true }
+    );
+
+    updatedDoc = await updatedDoc
+      .populate("createdBy", "username -_id")
+      .execPopulate();
+
+    if (!updatedDoc) {
+      return res.status(400).end();
+    }
+
+    res.status(200).json({ data: updatedDoc });
+  } catch (err) {
+    next(httpErr(400, err));
+  }
+};
 
 const deleteCardById = (req, res, next) =>
   generic.removeOne(req, res, next, { idReqType: "query" });
