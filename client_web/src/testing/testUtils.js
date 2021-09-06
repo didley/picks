@@ -7,6 +7,7 @@ import { rootSaga } from "sagas";
 
 const render = (component, renderOptions) => {
   const initialState = renderOptions?.initialState ?? null;
+  const skipStoreWrap = renderOptions?.skipStoreWrap;
   const store = configStore(initialState);
   store.runSaga(rootSaga);
 
@@ -14,7 +15,9 @@ const render = (component, renderOptions) => {
     <Provider store={store}>{children}</Provider>
   );
 
-  return rtlRender(component, { wrapper: Wrapper, ...renderOptions });
+  return skipStoreWrap
+    ? rtlRender(component)
+    : rtlRender(component, { wrapper: Wrapper, ...renderOptions });
 };
 
 export * from "@testing-library/react";
