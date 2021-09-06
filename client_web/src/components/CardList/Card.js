@@ -13,7 +13,7 @@ class Card extends React.Component {
       editingId,
       setEditable,
       clearEditable,
-      isLoading,
+      cardFormIsLoading,
       deleteCard,
       updateCard,
     } = this.props;
@@ -24,18 +24,13 @@ class Card extends React.Component {
 
     if (editingId === _id) {
       return (
-        <div className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs ">
-          <div className="flex justify-between">
-            <h5 className="font-bold">Editing Pick</h5>
-            <button onClick={clearEditable}>X</button>
-          </div>
-          <CardForm
-            editingCard={card}
-            onDelete={() => deleteCard(_id)}
-            onSubmit={(localStateValues) => updateCard(localStateValues)}
-            isLoading={isLoading}
-          />
-        </div>
+        <CardForm
+          onCancelClick={clearEditable}
+          editingCard={card}
+          onDelete={() => deleteCard(_id)}
+          onSubmit={(localStateValues) => updateCard(localStateValues)}
+          isLoading={cardFormIsLoading}
+        />
       );
     }
 
@@ -66,7 +61,7 @@ class Card extends React.Component {
 export default connect(
   (state) => ({
     editingId: getEditingId(state),
-    isLoading: getCardFormIsLoading(state),
+    cardFormIsLoading: getCardFormIsLoading(state),
   }),
   {
     setEditable: card.form.edit.set,

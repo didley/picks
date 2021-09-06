@@ -25,7 +25,7 @@ class CreateCardSection extends React.Component {
       cardFormVisibility,
       cardFormIsLoading,
       showCreateForm,
-      hideCreateForm,
+      handleHideCreateForm,
     } = this.props;
 
     if (!cardFormVisibility.createFormVisible) {
@@ -41,16 +41,11 @@ class CreateCardSection extends React.Component {
     }
 
     return (
-      <div className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs">
-        <div className="flex justify-between">
-          <h5 className="font-bold">Create a picks post</h5>
-          <button onClick={hideCreateForm}>Cancel</button>
-        </div>
-        <CardForm
-          onSubmit={this.handleCreateCardSubmit}
-          isLoading={cardFormIsLoading}
-        />
-      </div>
+      <CardForm
+        onCancelClick={handleHideCreateForm}
+        onSubmit={this.handleCreateCardSubmit}
+        isLoading={cardFormIsLoading}
+      />
     );
   }
 }
@@ -64,5 +59,5 @@ const mapState = (state) => ({
 export default connect(mapState, {
   createCard: card.create.request,
   showCreateForm: card.form.create.show,
-  hideCreateForm: card.form.create.hide,
+  handleHideCreateForm: card.form.create.hide,
 })(CreateCardSection);
