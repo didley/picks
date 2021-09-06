@@ -126,19 +126,19 @@ const errorReducer = (state = null, action) => {
 };
 
 const formVisibilityReducer = (
-  state = { createFromVisible: false, editingId: null },
+  state = { createFormVisible: false, editingId: null },
   action
 ) => {
   switch (action.type) {
     case CARD_FORM.create.show:
-      return { ...state, createFromVisible: true, editingId: null };
+      return { ...state, createFormVisible: true, editingId: null };
 
     case CARD_FORM.create.hide:
     case CREATE_CARD.success:
-      return { ...state, createFromVisible: false };
+      return { ...state, createFormVisible: false };
 
     case CARD_FORM.edit.set:
-      return { ...state, editingId: action.card._id, createFromVisible: false };
+      return { ...state, editingId: action.card._id, createFormVisible: false };
 
     case CARD_FORM.edit.clear:
     case UPDATE_CARD.success:
