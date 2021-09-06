@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { userMockControllers } from "./user-mockControllers";
+import { userMockControllers } from "./user.mock.controllers";
 
 const {
   loginUser,

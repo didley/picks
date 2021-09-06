@@ -1,4 +1,4 @@
-import { cardsMockHandlers } from "./cards/cards-mockHandlers";
-import { userMockHandlers } from "./user/user-mockHandlers";
+import { cardsMockHandlers } from "./cards/cards.mock.handlers";
+import { userMockHandlers } from "./user/user.mock.handlers";
 
 export const handlers = [...userMockHandlers, ...cardsMockHandlers];
