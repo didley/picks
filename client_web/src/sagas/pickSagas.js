@@ -22,7 +22,7 @@ function* getLinkPreview(payload) {
 }
 
 function* getLinkPreviewWatcher() {
-  yield debounce(2000, GET_LINK_PREVIEW.request, getLinkPreview);
+  yield debounce(1000, GET_LINK_PREVIEW.request, getLinkPreview);
 }
 
 // intercepts any pick url field changes and dispatches getLinkPreview action
