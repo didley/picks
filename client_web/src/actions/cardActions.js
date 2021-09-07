@@ -27,6 +27,7 @@ export const card = {
     failure: (error) => action(GET_CARDS.failure, { error }),
     reset: () => action(GET_CARDS.reset),
   },
+  // TODO: for single card view
   // get: {
   //   request: (userName) => action(GET_CARD.request, { userName }),
   //   success: (card) => action(GET_CARD.success, { card }),

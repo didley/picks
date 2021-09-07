@@ -9,12 +9,22 @@ import {
 import { GET_CARDS, CREATE_CARD, UPDATE_CARD, DELETE_CARD } from "actionTypes";
 import { card } from "actions/cardActions";
 import * as api from "utils/apiCalls/cards";
-import { selectFormPicks, selectDraftCard } from "reducers/selectors";
+import { selectDraftCard } from "reducers/selectors";
 import {
   setSuccessAlert,
   setErrorAlert,
   setGeneralAlert,
 } from "actions/alertActions";
+
+const sanitiseSubmitCard = (draftCard) => {
+  if (draftCard.picks) {
+    const strippedIdPicks = draftCard.picks.map(({ _id, ...rest }) => rest);
+    draftCard.picks = strippedIdPicks;
+  }
+  const { createdBy, editing, ...rest } = draftCard;
+
+  return rest;
+};
 
 function* getCards(payload) {
   try {
@@ -31,9 +41,12 @@ function* getCardsWatcher() {
   yield takeLatest(GET_CARDS.request, getCards);
 }
 
-function* createCard(payload) {
+function* createCard() {
   try {
-    const { data } = yield call(api.createCard, payload.card);
+    const draftCard = yield select(selectDraftCard);
+    const sanitisedCard = sanitiseSubmitCard(draftCard);
+
+    const { data } = yield call(api.createCard, sanitisedCard);
     yield put(setSuccessAlert({ message: "Picks created", timeout: 3000 }));
     yield put(card.create.success(data));
   } catch (error) {
@@ -47,23 +60,10 @@ function* createCardWatcher() {
 }
 
 function* updateCard() {
-  const draftCard = yield select(selectDraftCard);
-
-  const sanitiseEditingCard = (editingDraftCard) => {
-    if (editingDraftCard.picks) {
-      const strippedIdPicks = editingDraftCard.picks.map(
-        ({ _id, ...rest }) => rest
-      );
-      editingDraftCard.picks = strippedIdPicks;
-    }
-
-    const { createdBy, editing, ...rest } = editingDraftCard;
-
-    return rest;
-  };
-  const sanitisedCard = sanitiseEditingCard(draftCard);
-
   try {
+    const draftCard = yield select(selectDraftCard);
+    const sanitisedCard = sanitiseSubmitCard(draftCard);
+
     const { data } = yield call(api.updateCard, sanitisedCard);
     yield put(setSuccessAlert({ message: "Picks updated", timeout: 3000 }));
     yield put(card.update.success(data));

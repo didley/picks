@@ -22,12 +22,12 @@ export const selectCardFormVisibility = (state) =>
 
 export const selectDraftCard = (state) => {
   const draft = state.profile.profileCards.draft;
-  const editing = !!draft?.editingId;
+  const editing = draft ? { editing: !!draft?.editingId } : null;
 
   if (draft?.picks) {
     const denormalisedPicks = denormalize(draft.picks);
-    return { editing, ...{ ...draft, picks: denormalisedPicks } };
+    return { ...draft, picks: denormalisedPicks, ...editing };
   } else {
-    return { editing, ...draft };
+    return { ...draft, ...editing };
   }
 };
