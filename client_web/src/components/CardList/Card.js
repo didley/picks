@@ -1,42 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import { card } from "actions/cardActions";
-import { getEditingId, getCardFormIsLoading } from "reducers/selectors";
+import { selectDraftCard } from "reducers/selectors";
 import CardForm from "components/CardForm";
 import PickList from "../PickList";
 
 class Card extends React.Component {
   render() {
-    const {
-      loggedInUsername,
-      card,
-      editingId,
-      setEditable,
-      clearEditable,
-      isLoading,
-      deleteCard,
-      updateCard,
-    } = this.props;
+    const { loggedInUsername, card, draftCard, setEditable } = this.props;
 
     const { createdBy, picks, comments, _id } = card;
 
     const isOwnCard = loggedInUsername === createdBy.username;
 
-    if (editingId === _id) {
-      return (
-        <div className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs ">
-          <div className="flex justify-between">
-            <h5 className="font-bold">Editing Pick</h5>
-            <button onClick={clearEditable}>X</button>
-          </div>
-          <CardForm
-            editingCard={card}
-            onDelete={() => deleteCard(_id)}
-            onSubmit={(localStateValues) => updateCard(localStateValues)}
-            isLoading={isLoading}
-          />
-        </div>
-      );
+    if (draftCard?.editingId === _id) {
+      return <CardForm />;
     }
 
     return (
@@ -63,15 +40,6 @@ class Card extends React.Component {
   }
 }
 
-export default connect(
-  (state) => ({
-    editingId: getEditingId(state),
-    isLoading: getCardFormIsLoading(state),
-  }),
-  {
-    setEditable: card.form.edit.set,
-    clearEditable: card.form.edit.clear,
-    deleteCard: card.delete.request,
-    updateCard: card.update.request,
-  }
-)(Card);
+export default connect((state) => ({ draftCard: selectDraftCard(state) }))(
+  Card
+);

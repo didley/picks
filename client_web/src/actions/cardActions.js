@@ -1,17 +1,16 @@
 import { uuid } from "utils/uuid";
 import {
   GET_CARDS,
-  GET_CARD,
   CREATE_CARD,
   UPDATE_CARD,
   DELETE_CARD,
-  CARD_FORM,
-  ADD_PICK,
   GET_LINK_PREVIEW,
   LINK_PREVIEW_NOT_FOUND,
-  REMOVE_PICK,
-  UPDATE_PICK,
-  SET_PICKS,
+  SET_CREATING,
+  SET_EDITING,
+  CLEAR_DRAFT,
+  DRAFT_PICK,
+  CHANGE_DRAFT,
 } from "actionTypes";
 
 const action = (type, payload = {}) => ({ type, ...payload });
@@ -23,6 +22,7 @@ export const card = {
     failure: (error) => action(GET_CARDS.failure, { error }),
     reset: () => action(GET_CARDS.reset),
   },
+  // TODO: for single card view
   // get: {
   //   request: (userName) => action(GET_CARD.request, { userName }),
   //   success: (card) => action(GET_CARD.success, { card }),
@@ -47,29 +47,23 @@ export const card = {
     failure: (error) => action(DELETE_CARD.failure, { error }),
     reset: () => action(DELETE_CARD.reset),
   },
-  form: {
-    create: {
-      show: () => action(CARD_FORM.create.show),
-      hide: () => action(CARD_FORM.create.hide),
+  getLinkPreview: {
+    request: (url, id) => action(GET_LINK_PREVIEW.request, { url, id }),
+    success: (preview, id) => action(GET_LINK_PREVIEW.success, { preview, id }),
+    failure: (error, id) => action(GET_LINK_PREVIEW.failure, { error, id }),
+    reset: () => action(GET_LINK_PREVIEW.reset),
+    notFound: (id) => action(LINK_PREVIEW_NOT_FOUND, { id }),
+  },
+  draft: {
+    set: {
+      creating: () => action(SET_CREATING),
+      editing: (card) => action(SET_EDITING, { card }),
     },
-    edit: {
-      set: (card) => action(CARD_FORM.edit.set, { card }),
-      clear: () => action(CARD_FORM.edit.clear),
-    },
-    picks: {
-      set: (picks) => action(SET_PICKS, { picks }),
-      add: () => action(ADD_PICK, { id: uuid() }),
-      remove: (id) => action(REMOVE_PICK, { id }),
-      update: (fieldName, newValue, id) =>
-        action(UPDATE_PICK, { fieldName, newValue, id }),
-      getLinkPreview: {
-        request: (url, id) => action(GET_LINK_PREVIEW.request, { url, id }),
-        success: (preview, id) =>
-          action(GET_LINK_PREVIEW.success, { preview, id }),
-        failure: (error, id) => action(GET_LINK_PREVIEW.failure, { error, id }),
-        reset: () => action(GET_LINK_PREVIEW.reset),
-        notFound: (id) => action(LINK_PREVIEW_NOT_FOUND, { id }),
-      },
+    change: (event, id) => action(CHANGE_DRAFT, { event, id }), // supply id for picks
+    clear: () => action(CLEAR_DRAFT),
+    pick: {
+      add: () => action(DRAFT_PICK.add, { id: uuid() }),
+      remove: (id) => action(DRAFT_PICK.remove, { id }),
     },
   },
 };

@@ -6,9 +6,11 @@ import {
   render,
   screen,
   waitFor,
-} from "@testing-library/react";
+  waitForElementToBeRemoved,
+} from "testing/testUtils";
 import userEvent from "@testing-library/user-event";
 import { Card } from "testing/stubs/card";
+import { AuthProvider } from "testing/stubs/authProvider";
 
 import CardForm from "./index";
 
@@ -189,49 +191,32 @@ describe("<CardForm />", () => {
       expect(handleSubmit).toHaveBeenCalledWith(expectedSubmitVals)
     );
   });
-  it("can remove picks", async () => {
+  it.only("can remove picks", async () => {
     const handleSubmit = jest.fn();
+    const authProviderStub = AuthProvider();
+
     render(
       <CardForm
         isEditing={false}
         onSubmit={(vals, _fomikBag) => handleSubmit(vals)}
-      />
+      />,
+      {
+        initialState: authProviderStub,
+      }
     );
 
     const cardStub = {
       comments: "I've found some really interesting links this week",
       picks: [
-        {
-          title: "first",
-          url: "http://howToPicks.com",
-          comments: "such great article about creating picks1",
-          nsfw: true,
-        },
-        {
-          title: "second",
-          url: "http://howToPicks.com",
-          comments: "such great article about creating picks2",
-          nsfw: true,
-        },
-        {
-          title: "third",
-          url: "http://howToPicks.com",
-          comments: "such great article about creating picks3",
-          nsfw: true,
-        },
+        { url: "http://howToPicks.com", nsfw: true },
+        { url: "http://howToPicks.com", nsfw: true },
+        { url: "http://howToPicks.com", nsfw: true },
       ],
     };
 
     const expectedSubmitVals = {
       comments: "I've found some really interesting links this week",
-      picks: [
-        {
-          title: "third",
-          url: "http://howToPicks.com",
-          comments: "such great article about creating picks3",
-          nsfw: true,
-        },
-      ],
+      picks: [{ url: "http://howToPicks.com", nsfw: true }],
     };
 
     // adds comment to card
@@ -240,30 +225,48 @@ describe("<CardForm />", () => {
 
     // adds 3 empty pick fields
     const addPickBtn = screen.getByRole("button", { name: /add pick/i });
-    for (let i = 0; i < 2; i++) userEvent.click(addPickBtn);
+    userEvent.click(addPickBtn);
+    userEvent.click(addPickBtn);
+    userEvent.click(addPickBtn);
 
     // picks queries
-    const pickTitleField = await screen.findAllByLabelText(/title/i);
-    const pickUrlField = await screen.findAllByLabelText(/url/i);
-    const pickCommentsField = await screen.findAllByLabelText(/^comments$/i);
-    const pickNsfwToggle = await screen.findAllByLabelText(/nsfw/i);
+    const pickUrlFields = await screen.findAllByLabelText(/url/i);
+    const pickNsfwToggles = await screen.findAllByLabelText(/nsfw/i);
     const postPicksBtn = await screen.findByRole("button", {
       name: /post picks/i,
     });
 
     // enters 3 pick fields
-    for (let i = 0; i < 3; i++) {
-      userEvent.type(pickTitleField[i], cardStub.picks[i].title);
-      userEvent.type(pickUrlField[i], cardStub.picks[i].url);
-      userEvent.type(pickCommentsField[i], cardStub.picks[i].comments);
-      userEvent.click(pickNsfwToggle[i]);
-    }
+    // ! its a long running test because of the saga preview debounce
+    // ! its not returning picks as they are within state, maybe move all form to global state
+    userEvent.type(pickUrlFields[0], cardStub.picks[0].url);
+    userEvent.click(pickNsfwToggles[0]);
+    await waitForElementToBeRemoved(
+      () => screen.queryByText(/Loading preview.../i),
+      { timeout: 1200 }
+    );
+
+    userEvent.type(pickUrlFields[1], cardStub.picks[1].url);
+    userEvent.click(pickNsfwToggles[1]);
+    await waitForElementToBeRemoved(
+      () => screen.queryByText(/Loading preview.../i),
+      { timeout: 1200 }
+    );
+
+    userEvent.type(pickUrlFields[1], cardStub.picks[1].url);
+    userEvent.click(pickNsfwToggles[1]);
+    await waitForElementToBeRemoved(
+      () => screen.queryByText(/Loading preview.../i),
+      { timeout: 1200 }
+    );
 
     const removeButtons = await screen.findAllByRole("button", {
       name: /remove/i,
     });
     userEvent.click(removeButtons[0]);
     userEvent.click(removeButtons[0]);
+
+    // screen.debug();
 
     userEvent.click(postPicksBtn);
 

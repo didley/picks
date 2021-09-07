@@ -1,12 +1,14 @@
 import React from "react";
 import EditingPick from "./EditingPick";
 import { connect } from "react-redux";
-import { selectFormPicks } from "reducers/selectors";
+import { selectDraftCard } from "reducers/selectors";
 import { card as cardActions } from "actions/cardActions";
 
 class EditingPicks extends React.Component {
   render() {
-    const { picks, addPick, removePick, handlePickChange } = this.props;
+    const { draftCard, addPick, removePick, handleChange } = this.props;
+
+    const { picks } = draftCard;
 
     return (
       <div>
@@ -14,8 +16,8 @@ class EditingPicks extends React.Component {
           <EditingPick
             pick={pick}
             key={pick._id}
-            removePick={removePick}
-            handlePickChange={handlePickChange}
+            removePick={() => removePick(pick._id)}
+            onChange={(e) => handleChange(e, pick._id)}
           />
         ))}
         {picks.length < 5 ? (
@@ -36,12 +38,12 @@ class EditingPicks extends React.Component {
   }
 }
 
-const mapState = (state) => ({ picks: selectFormPicks(state) });
+const mapState = (state) => ({ draftCard: selectDraftCard(state) });
 
 const mapDispatch = {
-  addPick: cardActions.form.picks.add,
-  removePick: cardActions.form.picks.remove,
-  handlePickChange: cardActions.form.picks.update,
+  addPick: cardActions.draft.pick.add,
+  removePick: cardActions.draft.pick.remove,
+  handleChange: cardActions.draft.change,
 };
 
 export default connect(mapState, mapDispatch)(EditingPicks);
