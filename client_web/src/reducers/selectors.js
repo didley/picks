@@ -14,14 +14,20 @@ export const getProfile = (state) => {
   };
 };
 
-export const getEditingId = (state) =>
-  state.profile.profileCards.form.visibility.editingId;
-
-export const getCardFormIsLoading = (state) =>
-  state.profile.profileCards.cardStatus === "loading";
-
 export const selectFormPicks = (state) =>
   denormalize(state.profile.profileCards.form.picks);
 
 export const selectCardFormVisibility = (state) =>
   state.profile.profileCards.form.visibility;
+
+export const selectDraftCard = (state) => {
+  const draft = state.profile.profileCards.draft;
+  const editing = !!draft?.editingId;
+
+  if (draft?.picks) {
+    const denormalisedPicks = denormalize(draft.picks);
+    return { editing, ...{ ...draft, picks: denormalisedPicks } };
+  } else {
+    return { editing, ...draft };
+  }
+};

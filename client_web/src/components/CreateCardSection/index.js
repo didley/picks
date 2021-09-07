@@ -1,10 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  getCardFormIsLoading,
-  selectCardFormVisibility,
-  selectFormPicks,
-} from "reducers/selectors";
+import { selectCardFormVisibility, selectFormPicks } from "reducers/selectors";
 import { card } from "actions/cardActions";
 
 import CardForm from "components/CardForm";
@@ -21,12 +17,8 @@ class CreateCardSection extends React.Component {
   };
 
   render() {
-    const {
-      cardFormVisibility,
-      cardFormIsLoading,
-      showCreateForm,
-      handleHideCreateForm,
-    } = this.props;
+    const { cardFormVisibility, showCreateForm, handleHideCreateForm } =
+      this.props;
 
     if (!cardFormVisibility.createFormVisible) {
       return (
@@ -44,7 +36,6 @@ class CreateCardSection extends React.Component {
       <CardForm
         onCancelClick={handleHideCreateForm}
         onSubmit={this.handleCreateCardSubmit}
-        isLoading={cardFormIsLoading}
       />
     );
   }
@@ -52,7 +43,6 @@ class CreateCardSection extends React.Component {
 
 const mapState = (state) => ({
   cardFormVisibility: selectCardFormVisibility(state),
-  cardFormIsLoading: getCardFormIsLoading(state),
   formPicks: selectFormPicks(state),
 });
 

@@ -1,8 +1,9 @@
-const createRequestTypes = (base) => ({
+const createRequestTypes = (base, additional) => ({
   request: `${base}_REQUEST`,
   success: `${base}_SUCCESS`,
   failure: `${base}_FAILURE`,
   reset: `${base}_RESET`,
+  ...additional, // eg. { key : "_KEY" }
 });
 
 // profile summary
@@ -31,3 +32,14 @@ export const REMOVE_PICK = "cardForm/removePick";
 export const UPDATE_PICK = "cardForm/updatePick";
 export const GET_LINK_PREVIEW = createRequestTypes("cardForm/getLinkPreview");
 export const LINK_PREVIEW_NOT_FOUND = "cardForm/linkPreviewNotFound";
+
+// ! working on replacing picks state with draft card
+
+export const SET_CREATING = "cardDraft/setCreating";
+export const SET_EDITING = "cardDraft/setEditing";
+export const CLEAR_DRAFT = "cardDraft/clear";
+export const CHANGE_DRAFT = "cardDraft/change";
+export const DRAFT_PICK = {
+  add: "cardDraft/addPick",
+  remove: "cardDraft/removePick",
+};

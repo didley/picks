@@ -1,3 +1,4 @@
+import produce from "immer";
 import {
   GET_CARDS,
   GET_CARD,
@@ -11,9 +12,15 @@ import {
   UPDATE_PICK,
   GET_LINK_PREVIEW,
   LINK_PREVIEW_NOT_FOUND,
+  SET_CREATING,
+  SET_EDITING,
+  CLEAR_DRAFT,
+  DRAFT_PICK,
+  CHANGE_DRAFT,
 } from "actionTypes";
 import { combineReducers } from "redux";
 import { normaliseArray } from "utils/normaliseArray";
+import { parseMultiInputEvent } from "utils/parseMultiInputEvent";
 
 const cardsReducer = (state = {}, action) => {
   switch (action.type) {
@@ -265,9 +272,117 @@ const formReducers = combineReducers({
   picks: picksReducer,
 });
 
+const draftReducer = (state = null, action) => {
+  switch (action.type) {
+    case CARD_FORM.create.show:
+    case SET_CREATING:
+      return {
+        comments: "",
+        picks: {
+          initialCreateCardPickId: {
+            url: "",
+            preview: null,
+            status: "idle",
+            _id: "initialCreateCardPickId",
+          },
+        },
+      };
+
+    case CARD_FORM.edit.set:
+    case SET_EDITING: {
+      const { card } = action;
+
+      return {
+        editingId: card._id,
+        ...{ ...card, picks: normaliseArray(card.picks) },
+      };
+    }
+    case CHANGE_DRAFT: {
+      const { event, id } = action;
+
+      const { fieldName, newValue } = parseMultiInputEvent(event);
+
+      const nextState = produce(state, (draftState) => {
+        if (id) draftState.picks[id][fieldName] = newValue;
+        else draftState[fieldName] = newValue;
+      });
+
+      return nextState;
+    }
+
+    case CLEAR_DRAFT:
+      return null;
+
+    case DRAFT_PICK.add:
+      return produce(state, (draft) => {
+        draft.picks[action.id] = {
+          url: "",
+          nsfw: false,
+          preview: null,
+          status: "idle",
+          _id: action.id,
+        };
+      });
+
+    case DRAFT_PICK.remove: {
+      let { [action.id]: _, ...rest } = state?.picks;
+      return { ...state, picks: rest };
+    }
+
+    case GET_LINK_PREVIEW.request: {
+      return produce(state, (draft) => {
+        const pick = draft.picks[action.id];
+        pick.preview = null;
+        pick.status = "loading";
+        pick.error = null;
+      });
+    }
+
+    case GET_LINK_PREVIEW.success:
+      return produce(state, (draft) => {
+        const pick = draft.picks[action.id];
+        pick.preview = action.preview;
+        pick.status = "succeeded";
+        pick.error = null;
+      });
+
+    case LINK_PREVIEW_NOT_FOUND:
+      return produce(state, (draft) => {
+        const pick = draft.picks[action.id];
+        pick.preview = null;
+        pick.status = "notFound";
+        pick.error = action.error;
+      });
+
+    case GET_LINK_PREVIEW.failure:
+      return produce(state, (draft) => {
+        const pick = draft.picks[action.id];
+        pick.status = "failed";
+        pick.error = action.error;
+      });
+
+    case GET_LINK_PREVIEW.reset:
+      return produce(state, (draft) => {
+        const pick = draft.picks[action.id];
+        pick.preview = null;
+        pick.status = "idle";
+        pick.error = null;
+      });
+
+    case CREATE_CARD.success:
+    case UPDATE_CARD.success:
+    case DELETE_CARD.success:
+      return null;
+
+    default:
+      return state;
+  }
+};
+
 export const cardsRootReducer = combineReducers({
   cards: cardsReducer,
   cardStatus: cardStatusReducer,
   cardError: errorReducer,
   form: formReducers,
+  draft: draftReducer,
 });

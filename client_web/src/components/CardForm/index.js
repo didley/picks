@@ -1,81 +1,104 @@
 import React from "react";
+import { connect } from "react-redux";
 import EditingPicks from "./EditingPicks";
+import { selectDraftCard } from "reducers/selectors";
+import { card } from "actions/cardActions";
 
-import { Formik, Form, Field } from "formik";
+class CardForm extends React.Component {
+  render() {
+    const {
+      draftCard,
+      clearDraft,
+      handleChange,
+      deleteCard,
+      updateCard,
+      createCard,
+      draftIsLoading,
+    } = this.props;
 
-const CardForm = ({
-  onSubmit,
-  editingCard,
-  onDelete,
-  isLoading,
-  onCancelClick,
-}) => {
-  const initialValues = editingCard
-    ? { comments: editingCard.comments }
-    : { comments: "" };
+    const handleSubmit = (e) => {
+      e.preventDefault();
 
-  const editingView = editingCard ? true : false;
+      if (draftCard.editing) {
+        updateCard();
+      } else {
+        createCard();
+      }
+    };
 
-  return (
-    <div className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs">
-      <div className="flex justify-between">
-        <h5 className="font-bold">
-          {editingView ? "Editing Post" : "Create a Post"}
-        </h5>
-        <button onClick={onCancelClick}>Cancel</button>
-      </div>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        {() => (
-          <Form>
-            <div className="grid md:grid-cols-2 gap-2">
-              <label className="font-normal">
-                Post Comments
-                <Field
-                  name="comments"
-                  component="textarea"
-                  className="w-full"
-                />
-              </label>
-            </div>
+    if (!draftCard) return null;
 
-            <hr className="my-4" />
-            <h6 className="font-normal">Picks</h6>
-            <EditingPicks />
+    return (
+      <div className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs">
+        <div className="flex justify-between">
+          <h5 className="font-bold">
+            {draftCard.editing ? "Editing Post" : "Create a Post"}
+          </h5>
+          <button onClick={clearDraft}>Cancel</button>
+        </div>
 
-            <div className="flex justify-end">
-              {isLoading ? (
-                <small className="text-gray-400 p-2 m-1">Loading...</small>
-              ) : editingView ? (
-                <>
-                  <button
-                    type="button"
-                    onClick={onDelete}
-                    className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 m-1 rounded-md"
-                  >
-                    Delete Post
-                  </button>
+        <form onSubmit={handleSubmit}>
+          <div className="grid md:grid-cols-2 gap-2">
+            <label className="font-normal">
+              Post Comments
+              <textarea
+                name="comments"
+                className="w-full"
+                value={draftCard.comments}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
 
-                  <button
-                    type="submit"
-                    className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 m-1 rounded-md"
-                  >
-                    Update Post
-                  </button>
-                </>
-              ) : (
+          <hr className="my-4" />
+          <h6 className="font-normal">Picks</h6>
+
+          {draftCard.picks && <EditingPicks />}
+
+          <div className="flex justify-end">
+            {draftIsLoading ? (
+              <small className="text-gray-400 p-2 m-1">Loading...</small>
+            ) : draftCard.editing ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => deleteCard(draftCard.editingId)}
+                  className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 m-1 rounded-md"
+                >
+                  Delete Post
+                </button>
+
                 <button
                   type="submit"
                   className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 m-1 rounded-md"
                 >
-                  Post Picks
+                  Update Post
                 </button>
-              )}
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </div>
-  );
-};
+              </>
+            ) : (
+              <button
+                type="submit"
+                className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 m-1 rounded-md"
+              >
+                Post Picks
+              </button>
+            )}
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
 
-export default CardForm;
+const mapState = (state) => ({
+  draftCard: selectDraftCard(state),
+  // TODO draftIsLoading:
+});
+
+export default connect(mapState, {
+  clearDraft: card.draft.clear,
+  handleChange: card.draft.change,
+  deleteCard: card.delete.request,
+  updateCard: card.update.request,
+  createCard: card.create.request,
+})(CardForm);

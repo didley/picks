@@ -9,7 +9,7 @@ import {
 import { GET_CARDS, CREATE_CARD, UPDATE_CARD, DELETE_CARD } from "actionTypes";
 import { card } from "actions/cardActions";
 import * as api from "utils/apiCalls/cards";
-import { selectFormPicks, getEditingId } from "reducers/selectors";
+import { selectFormPicks, selectDraftCard } from "reducers/selectors";
 import {
   setSuccessAlert,
   setErrorAlert,
@@ -46,15 +46,25 @@ function* createCardWatcher() {
   yield takeLeading(CREATE_CARD.request, createCard);
 }
 
-function* updateCard(payload) {
-  const localStateValues = payload.updatedCard;
-  const formPicks = yield select(selectFormPicks);
-  const editingId = yield select(getEditingId);
+function* updateCard() {
+  const draftCard = yield select(selectDraftCard);
 
-  const updatedCard = { ...localStateValues, _id: editingId, picks: formPicks };
+  const sanitiseEditingCard = (editingDraftCard) => {
+    if (editingDraftCard.picks) {
+      const strippedIdPicks = editingDraftCard.picks.map(
+        ({ _id, ...rest }) => rest
+      );
+      editingDraftCard.picks = strippedIdPicks;
+    }
+
+    const { createdBy, editing, ...rest } = editingDraftCard;
+
+    return rest;
+  };
+  const sanitisedCard = sanitiseEditingCard(draftCard);
 
   try {
-    const { data } = yield call(api.updateCard, updatedCard);
+    const { data } = yield call(api.updateCard, sanitisedCard);
     yield put(setSuccessAlert({ message: "Picks updated", timeout: 3000 }));
     yield put(card.update.success(data));
   } catch (error) {

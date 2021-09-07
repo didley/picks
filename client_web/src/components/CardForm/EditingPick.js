@@ -1,19 +1,11 @@
 import React from "react";
 import Preview from "./Preview";
 
-const EditingPick = ({ pick, removePick, handlePickChange }) => {
+const EditingPick = ({ pick, removePick, onChange }) => {
   const loadingPreview = pick.status === "loading";
 
   const displayPreviewNotFound =
     (!pick.status && !pick.preview) || pick.status === "notFound";
-
-  const _handlePickChange = (e) => {
-    const target = e.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-
-    handlePickChange(name, value, pick._id);
-  };
 
   const notFoundForm = (
     <div>
@@ -22,11 +14,11 @@ const EditingPick = ({ pick, removePick, handlePickChange }) => {
         <p className="text-gray-500">Enter a title</p>
       </div>
       <label>
-        Title{" "}
+        Title
         <input
           className="w-full"
           name="userTitle"
-          onChange={_handlePickChange}
+          onChange={onChange}
           value={pick.userTitle}
         />
       </label>
@@ -39,7 +31,7 @@ const EditingPick = ({ pick, removePick, handlePickChange }) => {
         <label>
           Pick URL
           <input
-            onChange={_handlePickChange}
+            onChange={onChange}
             name="url"
             value={pick.url}
             placeholder="Past your Pick URL here"
@@ -61,7 +53,7 @@ const EditingPick = ({ pick, removePick, handlePickChange }) => {
           <input
             type="checkbox"
             name="nsfw"
-            onChange={_handlePickChange}
+            onChange={onChange}
             checked={pick.nsfw}
           />
         </label>
@@ -76,7 +68,7 @@ const EditingPick = ({ pick, removePick, handlePickChange }) => {
 
           <button
             type="button"
-            onClick={() => removePick(pick._id)}
+            onClick={removePick}
             className="mx-2 text-red-500"
           >
             Remove

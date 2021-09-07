@@ -1,7 +1,6 @@
 import { uuid } from "utils/uuid";
 import {
   GET_CARDS,
-  GET_CARD,
   CREATE_CARD,
   UPDATE_CARD,
   DELETE_CARD,
@@ -12,6 +11,11 @@ import {
   REMOVE_PICK,
   UPDATE_PICK,
   SET_PICKS,
+  SET_CREATING,
+  SET_EDITING,
+  CLEAR_DRAFT,
+  DRAFT_PICK,
+  CHANGE_DRAFT,
 } from "actionTypes";
 
 const action = (type, payload = {}) => ({ type, ...payload });
@@ -70,6 +74,18 @@ export const card = {
         reset: () => action(GET_LINK_PREVIEW.reset),
         notFound: (id) => action(LINK_PREVIEW_NOT_FOUND, { id }),
       },
+    },
+  },
+  draft: {
+    set: {
+      creating: () => action(SET_CREATING),
+      editing: (card) => action(SET_EDITING, { card }),
+    },
+    change: (event, id) => action(CHANGE_DRAFT, { event, id }), // supply id for picks
+    clear: () => action(CLEAR_DRAFT),
+    pick: {
+      add: () => action(DRAFT_PICK.add, { id: uuid() }),
+      remove: (id) => action(DRAFT_PICK.remove, { id }),
     },
   },
 };
