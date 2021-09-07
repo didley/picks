@@ -4,20 +4,18 @@ import { card as cardActions } from "actions/cardActions";
 import * as api from "utils/apiCalls/picks";
 import { parseMultiInputEvent } from "utils/parseMultiInputEvent";
 
-const { picks } = cardActions.form;
-
 function* getLinkPreview(payload) {
   try {
     const res = yield call(api.getLinkPreview, payload.url);
 
-    yield put(picks.getLinkPreview.success(res.data, payload.id));
+    yield put(cardActions.getLinkPreview.success(res.data, payload.id));
   } catch (error) {
     const previewNotFound = error.status === 404;
     if (previewNotFound) {
-      yield put(picks.getLinkPreview.notFound(payload.id));
+      yield put(cardActions.getLinkPreview.notFound(payload.id));
     } else {
       const errMsg = "URL error, check it's correct.";
-      yield put(picks.getLinkPreview.failure(errMsg, payload.id));
+      yield put(cardActions.getLinkPreview.failure(errMsg, payload.id));
     }
   }
 }
@@ -30,7 +28,7 @@ function* updatePickUrl(payload) {
   const { event, id } = payload;
   const { fieldName, newValue } = parseMultiInputEvent(event);
   if (fieldName === "url") {
-    yield put(picks.getLinkPreview.request(newValue, id));
+    yield put(cardActions.getLinkPreview.request(newValue, id));
   }
 }
 

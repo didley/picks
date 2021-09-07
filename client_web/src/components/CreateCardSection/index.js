@@ -1,10 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  selectCardFormVisibility,
-  selectDraftCard,
-  selectFormPicks,
-} from "reducers/selectors";
+import { selectDraftCard } from "reducers/selectors";
 import { card } from "actions/cardActions";
 
 import CardForm from "components/CardForm";

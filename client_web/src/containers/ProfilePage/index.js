@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { card } from "actions/cardActions";
 import { profile } from "actions/profileActions";
-import { getProfile, selectCardsLoading, selectUser } from "reducers/selectors";
+import { getProfile, selectUser } from "reducers/selectors";
 import ProfileHeader from "components/ProfileHeader";
 import CardList from "components/CardList";
 import CreateCardSection from "components/CreateCardSection";

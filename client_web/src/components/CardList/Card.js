@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { card } from "actions/cardActions";
 import { selectDraftCard } from "reducers/selectors";
 import CardForm from "components/CardForm";
 import PickList from "../PickList";
@@ -41,6 +40,6 @@ class Card extends React.Component {
   }
 }
 
-export default connect((state) => ({ draftCard: selectDraftCard(state) }), {
-  setEditable: card.form.edit.set,
-})(Card);
+export default connect((state) => ({ draftCard: selectDraftCard(state) }))(
+  Card
+);

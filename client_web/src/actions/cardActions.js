@@ -4,13 +4,8 @@ import {
   CREATE_CARD,
   UPDATE_CARD,
   DELETE_CARD,
-  CARD_FORM,
-  ADD_PICK,
   GET_LINK_PREVIEW,
   LINK_PREVIEW_NOT_FOUND,
-  REMOVE_PICK,
-  UPDATE_PICK,
-  SET_PICKS,
   SET_CREATING,
   SET_EDITING,
   CLEAR_DRAFT,
@@ -52,30 +47,12 @@ export const card = {
     failure: (error) => action(DELETE_CARD.failure, { error }),
     reset: () => action(DELETE_CARD.reset),
   },
-  form: {
-    create: {
-      show: () => action(CARD_FORM.create.show),
-      hide: () => action(CARD_FORM.create.hide),
-    },
-    edit: {
-      set: (card) => action(CARD_FORM.edit.set, { card }),
-      clear: () => action(CARD_FORM.edit.clear),
-    },
-    picks: {
-      set: (picks) => action(SET_PICKS, { picks }),
-      add: () => action(ADD_PICK, { id: uuid() }),
-      remove: (id) => action(REMOVE_PICK, { id }),
-      update: (fieldName, newValue, id) =>
-        action(UPDATE_PICK, { fieldName, newValue, id }),
-      getLinkPreview: {
-        request: (url, id) => action(GET_LINK_PREVIEW.request, { url, id }),
-        success: (preview, id) =>
-          action(GET_LINK_PREVIEW.success, { preview, id }),
-        failure: (error, id) => action(GET_LINK_PREVIEW.failure, { error, id }),
-        reset: () => action(GET_LINK_PREVIEW.reset),
-        notFound: (id) => action(LINK_PREVIEW_NOT_FOUND, { id }),
-      },
-    },
+  getLinkPreview: {
+    request: (url, id) => action(GET_LINK_PREVIEW.request, { url, id }),
+    success: (preview, id) => action(GET_LINK_PREVIEW.success, { preview, id }),
+    failure: (error, id) => action(GET_LINK_PREVIEW.failure, { error, id }),
+    reset: () => action(GET_LINK_PREVIEW.reset),
+    notFound: (id) => action(LINK_PREVIEW_NOT_FOUND, { id }),
   },
   draft: {
     set: {
