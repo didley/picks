@@ -12,28 +12,28 @@ export function alertReducer(state = initialState, action) {
       return {
         style: "GENERAL",
         message: action.message,
-        details: action.details,
+        details: action.extraDetails,
       };
 
     case alertTypes.SET_WARNING_ALERT:
       return {
         style: "WARNING",
         message: action.message,
-        details: action.details,
+        details: action.extraDetails,
       };
 
     case alertTypes.SET_ERROR_ALERT:
       return {
         style: "ERROR",
         message: action.message,
-        details: action.details,
+        details: action.extraDetails,
       };
 
     case alertTypes.SET_SUCCESS_ALERT:
       return {
         style: "SUCCESS",
         message: action.message,
-        details: action.details,
+        details: action.extraDetails,
       };
 
     case alertTypes.SET_LOADING_ALERT:
@@ -44,11 +44,7 @@ export function alertReducer(state = initialState, action) {
       };
 
     case alertTypes.CLEAR_ALERT:
-      return {
-        style: null,
-        message: null,
-        details: null,
-      };
+      return initialState;
 
     default:
       return state;

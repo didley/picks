@@ -50,6 +50,7 @@
     "autoprefixer": "^9",
     "msw": "^0.33.2",
     "postcss": "^7",
+    "redux-saga-test-plan": "^4.0.3",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   },
   "msw": {
