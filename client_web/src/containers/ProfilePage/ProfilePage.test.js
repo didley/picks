@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  getByTestId,
-  queryByText,
-  render,
-  screen,
-  waitForElementToBeRemoved,
-} from "testing/testUtils";
+import { render, screen, waitForElementToBeRemoved } from "testing/testUtils";
 import userEvent from "@testing-library/user-event";
 import { AuthProvider } from "testing/stubs/authProvider";
 
@@ -139,7 +133,6 @@ describe("<ProfilePage />", () => {
       it("can create card and add to profile", async () => {
         // it awaits loaded profile and cards
         await screen.findByRole("img", { name: "compass" });
-        await screen.findAllByRole("button", { name: "share icon" });
 
         // it opens form
         const newPostBtn = await screen.findByText("+ New Picks");
@@ -147,41 +140,30 @@ describe("<ProfilePage />", () => {
 
         // form field selectors
         const postCommentField = await screen.findByText(/post comments/i);
-        const titleField = await screen.findByRole("textbox", {
-          name: /title/i,
-        });
         const urlField = await screen.findByRole("textbox", { name: /url/i });
-        const picksCommentField = await screen.findByRole("textbox", {
-          name: "Comments",
-          exact: true,
-        });
+
         const submitBtn = await screen.findByRole("button", {
           name: /post picks/i,
         });
 
         userEvent.type(postCommentField, "CREATE_CARD_TEST1");
-        userEvent.type(titleField, "CREATE_CARD_TEST2");
         userEvent.type(urlField, "http://www.CREATE_CARD_TEST.com");
-        userEvent.type(picksCommentField, "CREATE_CARD_TEST3");
+
+        await waitForElementToBeRemoved(
+          () => screen.queryByText("Loading preview..."),
+          { timeout: 1100 }
+        );
 
         userEvent.click(submitBtn);
+
+        // it hides create form after submit
+        await waitForElementToBeRemoved(() =>
+          screen.queryByText("Create a Post")
+        );
 
         // it displays created post on page
         const postCommentText = await screen.findByText("CREATE_CARD_TEST1");
         expect(postCommentText).toBeInTheDocument();
-
-        const titleText = await screen.findByText("CREATE_CARD_TEST2");
-        expect(titleText).toBeInTheDocument();
-
-        const picksCommentText = await screen.findByText(
-          "comments: CREATE_CARD_TEST3"
-        );
-        expect(picksCommentText).toBeInTheDocument();
-
-        // it no longer displays create form
-        expect(
-          screen.queryByText("Create a picks post")
-        ).not.toBeInTheDocument();
       });
       it("can cancel creating card", async () => {
         const newPostBtn = await screen.findByText("+ New Picks");
@@ -247,8 +229,9 @@ describe("<ProfilePage />", () => {
       expect(usersCard[0]).toContainHTML("Edit</button>");
 
       const otherUsersCard = await screen.findByRole("listitem", {
-        name: /card by some_other_user/i,
+        name: /card by A_DIFFERENT_USER/i,
       });
+
       expect(otherUsersCard).not.toContainHTML("Edit</button>");
     });
     it.todo("can update users card");

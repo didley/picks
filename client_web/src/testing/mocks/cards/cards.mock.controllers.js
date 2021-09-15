@@ -24,12 +24,12 @@ export const cardsMockControllers = {
   },
   getLinkPreview: (req, res, ctx) => {
     const urlParam = req.url.searchParams.get("url");
-    const reqDomain = parseDomain(urlParam);
+    // const reqDomain = parseDomain(urlParam);
 
     const preview = {
       data: {
         ogType: "article",
-        ogTitle: `Mock preview to ${reqDomain}`,
+        ogTitle: `Mock preview`,
         ogLocale: "en",
         ogImage: {
           url: "https://miro.medium.com/max/1200/0*fNOHp2Ep8z9pwRnr",
