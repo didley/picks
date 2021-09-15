@@ -229,8 +229,9 @@ describe("<ProfilePage />", () => {
       expect(usersCard[0]).toContainHTML("Edit</button>");
 
       const otherUsersCard = await screen.findByRole("listitem", {
-        name: /card by some_other_user/i,
+        name: /card by A_DIFFERENT_USER/i,
       });
+
       expect(otherUsersCard).not.toContainHTML("Edit</button>");
     });
     it.todo("can update users card");
