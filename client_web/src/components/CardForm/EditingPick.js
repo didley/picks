@@ -1,7 +1,15 @@
 import React from "react";
 import Preview from "./Preview";
 
-const EditingPick = ({ pick, removePick, onChange }) => {
+const EditingPick = ({
+  pick,
+  removePick,
+  onChange,
+  onMoveUp,
+  onMoveDown,
+  isFirstPick,
+  isLastPick,
+}) => {
   const loadingPreview = pick.status === "loading";
 
   const displayPreviewNotFound =
@@ -58,11 +66,21 @@ const EditingPick = ({ pick, removePick, onChange }) => {
           />
         </label>
         <div>
-          <button aria-label="move-up" type="button" className="mx-2">
+          <button
+            aria-label="move-up"
+            type="button"
+            className={`mx-2${isFirstPick ? " invisible" : ""}`}
+            onClick={onMoveUp}
+          >
             ↑
           </button>
 
-          <button aria-label="move-down" type="button" className="mx-2">
+          <button
+            aria-label="move-down"
+            type="button"
+            className={`mx-2 ${isLastPick ? " invisible" : ""}`}
+            onClick={onMoveDown}
+          >
             ↓
           </button>
 
