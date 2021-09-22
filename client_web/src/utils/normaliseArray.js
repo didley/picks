@@ -3,3 +3,6 @@ export const normaliseArray = (arr) =>
     map[obj._id] = obj;
     return map;
   }, {});
+
+export const denormalise = (normalizedObject) =>
+  Object.values(normalizedObject);
