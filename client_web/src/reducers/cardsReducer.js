@@ -14,7 +14,7 @@ import {
   CHANGE_DRAFT,
 } from "actionTypes";
 import { combineReducers } from "redux";
-import { normaliseArray } from "utils/normaliseArray";
+import { normaliseArray, denormalise } from "utils/normaliseArray";
 import { parseMultiInputEvent } from "utils/parseMultiInputEvent";
 
 const cardsReducer = (state = {}, action) => {
@@ -161,6 +161,27 @@ const draftReducer = (state = null, action) => {
     case DRAFT_PICK.remove: {
       let { [action.id]: _, ...rest } = state?.picks;
       return { ...state, picks: rest };
+    }
+
+    case DRAFT_PICK.move: {
+      // un-serialise/re-serialise implementation, refactor was attempted but didn't result in cleaner outcome as swapping elements of array or serialised object sucks in js sucks.
+
+      const { fromId, toId } = action;
+      if (!fromId || !toId) return state;
+
+      const picksArray = denormalise(state.picks);
+
+      const fromIndex = picksArray.findIndex((el) => el._id === fromId);
+      const toIndex = picksArray.findIndex((el) => el._id === toId);
+      if (fromIndex === -1 || toIndex === -1) return state;
+
+      const movedPicks = produce(picksArray, (draft) => {
+        draft[toIndex] = picksArray[fromIndex];
+        draft[fromIndex] = picksArray[toIndex];
+      });
+      const serialisedPicks = normaliseArray(movedPicks);
+
+      return { ...state, picks: serialisedPicks };
     }
 
     case GET_LINK_PREVIEW.request: {

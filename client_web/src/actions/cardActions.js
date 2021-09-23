@@ -64,6 +64,7 @@ export const card = {
     pick: {
       add: () => action(DRAFT_PICK.add, { id: uuid() }),
       remove: (id) => action(DRAFT_PICK.remove, { id }),
+      move: (fromId, toId) => action(DRAFT_PICK.move, { fromId, toId }),
     },
   },
 };
