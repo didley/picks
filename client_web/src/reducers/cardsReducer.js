@@ -164,7 +164,8 @@ const draftReducer = (state = null, action) => {
     }
 
     case DRAFT_PICK.move: {
-      // jank un-serialise/re-serialise implementation to save larger refactor to either only using un-serialised picks or moving to an actual normaliser library
+      // un-serialise/re-serialise implementation, refactor was attempted but didn't result in cleaner outcome as swapping elements of array or serialised object sucks in js sucks.
+
       const { fromId, toId } = action;
       if (!fromId || !toId) return state;
 
