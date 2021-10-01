@@ -7,7 +7,7 @@ export const getCardByUsernameStub = (username) => ({
       picks: [
         {
           preview: {
-            ogImage:
+            ogImageUrl:
               "https://dailymix-images.scdn.co/v2/img/ab6761610000e5eba9ef26e76b058ee97761bc94/3/en/large",
             ogTitle: "Daily Mix 3",
             ogDescription: "Spotify · Playlist · 50 songs",
@@ -22,7 +22,7 @@ export const getCardByUsernameStub = (username) => ({
         },
         {
           preview: {
-            ogImage:
+            ogImageUrl:
               "https://dailymix-images.scdn.co/v2/img/ab6761610000e5ebf9da16d673af005d53bab9cc/3/en/large",
             ogTitle: "Daily Mix 3",
             ogDescription: "Spotify · Playlist · 50 songs",
@@ -38,7 +38,7 @@ export const getCardByUsernameStub = (username) => ({
         },
         {
           preview: {
-            ogImage:
+            ogImageUrl:
               "https://live-production.wcms.abc-cdn.net.au/fbfb3e180d33465aaac5387a953910a5?impolicy=wcms_crop_resize&cropH=717&cropW=1272&xPos=0&yPos=54&width=862&height=485",
             ogTitle: "Everything you need to know about NSW's new COVID rules",
             ogDescription:
@@ -67,7 +67,7 @@ export const getCardByUsernameStub = (username) => ({
       picks: [
         {
           preview: {
-            ogImage:
+            ogImageUrl:
               "https://dailymix-images.scdn.co/v2/img/ab6761610000e5ebf9da16d673af005d53bab9cc/3/en/large",
             ogTitle: "Daily Mix 3",
             ogDescription: "Spotify · Playlist · 50 songs",
@@ -95,7 +95,7 @@ export const getCardByUsernameStub = (username) => ({
       picks: [
         {
           preview: {
-            ogImage:
+            ogImageUrl:
               "https://dailymix-images.scdn.co/v2/img/ab6761610000e5eba9ef26e76b058ee97761bc94/3/en/large",
             ogTitle: "Daily Mix 3",
             ogDescription: "Spotify · Playlist · 50 songs",
@@ -118,7 +118,7 @@ export const getCardByUsernameStub = (username) => ({
         },
         {
           preview: {
-            ogImage:
+            ogImageUrl:
               "https://live-production.wcms.abc-cdn.net.au/fbfb3e180d33465aaac5387a953910a5?impolicy=wcms_crop_resize&cropH=717&cropW=1272&xPos=0&yPos=54&width=862&height=485",
             ogTitle: "Everything you need to know about NSW's new COVID rules",
             ogDescription:
