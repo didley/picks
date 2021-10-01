@@ -46,10 +46,23 @@ const cardOverCharLimit = {
       url: "https://twitter.com/kettanaito/status/1429032074699235328?s=20ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
       nsfw: false,
     },
+    {
+      preview: {},
+      userTitle:
+        "a funny tweetsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+      url: "https://twitter.com/kettanaito/status/1429032074699235328?s=20ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+      nsfw: false,
+    },
   ],
 };
 
 describe("fn truncatePicksWithinCard", () => {
+  it("should return empty object if no preview", () => {
+    const instance = truncatePicksWithinCard(cardOverCharLimit);
+    const userTitlePick = instance.picks[3];
+
+    expect(userTitlePick.preview).toMatchObject({});
+  });
   it("should return pick if no preview", () => {
     const instance = truncatePicksWithinCard(cardOverCharLimit);
     const userTitlePick = instance.picks[2];
@@ -58,10 +71,10 @@ describe("fn truncatePicksWithinCard", () => {
   });
   it("should disregard any characters over character limits", () => {
     const instance = truncatePicksWithinCard(cardOverCharLimit);
-    const { ogImage, ogTitle, ogDescription, ogType, ogLocale } =
+    const { ogImageUrl, ogTitle, ogDescription, ogType, ogLocale } =
       instance.picks[0].preview;
 
-    expect(ogImage.url.length).toBe(250);
+    expect(ogImageUrl.length).toBe(250);
     expect(ogTitle.length).toBe(200);
     expect(ogDescription.length).toBe(200);
     expect(ogType.length).toBe(120);

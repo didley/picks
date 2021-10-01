@@ -11,8 +11,8 @@ const Pick = ({ pick }) => {
     <div className="grid my-2 border-l-2 border-red-400 px-2">
       <div>
         <div className="flex items-center gap-3">
-          {preview?.ogImage?.url && (
-            <img src={preview.ogImage.url} alt="pick" className="w-20" />
+          {preview?.ogImageUrl && (
+            <img src={preview.ogImageUrl} alt="pick" className="w-20" />
           )}
           <div className="inline-block align-middle">
             <p>

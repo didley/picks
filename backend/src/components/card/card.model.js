@@ -1,5 +1,18 @@
 import mongoose from "mongoose";
 import { pickSchema } from "../pick/pick.model";
+import { isEmptyObj } from "../../utils/isEmptyObj";
+
+export function pickIsMissingUserTitle(picks) {
+  const checkPickMissingUserTitle = ({ preview, userTitle }) => {
+    const noPreview = preview === undefined || isEmptyObj(preview);
+
+    const noUserTitle = userTitle === undefined || userTitle.trim() === "";
+
+    return noPreview && noUserTitle;
+  };
+
+  return picks.some(checkPickMissingUserTitle);
+}
 
 const cardSchema = new mongoose.Schema(
   {
@@ -11,10 +24,18 @@ const cardSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-cardSchema.pre("save", function (next) {
-  if (this.picks.length > 5) {
-    return next(new Error("You can't have more than 5 picks"));
+cardSchema.pre("save", async function (next) {
+  // ! Workaround: using this.toObject() as 'this' is a mongoose doc and not a plain js object, causing issues with is empty obj equality check
+  const { picks } = this.toObject();
+
+  if (picks.length > 5) {
+    next(new Error("You can't have more than 5 picks"));
   }
+
+  if (pickIsMissingUserTitle(picks)) {
+    next(new Error("User title required if preview not found"));
+  }
+
   next();
 });
 
