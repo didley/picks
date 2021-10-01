@@ -31,12 +31,7 @@ export const cardsMockControllers = {
         ogType: "article",
         ogTitle: `Mock preview`,
         ogLocale: "en",
-        ogImage: {
-          url: "https://miro.medium.com/max/1200/0*fNOHp2Ep8z9pwRnr",
-          width: null,
-          height: null,
-          type: null,
-        },
+        ogImage: "https://miro.medium.com/max/1200/0*fNOHp2Ep8z9pwRnr",
         ogDescription: "Mock preview description",
       },
     };

@@ -8,12 +8,7 @@ const pick = {
       ogType: "music.playlist",
       ogTitle: "Daily Mix 3",
       ogLocale: "en",
-      ogImage: {
-        url: "https://image.link",
-        width: null,
-        height: null,
-        type: null,
-      },
+      ogImage: "https://image.link",
       ogDescription: "Spotify · Playlist · 50 songs",
     },
   },
@@ -58,9 +53,8 @@ describe("pickIsMissingUserTitle fn", () => {
     const mongooseThisPicks = [
       {
         preview: {
-          ogImage: {
-            url: "https://dailymix-images.scdn.co/v2/img/ab6761610000e5eba9ef26e76b058ee97761bc94/3/en/large0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-          },
+          ogImageUlr:
+            "https://dailymix-images.scdn.co/v2/img/ab6761610000e5eba9ef26e76b058ee97761bc94/3/en/large0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
           ogTitle: "Daily Mix 3",
           ogDescription: "Spotify · Playlist · 50 songs",
           ogType: "music.playlist",
