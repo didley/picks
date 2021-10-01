@@ -6,9 +6,8 @@ const cardOverCharLimit = {
   picks: [
     {
       preview: {
-        ogImage: {
-          url: "https://dailymix-images.scdn.co/v2/img/ab6761610000e5eba9ef26e76b058ee97761bc94/3/en/largessssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
-        },
+        ogImage:
+          "https://dailymix-images.scdn.co/v2/img/ab6761610000e5eba9ef26e76b058ee97761bc94/3/en/largessssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
         ogTitle:
           "Daily Mix 3ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
         ogDescription:
@@ -23,9 +22,8 @@ const cardOverCharLimit = {
     },
     {
       preview: {
-        ogImage: {
-          url: "https://dailymix-images.scdn.co/v2/img/ab6761610000e5ebf9da16d673af005d53bab9cc/3/en/largesssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
-        },
+        ogImage:
+          "https://dailymix-images.scdn.co/v2/img/ab6761610000e5ebf9da16d673af005d53bab9cc/3/en/largesssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
         ogTitle:
           "Daily Mix 3sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
         ogDescription:
