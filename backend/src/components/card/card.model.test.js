@@ -8,7 +8,7 @@ const pick = {
       ogType: "music.playlist",
       ogTitle: "Daily Mix 3",
       ogLocale: "en",
-      ogImage: "https://image.link",
+      ogImageUrl: "https://image.link",
       ogDescription: "Spotify · Playlist · 50 songs",
     },
   },

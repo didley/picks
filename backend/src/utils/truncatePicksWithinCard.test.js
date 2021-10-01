@@ -6,7 +6,7 @@ const cardOverCharLimit = {
   picks: [
     {
       preview: {
-        ogImage:
+        ogImageUrl:
           "https://dailymix-images.scdn.co/v2/img/ab6761610000e5eba9ef26e76b058ee97761bc94/3/en/largessssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
         ogTitle:
           "Daily Mix 3ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
@@ -22,7 +22,7 @@ const cardOverCharLimit = {
     },
     {
       preview: {
-        ogImage:
+        ogImageUrl:
           "https://dailymix-images.scdn.co/v2/img/ab6761610000e5ebf9da16d673af005d53bab9cc/3/en/largesssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
         ogTitle:
           "Daily Mix 3sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
