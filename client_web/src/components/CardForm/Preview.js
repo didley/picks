@@ -1,11 +1,11 @@
 import { parseDomain } from "utils/parseDomain";
 
 const Preview = ({ preview, url, nsfw }) => {
-  const { ogImage, ogTitle, ogDescription } = preview;
+  const { ogImageUrl, ogTitle, ogDescription } = preview;
 
   return (
     <div className="flex items-center gap-3">
-      {ogImage?.url && <img src={ogImage?.url} alt="pick" className="w-20" />}
+      {ogImageUrl && <img src={ogImageUrl} alt="pick" className="w-20" />}
       <div className="inline-block align-middle">
         {ogTitle && (
           <p>

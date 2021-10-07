@@ -3,13 +3,13 @@ export const truncStr = (
   limit = 0,
   opts = { ellipsis: false }
 ) => {
-  if (!string) return null;
+  if (!string) return undefined;
   if (typeof string !== "string") {
     console.error(
       `string argument must be of type string.\nSupplied arg:`,
       string
     );
-    return null;
+    return undefined;
   }
 
   if (limit === 0) throw Error("Limit required");

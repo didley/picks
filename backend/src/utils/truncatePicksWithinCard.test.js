@@ -51,11 +51,18 @@ const cardOverCharLimit = {
       url: "https://twitter.com/kettanaito/status/1429032074699235328?s=20ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
       nsfw: false,
     },
+    {
+      preview: { ogTitle: "wow" },
+      userTitle:
+        "a funny tweetsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+      url: "https://twitter.com/kettanaito/status/1429032074699235328?s=20ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+      nsfw: false,
+    },
   ],
 };
 
 describe("fn truncatePicksWithinCard", () => {
-  it("should return empty object if no preview", () => {
+  it("should return empty preview object if no preview", () => {
     const instance = truncatePicksWithinCard(cardOverCharLimit);
     const userTitlePick = instance.picks[3];
 
@@ -77,5 +84,10 @@ describe("fn truncatePicksWithinCard", () => {
     expect(ogDescription.length).toBe(200);
     expect(ogType.length).toBe(120);
     expect(ogLocale.length).toBe(10);
+  });
+  it("should only return preview properties that are defined", () => {
+    const instance = truncatePicksWithinCard(cardOverCharLimit);
+
+    expect(instance.picks[4].preview).toEqual({ ogTitle: "wow" });
   });
 });

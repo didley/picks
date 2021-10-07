@@ -1,34 +1,26 @@
 import { truncStr } from "./truncateString";
+import { isEmptyObj } from "./isEmptyObj";
 
 export const truncatePicksWithinCard = (card) => {
-  const truncPreview = ({
-    ogImage,
-    ogTitle,
-    ogDescription,
-    ogType,
-    ogLocale,
-  }) => {
-    const ogImageUrl = ogImage.url ? truncStr(ogImage?.url, 250) : undefined;
+  const truncatedPicks = card?.picks.map((pick) => {
+    if (isEmptyObj(pick.preview)) return pick;
+
+    let { ogImageUrl, ogTitle, ogDescription, ogType, ogLocale } =
+      pick.preview || {};
+
+    ogImageUrl = truncStr(ogImageUrl, 250);
     ogTitle = truncStr(ogTitle, 200, { ellipsis: true });
     ogDescription = truncStr(ogDescription, 200, { ellipsis: true });
     ogType = truncStr(ogType, 120);
     ogLocale = truncStr(ogLocale, 10);
 
-    return {
+    const truncatedPreview = {
       ogImageUrl,
       ogTitle,
       ogDescription,
       ogType,
       ogLocale,
     };
-  };
-
-  const truncatedPicks = card?.picks.map((pick) => {
-    if (pick.preview === undefined || Object.keys(pick.preview).length === 0) {
-      return pick;
-    }
-
-    const truncatedPreview = truncPreview(pick.preview);
 
     return { ...pick, preview: truncatedPreview };
   });

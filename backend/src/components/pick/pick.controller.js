@@ -13,7 +13,13 @@ const getLinkPreview = async (req, res, next) => {
 
     const { ogType, ogTitle, ogLocale, ogImage, ogDescription } = result;
     res.status(200).json({
-      data: { ogType, ogTitle, ogLocale, ogImage, ogDescription },
+      data: {
+        ogType,
+        ogTitle,
+        ogLocale,
+        ogImageUrl: ogImage?.url,
+        ogDescription,
+      },
     });
   } catch (err) {
     next(httpErr(400, err));
