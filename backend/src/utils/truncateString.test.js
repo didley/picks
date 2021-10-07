@@ -15,22 +15,22 @@ describe("fn truncStr", () => {
   it("throws if no limit param supplied", () => {
     expect(() => truncStr("str")).toThrow();
   });
-  it("returns null if no string supplied", () => {
+  it("returns undefined if no string supplied", () => {
     const instance = truncStr(undefined, 5, { ellipsis: true });
-    expect(instance).toBe(null);
+    expect(instance).toBe(undefined);
   });
 
-  it("returns null if string param not of type string and console logs error message", () => {
+  it("returns undefined if string param not of type string and console logs error message", () => {
     const consoleSpy = jest
       .spyOn(console, "error")
-      .mockImplementation(() => null); // suppresses error logs from console
+      .mockImplementation(() => null); // suppresses error logs from test console
 
     // function
-    expect(truncStr(() => "fn", 5, { ellipsis: true })).toBe(null);
+    expect(truncStr(() => "fn", 5, { ellipsis: true })).toBe(undefined);
     // object
-    expect(truncStr({ obj: "obj" }, 5, { ellipsis: true })).toBe(null);
+    expect(truncStr({ obj: "obj" }, 5, { ellipsis: true })).toBe(undefined);
     // number
-    expect(truncStr(1, 5, { ellipsis: true })).toBe(null);
+    expect(truncStr(1, 5, { ellipsis: true })).toBe(undefined);
 
     expect(consoleSpy).toHaveBeenCalledTimes(3);
   });
