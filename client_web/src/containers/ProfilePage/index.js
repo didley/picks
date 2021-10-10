@@ -31,7 +31,7 @@ class ProfilePage extends React.Component {
   render() {
     const { user, profile } = this.props;
     const { profileHeader, profileCards } = profile;
-    const isOwnProfile = this.props.match?.params?.username === user.username;
+    const isOwnProfile = this.props.match?.params?.username === user?.username;
 
     return (
       <div className="max-w-6xl m-auto">
