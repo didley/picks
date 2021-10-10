@@ -14,6 +14,8 @@ export const getProfile = (state) => {
   };
 };
 
+export const selectCard = (state) => state.card;
+
 export const selectFormPicks = (state) =>
   denormalise(state.profile.profileCards.form.picks);
 

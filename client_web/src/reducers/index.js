@@ -2,12 +2,14 @@ import { combineReducers } from "redux";
 import { authReducer } from "./authReducer";
 import { alertReducer } from "./alertReducer";
 import { profileReducer } from "./profileReducer";
+import { cardReducer } from "./cardReducer";
 import { LOGOUT } from "actions/authTypes";
 
 const appReducer = combineReducers({
   auth: authReducer,
   alert: alertReducer,
   profile: profileReducer,
+  card: cardReducer,
 });
 
 export const rootReducer = (state, action) => {

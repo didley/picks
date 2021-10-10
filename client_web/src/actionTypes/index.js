@@ -14,7 +14,7 @@ export const UPDATE_PROFILE_SUMMARY = createRequestTypes(
 
 // card
 export const GET_CARDS = createRequestTypes("card/getCards");
-export const GET_CARD = createRequestTypes("card/getCards");
+export const GET_CARD = createRequestTypes("card/getCard");
 export const CREATE_CARD = createRequestTypes("card/createCard");
 export const DELETE_CARD = createRequestTypes("card/deleteCard");
 export const UPDATE_CARD = createRequestTypes("card/updateCard");

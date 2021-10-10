@@ -6,8 +6,6 @@ import { truncatePicksWithinCard } from "../../utils/truncatePicksWithinCard";
 
 const generic = useGenericCRUD(Card);
 
-const getAllCards = (req, res, next) => generic.getMany(req, res, next);
-
 const getCardsByUsername = async (req, res, next) => {
   const { un: usernameQueryString } = req.query;
 
@@ -18,6 +16,23 @@ const getCardsByUsername = async (req, res, next) => {
       .populate("createdBy", "username -_id");
 
     res.status(200).json({ data: docs });
+  } catch (err) {
+    next(httpErr(400, err));
+  }
+};
+
+const getCardById = async (req, res, next) => {
+  const { id: cardId } = req.query;
+
+  try {
+    const doc = await Card.findOne({ _id: cardId }).populate(
+      "createdBy",
+      "username -_id"
+    );
+
+    if (!doc) return res.status(400).end();
+
+    res.status(200).json({ data: doc });
   } catch (err) {
     next(httpErr(400, err));
   }
@@ -38,9 +53,6 @@ const createCard = async (req, res, next) => {
     next(httpErr(400, err));
   }
 };
-
-const getCardById = (req, res, next) =>
-  generic.getOne(req, res, next, { idReqType: "query" });
 
 const updateCard = async (req, res, next) => {
   const card = req.body;
@@ -75,7 +87,6 @@ const deleteCardById = (req, res, next) =>
   generic.removeOne(req, res, next, { idReqType: "query" });
 
 export default {
-  getAllCards,
   getCardsByUsername,
   createCard,
   getCardById,
