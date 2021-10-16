@@ -13,16 +13,17 @@ class ProfilePage extends React.Component {
 
   render() {
     const { user, card } = this.props;
+    const { username } = this.props.match.params;
 
     return (
       <div
         onClick={(e) => {
           e.stopPropagation();
-          nav(`/profile/${user?.username}/`);
+          nav(`/profile/${username}/`);
         }}
         className="max-w-6xl m-auto"
       >
-        <h3 className="hover:underline">{`← ${user?.username} profile`}</h3>
+        <h3 className="hover:underline">{`← ${username} profile`}</h3>
 
         {card.status === "loading" && <small>Loading card...</small>}
 
