@@ -25,6 +25,8 @@ class Card extends React.Component {
           <ShareBtn
             shareData={{
               url: createLink(`/profile/${createdBy?.username}/${_id}`),
+              title: `${createdBy?.username} Picks`,
+              test: `${comments}`,
             }}
           />
           {isOwnCard && (
