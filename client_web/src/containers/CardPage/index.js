@@ -3,10 +3,11 @@ import { connect } from "react-redux";
 import { card } from "actions/cardActions";
 import { selectCard, selectUser } from "reducers/selectors";
 import Card from "components/CardList/Card";
+import { nav } from "utils/history";
 
 class ProfilePage extends React.Component {
   componentDidMount() {
-    const { username, cardId } = this.props.match.params;
+    const { cardId } = this.props.match.params;
     this.props.getCard(cardId);
   }
 
@@ -14,8 +15,14 @@ class ProfilePage extends React.Component {
     const { user, card } = this.props;
 
     return (
-      <div className="max-w-6xl m-auto">
-        <h1>Card</h1>
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          nav(`/profile/${user?.username}/`);
+        }}
+        className="max-w-6xl m-auto"
+      >
+        <h3 className="hover:underline">{`← ${user?.username} profile`}</h3>
 
         {card.status === "loading" && <small>Loading card...</small>}
 
