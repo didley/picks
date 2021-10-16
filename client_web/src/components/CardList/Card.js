@@ -38,7 +38,10 @@ class Card extends React.Component {
           {isOwnCard && (
             <button
               className="ml-2 text-sm text-gray-500"
-              onClick={() => setEditable(card)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setEditable(card);
+              }}
             >
               Edit
             </button>

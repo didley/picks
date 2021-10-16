@@ -29,7 +29,10 @@ class CardForm extends React.Component {
     if (!draftCard) return null;
 
     return (
-      <div className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs">
+      <div
+        className="rounded-lg p-4 m-2 border-2 border-blue-500 text-xs"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex justify-between">
           <h5 className="font-bold">
             {draftCard.editing ? "Editing Post" : "Create a Post"}

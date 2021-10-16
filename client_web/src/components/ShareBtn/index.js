@@ -49,7 +49,10 @@ class ShareBtn extends React.Component {
 
     return (
       <button
-        onClick={() => handleShare(shareData, setAlert)}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleShare(shareData, setAlert);
+        }}
         className={className}
       >
         {alertType ? alert[alertType] : defaultText}
