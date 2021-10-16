@@ -7,3 +7,13 @@ export const history = createBrowserHistory();
 export const nav = (loc) => {
   history.push(loc);
 };
+
+export const getRootUrl = () => {
+  if (process.env.NODE_ENV === "production") {
+    return process.env.REACT_APP_ROOT_URL_PROD;
+  } else {
+    return process.env.REACT_APP_ROOT_URL_DEV;
+  }
+};
+
+export const createLink = (path = "") => getRootUrl() + path;
