@@ -10,6 +10,7 @@ import {
   getIsAuthenticating,
   selectUser,
 } from "reducers/selectors";
+import { nav } from "utils/history";
 
 import NavBar from "./NavBar";
 import Home from "./HomePage";
@@ -26,7 +27,10 @@ class App extends React.Component {
     this.props.checkIsAuthenticatedAction();
   }
 
-  handleLogout = () => this.props.logoutAction();
+  handleLogout = () => {
+    nav("/login");
+    this.props.logoutAction();
+  };
 
   render() {
     const { isAuthenticated, isAuthenticating, user } = this.props;
