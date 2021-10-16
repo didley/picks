@@ -6,7 +6,13 @@ import {
   takeLeading,
   select,
 } from "redux-saga/effects";
-import { GET_CARDS, CREATE_CARD, UPDATE_CARD, DELETE_CARD } from "actionTypes";
+import {
+  GET_CARDS,
+  GET_CARD,
+  CREATE_CARD,
+  UPDATE_CARD,
+  DELETE_CARD,
+} from "actionTypes";
 import { card } from "actions/cardActions";
 import * as api from "utils/apiCalls/cards";
 import { selectDraftCard } from "reducers/selectors";
@@ -39,6 +45,21 @@ function* getCards(payload) {
 
 function* getCardsWatcher() {
   yield takeLatest(GET_CARDS.request, getCards);
+}
+
+function* getCard(payload) {
+  try {
+    const { data } = yield call(api.getCard, payload.id);
+
+    yield put(card.get.success(data));
+  } catch (error) {
+    yield put(setErrorAlert({ message: error.message, timeout: 3000 }));
+    yield put(card.get.failure(error));
+  }
+}
+
+function* getCardWatcher() {
+  yield takeLatest(GET_CARD.request, getCard);
 }
 
 function* createCard() {
@@ -95,6 +116,7 @@ function* deleteCardWatcher() {
 export function* cardsRoot() {
   yield all([
     getCardsWatcher(),
+    getCardWatcher(),
     createCardWatcher(),
     updateCardWatcher(),
     deleteCardWatcher(),

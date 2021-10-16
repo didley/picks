@@ -18,6 +18,7 @@ import SignUpPage from "./SignUpPage";
 import FeedPage from "./FeedPage";
 import CreatePage from "./CreatePage";
 import ProfilePage from "./ProfilePage";
+import CardPage from "./CardPage";
 import AlertBar from "components/AlertBar";
 
 class App extends React.Component {
@@ -55,7 +56,8 @@ class App extends React.Component {
               <CreatePage />
             </PrivateRoute>
 
-            <PrivateRoute path="/profile/:username" component={ProfilePage} />
+            <Route path="/profile/:username/:cardId" component={CardPage} />
+            <Route path="/profile/:username" component={ProfilePage} />
 
             <Route path="/">{isAuthenticated ? <FeedPage /> : <Home />}</Route>
           </Switch>

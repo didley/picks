@@ -1,7 +1,6 @@
 import produce from "immer";
 import {
   GET_CARDS,
-  GET_CARD,
   CREATE_CARD,
   UPDATE_CARD,
   DELETE_CARD,
@@ -22,8 +21,6 @@ const cardsReducer = (state = {}, action) => {
     case GET_CARDS.success:
       return normaliseArray(action.cards);
 
-    case GET_CARD.success:
-      return { ...state, cards: action.card };
     case CREATE_CARD.success:
       return {
         ...{ [action.card._id]: action.card },
@@ -47,28 +44,24 @@ const cardsReducer = (state = {}, action) => {
 const cardStatusReducer = (state = "idle", action) => {
   switch (action.type) {
     case GET_CARDS.request:
-    case GET_CARD.request:
     case CREATE_CARD.request:
     case UPDATE_CARD.request:
     case DELETE_CARD.request:
       return "loading";
 
     case GET_CARDS.success:
-    case GET_CARD.success:
     case CREATE_CARD.success:
     case UPDATE_CARD.success:
     case DELETE_CARD.success:
       return "succeeded";
 
     case GET_CARDS.failure:
-    case GET_CARD.failure:
     case CREATE_CARD.failure:
     case UPDATE_CARD.failure:
     case DELETE_CARD.failure:
       return "failed";
 
     case GET_CARDS.reset:
-    case GET_CARD.reset:
     case CREATE_CARD.reset:
     case UPDATE_CARD.reset:
     case DELETE_CARD.reset:
@@ -82,22 +75,18 @@ const cardStatusReducer = (state = "idle", action) => {
 const errorReducer = (state = null, action) => {
   switch (action.type) {
     case GET_CARDS.failure:
-    case GET_CARD.failure:
     case CREATE_CARD.failure:
     case UPDATE_CARD.failure:
     case DELETE_CARD.failure:
       return { ...state, ...action.error };
 
     case GET_CARDS.request:
-    case GET_CARD.request:
     case CREATE_CARD.request:
     case UPDATE_CARD.request:
     case DELETE_CARD.request:
-    case GET_CARD.success:
     case CREATE_CARD.success:
     case UPDATE_CARD.success:
     case DELETE_CARD.success:
-    case GET_CARD.reset:
     case CREATE_CARD.reset:
     case UPDATE_CARD.reset:
     case DELETE_CARD.reset:

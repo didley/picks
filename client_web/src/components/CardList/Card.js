@@ -4,6 +4,8 @@ import { selectDraftCard } from "reducers/selectors";
 import { card } from "actions/cardActions";
 import CardForm from "components/CardForm";
 import PickList from "../PickList";
+import { nav, createLink } from "utils/history";
+import ShareBtn from "components/ShareBtn";
 
 class Card extends React.Component {
   render() {
@@ -18,18 +20,44 @@ class Card extends React.Component {
     }
 
     return (
-      <div className="relative border rounded-lg p-3 m-2">
-        {isOwnCard && (
-          <button
-            className="absolute top-0 right-0 mr-3 md:mr-5 mt-4 md:mt-3 text-sm text-gray-500"
-            onClick={() => setEditable(card)}
-          >
-            Edit
-          </button>
-        )}
+      <div
+        className="relative border rounded-lg p-3 m-2 hover:border-blue-500"
+        onClick={(e) => {
+          e.stopPropagation();
+          nav(`/profile/${createdBy?.username}/${_id}`);
+        }}
+      >
+        <div className="absolute md:bottom-0 right-0 mr-3 md:mr-6 mt-2 md:mb-2">
+          <ShareBtn
+            shareData={{
+              url: createLink(`/profile/${createdBy?.username}/${_id}`),
+              title: `${createdBy?.username} Picks`,
+              test: `${comments}`,
+            }}
+          />
+          {isOwnCard && (
+            <button
+              className="ml-2 text-sm text-gray-500"
+              onClick={(e) => {
+                e.stopPropagation();
+                setEditable(card);
+              }}
+            >
+              Edit
+            </button>
+          )}
+        </div>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <div className="mb-3">
-            <small className="text-gray-500">{createdBy?.username}</small>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                nav(`/profile/${createdBy?.username}/`);
+              }}
+              className="hover:underline"
+            >
+              <small className="text-gray-500">{createdBy?.username}</small>
+            </button>
             <br />
             <small>{comments}</small>
             <hr className="md:hidden" />

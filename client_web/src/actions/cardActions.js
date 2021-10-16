@@ -1,6 +1,7 @@
 import { uuid } from "utils/uuid";
 import {
   GET_CARDS,
+  GET_CARD,
   CREATE_CARD,
   UPDATE_CARD,
   DELETE_CARD,
@@ -22,13 +23,12 @@ export const card = {
     failure: (error) => action(GET_CARDS.failure, { error }),
     reset: () => action(GET_CARDS.reset),
   },
-  // TODO: for single card view
-  // get: {
-  //   request: (userName) => action(GET_CARD.request, { userName }),
-  //   success: (card) => action(GET_CARD.success, { card }),
-  //   failure: (error) => action(GET_CARD.failure, { error }),
-  //   reset: () => action(GET_CARD.reset),
-  // },
+  get: {
+    request: (id) => action(GET_CARD.request, { id }),
+    success: (card) => action(GET_CARD.success, { card }),
+    failure: (error) => action(GET_CARD.failure, { error }),
+    reset: () => action(GET_CARD.reset),
+  },
   create: {
     request: (card) => action(CREATE_CARD.request, { card }),
     success: (card) => action(CREATE_CARD.success, { card }),

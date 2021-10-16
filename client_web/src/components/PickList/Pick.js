@@ -15,14 +15,16 @@ const Pick = ({ pick }) => {
             <img src={preview.ogImageUrl} alt="pick" className="w-20" />
           )}
           <div className="inline-block align-middle">
-            <p>
-              {nsfw && <span className="text-red-500 font-bold">NSFW </span>}
+            <p className="pb-1">
               <ExternalLink to={url}>
+                {nsfw && <span className="text-red-500 font-bold">NSFW </span>}
                 {preview?.ogTitle ? preview.ogTitle : userTitle}
               </ExternalLink>
             </p>
             {preview?.ogDescription && (
-              <small className="text-gray-500">{preview.ogDescription}</small>
+              <p className="text-gray-400 text-xs leading-relaxed">
+                {preview.ogDescription}
+              </p>
             )}
             {domain && (
               <div>

@@ -1,10 +1,3 @@
-import CardList from "components/CardList";
-
-const FeedPage = () => (
-  <div>
-    Feed page
-    <CardList />
-  </div>
-);
+const FeedPage = () => <div>Feed page</div>;
 
 export default FeedPage;
