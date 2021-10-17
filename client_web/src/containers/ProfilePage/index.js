@@ -14,7 +14,11 @@ class ProfilePage extends React.Component {
   }
 
   componentDidMount() {
-    const { username } = this.props.match.params;
+    const paramUn = this.props.match?.params?.username;
+    const authedUn = this.props.user?.username;
+
+    let username = paramUn ? paramUn : authedUn;
+
     this.props.getProfileHeader(username);
     this.props.getAllCards(username);
   }

@@ -2,7 +2,7 @@ import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { logInUserAction } from "actions/authActions";
-import { getIsAuthenticated } from "reducers/selectors";
+import { selectAuth } from "reducers/selectors";
 
 class LogInPage extends React.Component {
   constructor(props) {
@@ -28,9 +28,10 @@ class LogInPage extends React.Component {
 
   render() {
     const { email, password } = this.state;
-    const { isAuthenticated } = this.props;
+    const { auth } = this.props;
 
-    if (isAuthenticated) return <Redirect to="/feed" />;
+    if (auth.isAuthenticated)
+      return <Redirect to={`/profile/${auth.user.username}`} />;
 
     return (
       <div>
@@ -82,8 +83,6 @@ class LogInPage extends React.Component {
   }
 }
 
-const mapState = (state) => ({
-  isAuthenticated: getIsAuthenticated(state),
-});
+const mapState = (state) => ({ auth: selectAuth(state) });
 
 export default connect(mapState, { logInUserAction })(LogInPage);

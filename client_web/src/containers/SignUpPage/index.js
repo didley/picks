@@ -2,7 +2,7 @@ import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { signUpRequestAction } from "actions/authActions";
-import { getIsAuthenticated } from "reducers/selectors";
+import { selectAuth } from "reducers/selectors";
 
 class SignUpPage extends React.Component {
   constructor(props) {
@@ -30,9 +30,10 @@ class SignUpPage extends React.Component {
 
   render() {
     const { username, email, password } = this.state;
-    const { isAuthenticated } = this.props;
+    const { auth } = this.props;
 
-    if (isAuthenticated) return <Redirect to="/feed" />;
+    if (auth.isAuthenticated)
+      return <Redirect to={`/profile/${auth.user.username}`} />;
 
     return (
       <div>
@@ -98,8 +99,6 @@ class SignUpPage extends React.Component {
   }
 }
 
-const mapState = (state) => ({
-  isAuthenticated: getIsAuthenticated(state),
-});
+const mapState = (state) => ({ auth: selectAuth(state) });
 
 export default connect(mapState, { signUpRequestAction })(SignUpPage);

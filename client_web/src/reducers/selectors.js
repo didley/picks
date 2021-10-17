@@ -1,7 +1,6 @@
 import { denormalise } from "utils/normaliseArray";
 
-export const getIsAuthenticated = (state) => state.auth.isAuthenticated;
-export const getIsAuthenticating = (state) => state.auth.isAuthenticating;
+export const selectAuth = (state) => state.auth;
 export const selectUser = (state) => state.auth.user;
 
 export const getProfile = (state) => {

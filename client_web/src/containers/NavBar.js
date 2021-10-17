@@ -10,16 +10,21 @@ const NavBar = ({ isAuthenticated, onLogoutClick, user }) => {
   const authenticatedLinks = (
     <>
       <li>
-        <Link to="/feed">Feed</Link>
+        <Link to={`/profile/${user?.username}`} className="hover:underline">
+          <small className="font-xs text-white">My profile</small>
+        </Link>
       </li>
+      |
       <li>
-        <Link to="/create">Create</Link>
+        <Link to={`/account`} className="hover:underline">
+          <small className="font-xs text-white">My account</small>
+        </Link>
       </li>
+      |
       <li>
-        <Link to={`/profile/${user?.username}`}>Profile</Link>
-      </li>
-      <li>
-        <button onClick={onLogoutClick}>Log Out</button>
+        <button onClick={onLogoutClick} className="hover:underline">
+          <small className="font-xs text-white">Log out</small>
+        </button>
       </li>
     </>
   );
@@ -27,20 +32,28 @@ const NavBar = ({ isAuthenticated, onLogoutClick, user }) => {
   const unAuthenticatedLinks = (
     <>
       <li>
-        <Link to="/">Home</Link>
+        <Link to="/signup" className="hover:underline">
+          <small className="font-xs text-white">Register</small>
+        </Link>
       </li>
+      |
       <li>
-        <Link to="/login">Log In</Link>
-      </li>
-      <li>
-        <Link to="/signup">Sign Up</Link>
+        <Link to="/login" className="hover:underline">
+          <small className="font-xs text-white">Log in</small>
+        </Link>
       </li>
     </>
   );
 
   return (
-    <nav>
-      <ul className="flex gap-4 underline">
+    <nav className="bg-gray-900 h-16 mb-2 text-white flex justify-between items-center p-4">
+      <Link
+        to="/"
+        className="text-white font-black text-4xl p-2 m-3 kerning tracking-tight"
+      >
+        Picks
+      </Link>
+      <ul className="flex gap-4">
         {isAuthenticated ? authenticatedLinks : unAuthenticatedLinks}
       </ul>
     </nav>

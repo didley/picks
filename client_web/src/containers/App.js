@@ -5,22 +5,17 @@ import { Switch, Route } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
 import PrivateRoute from "./PrivateRoute";
 import { checkIsAuthenticatedAction, logoutAction } from "actions/authActions";
-import {
-  getIsAuthenticated,
-  getIsAuthenticating,
-  selectUser,
-} from "reducers/selectors";
+import { selectAuth } from "reducers/selectors";
 import { nav } from "utils/history";
 
 import NavBar from "./NavBar";
 import Home from "./HomePage";
 import LogInPage from "./LogInPage";
 import SignUpPage from "./SignUpPage";
-import FeedPage from "./FeedPage";
-import CreatePage from "./CreatePage";
 import ProfilePage from "./ProfilePage";
 import CardPage from "./CardPage";
 import AlertBar from "components/AlertBar";
+import AccountPage from "./AccountPage";
 
 class App extends React.Component {
   componentDidMount() {
@@ -33,16 +28,16 @@ class App extends React.Component {
   };
 
   render() {
-    const { isAuthenticated, isAuthenticating, user } = this.props;
+    const { auth } = this.props;
 
-    if (isAuthenticating) return <AlertBar type="LOADING" />;
+    if (auth.isAuthenticating) return <AlertBar type="LOADING" />;
 
     return (
       <div>
         <NavBar
-          isAuthenticated={isAuthenticated}
+          isAuthenticated={auth.isAuthenticated}
           onLogoutClick={this.handleLogout}
-          user={user}
+          user={auth.user}
         />
         <AlertBar />
         <ErrorBoundary>
@@ -53,17 +48,17 @@ class App extends React.Component {
             <Route path="/signup">
               <SignUpPage />
             </Route>
-            <PrivateRoute path="/feed">
-              <FeedPage />
-            </PrivateRoute>
-            <PrivateRoute path="/create">
-              <CreatePage />
-            </PrivateRoute>
 
             <Route path="/profile/:username/:cardId" component={CardPage} />
             <Route path="/profile/:username" component={ProfilePage} />
 
-            <Route path="/">{isAuthenticated ? <FeedPage /> : <Home />}</Route>
+            <PrivateRoute path="/account">
+              <AccountPage />
+            </PrivateRoute>
+
+            <Route path="/">
+              {auth.isAuthenticated ? <ProfilePage /> : <Home />}
+            </Route>
           </Switch>
         </ErrorBoundary>
       </div>
@@ -71,11 +66,7 @@ class App extends React.Component {
   }
 }
 
-const mapState = (state) => ({
-  isAuthenticated: getIsAuthenticated(state),
-  isAuthenticating: getIsAuthenticating(state),
-  user: selectUser(state),
-});
+const mapState = (state) => ({ auth: selectAuth(state) });
 
 export default connect(mapState, { checkIsAuthenticatedAction, logoutAction })(
   App
