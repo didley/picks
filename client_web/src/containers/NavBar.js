@@ -52,10 +52,7 @@ class NavBar extends React.Component {
 
     return (
       <nav className="bg-gray-900 h-16 text-white flex justify-between items-center p-4">
-        <Link
-          to="/"
-          className="text-white font-black text-4xl p-2 m-3 kerning tracking-tight"
-        >
+        <Link to="/" className="text-white font-black text-4xl tracking-tight">
           Picks
         </Link>
         <ul className="flex gap-4">
