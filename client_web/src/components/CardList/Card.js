@@ -35,7 +35,6 @@ class Card extends React.Component {
               test: `${comments}`,
             }}
           >
-            {" "}
             <small className="text-green-400 font-bold">share</small>
           </ShareBtn>
           {isOwnCard && (
