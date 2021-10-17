@@ -37,7 +37,7 @@ class EditingPicks extends React.Component {
         {picks.length < 5 ? (
           <button
             type="button"
-            className="bg-blue-400 text-white rounded-md w-full my-4 p-2 text-center"
+            className="bg-purple-500 text-white rounded-md w-full my-4 p-2 text-center"
             onClick={() => addPick()}
           >
             {`Add Pick ${picks.length + 1} of 5`}

@@ -6,7 +6,7 @@ export const ExternalLink = ({ to, title, children }) => (
       e.stopPropagation();
       openInNewTab(to);
     }}
-    className="text-blue-700 hover:underline cursor-pointer text-left leading-tight"
+    className="text-purple-800 hover:underline cursor-pointer text-left leading-tight"
   >
     {title ? title : children}
   </button>

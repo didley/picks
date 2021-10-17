@@ -21,7 +21,7 @@ class Card extends React.Component {
 
     return (
       <div
-        className="relative border rounded-lg p-3 m-2 hover:border-blue-500"
+        className="relative border rounded-lg p-3 m-2 hover:border-purple-300 bg-white"
         onClick={(e) => {
           e.stopPropagation();
           nav(`/profile/${createdBy?.username}/${_id}`);
@@ -34,16 +34,19 @@ class Card extends React.Component {
               title: `${createdBy?.username} Picks`,
               test: `${comments}`,
             }}
-          />
+          >
+            {" "}
+            <small className="text-green-400 font-bold">share</small>
+          </ShareBtn>
           {isOwnCard && (
             <button
-              className="ml-2 text-sm text-gray-500"
+              className="ml-2 text-sm text-gray-500 hover:text-purple-500"
               onClick={(e) => {
                 e.stopPropagation();
                 setEditable(card);
               }}
             >
-              Edit
+              edit
             </button>
           )}
         </div>
