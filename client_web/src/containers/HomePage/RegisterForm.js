@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { signUpRequestAction } from "actions/authActions";
 import { selectAuth } from "reducers/selectors";
 
-class SignUpPage extends React.Component {
+class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -37,18 +37,16 @@ class SignUpPage extends React.Component {
 
     return (
       <div>
-        <Link to="login">Log In</Link>
-        <form
-          className="container bg-green-100 rounded-lg m-5 py-10 px-20"
-          onSubmit={this.handleSubmit}
-        >
-          <h1 className="font-black text-4xl p-2 m-3">Create an account</h1>
+        <form onSubmit={this.handleSubmit}>
+          <h3 className="font-black text-base sm:text-xl mb-2">
+            Create a Picks account
+          </h3>
           <div>
             <label className="text-sm">
               Username
               <br />
               <input
-                className="rounded-lg text-sm p-1 my-1 border border-green-400"
+                className="rounded-lg text-sm p-1 my-1 border border-green-400 hover:border-green-600"
                 type="text"
                 required
                 name="username"
@@ -63,7 +61,7 @@ class SignUpPage extends React.Component {
               Email
               <br />
               <input
-                className="rounded-lg text-sm p-1 my-1 border border-green-400"
+                className="rounded-lg text-sm p-1 my-1 border border-green-400 hover:border-green-600"
                 type="email"
                 required
                 name="email"
@@ -78,7 +76,7 @@ class SignUpPage extends React.Component {
               Password
               <br />
               <input
-                className="rounded-lg text-sm p-1 my-1 border border-green-400"
+                className="rounded-lg text-sm p-1 my-1 border border-green-400 hover:border-green-600"
                 type="password"
                 required
                 name="password"
@@ -90,9 +88,16 @@ class SignUpPage extends React.Component {
 
           <div>
             <button className="bg-white text-xs rounded-lg p-1 px-3 my-3 border border-purple-400 hover:bg-purple-100">
-              Sign-up
+              Sign up
             </button>
           </div>
+
+          <small>
+            Already have an account?{" "}
+            <Link to="/#login" className="text-green-400 hover:underline">
+              Log in
+            </Link>
+          </small>
         </form>
       </div>
     );
@@ -101,4 +106,4 @@ class SignUpPage extends React.Component {
 
 const mapState = (state) => ({ auth: selectAuth(state) });
 
-export default connect(mapState, { signUpRequestAction })(SignUpPage);
+export default connect(mapState, { signUpRequestAction })(RegisterForm);

@@ -38,7 +38,7 @@ class ProfilePage extends React.Component {
     const isOwnProfile = this.props.match?.params?.username === user?.username;
 
     return (
-      <div className="max-w-6xl m-auto">
+      <div className="max-w-6xl m-auto mt-2">
         <ProfileHeader
           profileHeader={profileHeader}
           loggedInUsername={user?.username}

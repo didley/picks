@@ -9,13 +9,11 @@ import { selectAuth } from "reducers/selectors";
 import { nav } from "utils/history";
 
 import NavBar from "./NavBar";
-import Home from "./HomePage";
-import LogInPage from "./LogInPage";
-import SignUpPage from "./SignUpPage";
 import ProfilePage from "./ProfilePage";
 import CardPage from "./CardPage";
 import AlertBar from "components/AlertBar";
 import AccountPage from "./AccountPage";
+import HomePage from "./HomePage";
 
 class App extends React.Component {
   componentDidMount() {
@@ -23,7 +21,7 @@ class App extends React.Component {
   }
 
   handleLogout = () => {
-    nav("/login");
+    nav("/#login");
     this.props.logoutAction();
   };
 
@@ -42,23 +40,13 @@ class App extends React.Component {
         <AlertBar />
         <ErrorBoundary>
           <Switch>
-            <Route path="/login">
-              <LogInPage />
-            </Route>
-            <Route path="/signup">
-              <SignUpPage />
-            </Route>
+            <Route exact path="/" component={HomePage} />
 
             <Route path="/profile/:username/:cardId" component={CardPage} />
+
             <Route path="/profile/:username" component={ProfilePage} />
 
-            <PrivateRoute path="/account">
-              <AccountPage />
-            </PrivateRoute>
-
-            <Route path="/">
-              {auth.isAuthenticated ? <ProfilePage /> : <Home />}
-            </Route>
+            <PrivateRoute path="/account" component={AccountPage} />
           </Switch>
         </ErrorBoundary>
       </div>

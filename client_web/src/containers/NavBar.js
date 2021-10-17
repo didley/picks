@@ -32,13 +32,13 @@ const NavBar = ({ isAuthenticated, onLogoutClick, user }) => {
   const unAuthenticatedLinks = (
     <>
       <li>
-        <Link to="/signup" className="hover:underline">
+        <Link to="/" className="hover:underline">
           <small className="font-xs text-white">Register</small>
         </Link>
       </li>
       |
       <li>
-        <Link to="/login" className="hover:underline">
+        <Link to="/#login" className="hover:underline">
           <small className="font-xs text-white">Log in</small>
         </Link>
       </li>
@@ -46,7 +46,7 @@ const NavBar = ({ isAuthenticated, onLogoutClick, user }) => {
   );
 
   return (
-    <nav className="bg-gray-900 h-16 mb-2 text-white flex justify-between items-center p-4">
+    <nav className="bg-gray-900 h-16 text-white flex justify-between items-center p-4">
       <Link
         to="/"
         className="text-white font-black text-4xl p-2 m-3 kerning tracking-tight"
