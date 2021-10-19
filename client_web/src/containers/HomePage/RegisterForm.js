@@ -12,6 +12,7 @@ class RegisterForm extends React.Component {
       username: "",
       email: "",
       password: "",
+      confirmPassword: "",
     };
   }
 
@@ -22,15 +23,19 @@ class RegisterForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { username, email, password } = this.state;
-    if (username && email && password) {
+    const { username, email, password, confirmPassword } = this.state;
+    const pwConfirmed = password === confirmPassword;
+
+    if (username && email && password && confirmPassword && pwConfirmed) {
       this.props.signUpRequestAction(username, email, password);
     }
   };
 
   render() {
-    const { username, email, password } = this.state;
+    const { username, email, password, confirmPassword } = this.state;
     const { auth } = this.props;
+    const pwConfirmed = password === confirmPassword;
+    const showPwMismatchWarn = confirmPassword && !pwConfirmed;
 
     if (auth.isAuthenticated)
       return <Redirect to={`/profile/${auth.user.username}`} />;
@@ -57,7 +62,7 @@ class RegisterForm extends React.Component {
           </div>
 
           <div>
-            <label className="text-sm" htmlFor="email">
+            <label className="text-sm">
               Email
               <br />
               <input
@@ -72,7 +77,7 @@ class RegisterForm extends React.Component {
           </div>
 
           <div>
-            <label className="text-sm" htmlFor="password">
+            <label className="text-sm">
               Password
               <br />
               <input
@@ -85,6 +90,28 @@ class RegisterForm extends React.Component {
               />
             </label>
           </div>
+
+          <div>
+            <label className="text-sm">
+              Confirm password
+              <br />
+              <input
+                className={`rounded-lg text-sm p-1 my-1 border  ${
+                  showPwMismatchWarn
+                    ? "border-red-500"
+                    : "border-green-400 hover:border-green-600"
+                }`}
+                type="password"
+                required
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={this.handleChange}
+              />
+            </label>
+          </div>
+          {showPwMismatchWarn && (
+            <small className="text-red-500">Passwords don't match</small>
+          )}
 
           <div>
             <button className="bg-white text-xs rounded-lg p-1 px-3 my-3 border border-purple-400 hover:bg-purple-100">
