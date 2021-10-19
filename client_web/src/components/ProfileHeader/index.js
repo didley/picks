@@ -36,7 +36,7 @@ const ProfileHeader = ({
     <div className="flex justify-center w-full">
       <div
         aria-label="profile"
-        className="relative mx-2 w-full max-w-xl p-8 rounded-lg border border-purple-300 bg-white"
+        className="relative mx-2 w-full max-w-xl p-8 rounded-lg border border-gray-200 bg-white"
       >
         <div className="absolute top-0 right-0 mr-3 md:mr-5 mt-6">
           <ShareBtn

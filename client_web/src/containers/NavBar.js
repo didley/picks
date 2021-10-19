@@ -51,8 +51,11 @@ class NavBar extends React.Component {
     if (location.pathname === "/") return null;
 
     return (
-      <nav className="bg-gray-900 h-16 text-white flex justify-between items-center p-4">
-        <Link to="/" className="text-white font-black text-4xl tracking-tight">
+      <nav className="bg-gray-900 h-11 sm:h-14 text-white flex justify-between items-center p-4">
+        <Link
+          to="/"
+          className="text-white font-black text-xl sm:text-3xl tracking-tight"
+        >
           Picks
         </Link>
         <ul className="flex gap-4">
