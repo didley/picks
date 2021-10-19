@@ -7,7 +7,7 @@ const CardList = ({ cards, loggedInUsername, isLoading }) => {
   }
 
   return (
-    <ul aria-label="card-list" className="max-w-6xl m-auto">
+    <ul aria-label="card-list" className="max-w-6xl m-auto pb-1">
       {cards &&
         cards.map((card) => (
           <li

@@ -1,7 +1,6 @@
 import EditProfileForm from "./EditProfileForm";
 import ShareBtn from "components/ShareBtn";
 import { createLink } from "utils/history";
-import ShareIcon from "components/ShareIcon";
 
 const ProfileHeader = ({
   profileHeader,
@@ -25,13 +24,19 @@ const ProfileHeader = ({
       />
     );
 
-  if (isLoading) return <small>Loading profile...</small>;
+  if (isLoading)
+    return (
+      <small>
+        Loading profile...
+        <br />
+      </small>
+    );
 
   return (
     <div className="flex justify-center w-full">
       <div
         aria-label="profile"
-        className="relative mx-2 w-full max-w-xl p-8 rounded-lg border border-gray-500"
+        className="relative mx-2 w-full max-w-xl p-8 rounded-lg border border-gray-200 bg-white"
       >
         <div className="absolute top-0 right-0 mr-3 md:mr-5 mt-6">
           <ShareBtn
@@ -40,14 +45,14 @@ const ProfileHeader = ({
               title: `${username} Picks profile`,
             }}
           >
-            <small className="text-blue-500 font-bold">share profile</small>
+            <small className="text-purple-400 font-bold">share profile</small>
           </ShareBtn>
           {isOwnProfile && (
             <button
-              className="text-sm text-gray-500 border border-gray-400 rounded-full p-2 hover:border-blue-500 hover:text-blue-500 ml-3"
+              className="text-sm text-gray-500 border border-gray-400 rounded-full p-2 hover:border-purple-500 hover:text-purple-500 ml-3"
               onClick={handleSetProfileEditVisible}
             >
-              Edit Profile
+              edit profile
             </button>
           )}
         </div>

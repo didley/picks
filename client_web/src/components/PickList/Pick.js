@@ -8,11 +8,15 @@ const Pick = ({ pick }) => {
   const domain = parseDomain(pick.url);
 
   return (
-    <div className="grid my-2 border-l-2 border-red-400 px-2">
+    <div className="grid my-2 border-l-2 border-purple-400 pl-2">
       <div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center">
           {preview?.ogImageUrl && (
-            <img src={preview.ogImageUrl} alt="pick" className="w-20" />
+            <img
+              src={preview.ogImageUrl}
+              alt="pick"
+              className="w-24 h-24 object-cover rounded-sm mr-2"
+            />
           )}
           <div className="inline-block align-middle">
             <p className="pb-1">

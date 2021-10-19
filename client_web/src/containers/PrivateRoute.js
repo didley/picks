@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
-import { getIsAuthenticated, getIsAuthenticating } from "reducers/selectors";
+import { selectAuth } from "reducers/selectors";
 
 class PrivateRoute extends React.Component {
   render() {
     const {
-      isAuthenticated,
-      isAuthenticating,
+      auth,
+
       render,
       component: Component,
       children,
@@ -23,7 +23,7 @@ class PrivateRoute extends React.Component {
       <Route
         {...rest}
         render={(routeProps) => {
-          if (!isAuthenticated && !isAuthenticated) {
+          if (!auth.isAuthenticated && !auth.isAuthenticating) {
             return (
               <Redirect
                 to={{
@@ -43,9 +43,6 @@ class PrivateRoute extends React.Component {
   }
 }
 
-const mapState = (state) => ({
-  isAuthenticated: getIsAuthenticated(state),
-  isAuthenticating: getIsAuthenticating(state),
-});
+const mapState = (state) => ({ auth: selectAuth(state) });
 
 export default connect(mapState)(PrivateRoute);

@@ -14,7 +14,11 @@ class ProfilePage extends React.Component {
   }
 
   componentDidMount() {
-    const { username } = this.props.match.params;
+    const paramUn = this.props.match?.params?.username;
+    const authedUn = this.props.user?.username;
+
+    let username = paramUn ? paramUn : authedUn;
+
     this.props.getProfileHeader(username);
     this.props.getAllCards(username);
   }
@@ -34,7 +38,7 @@ class ProfilePage extends React.Component {
     const isOwnProfile = this.props.match?.params?.username === user?.username;
 
     return (
-      <div className="max-w-6xl m-auto">
+      <div className="max-w-6xl m-auto mt-2">
         <ProfileHeader
           profileHeader={profileHeader}
           loggedInUsername={user?.username}
