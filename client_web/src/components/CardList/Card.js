@@ -27,7 +27,7 @@ class Card extends React.Component {
           nav(`/profile/${createdBy?.username}/${_id}`);
         }}
       >
-        <div className="absolute md:bottom-0 right-0 mr-3 md:mr-6 mt-2 md:mb-2">
+        <div className="absolute md:bottom-0 right-0 mr-3 md:mr-6 md:mb-2">
           <ShareBtn
             shareData={{
               url: createLink(`/profile/${createdBy?.username}/${_id}`),
@@ -56,7 +56,7 @@ class Card extends React.Component {
                 e.stopPropagation();
                 nav(`/profile/${createdBy?.username}/`);
               }}
-              className="hover:underline"
+              className="hover:underline mb-2"
             >
               <small className="text-gray-500">{createdBy?.username}</small>
             </button>
