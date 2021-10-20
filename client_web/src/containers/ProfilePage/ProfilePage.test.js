@@ -135,7 +135,7 @@ describe("<ProfilePage />", () => {
         await screen.findByRole("img", { name: "compass" });
 
         // it opens form
-        const newPostBtn = await screen.findByText("+ New Picks");
+        const newPostBtn = await screen.findByText(/create picks/i);
         userEvent.click(newPostBtn);
 
         // form field selectors
@@ -166,13 +166,13 @@ describe("<ProfilePage />", () => {
         expect(postCommentText).toBeInTheDocument();
       });
       it("can cancel creating card", async () => {
-        const newPostBtn = await screen.findByText("+ New Picks");
+        const newPostBtn = await screen.findByText(/create picks/i);
         userEvent.click(newPostBtn);
 
         const cancelBtn = await screen.findByText("Cancel");
         userEvent.click(cancelBtn);
 
-        expect(await screen.findByText("+ New Picks")).toBeInTheDocument();
+        expect(await screen.findByText(/create picks/i)).toBeInTheDocument();
         expect(screen.queryByText("Cancel")).not.toBeInTheDocument();
       });
       it.todo("can not create card with zero picks");
@@ -181,7 +181,7 @@ describe("<ProfilePage />", () => {
       beforeEach(renderDIFFERENTUsersProfilePage);
 
       it("does not display create button if not users profile", async () => {
-        expect(screen.queryByText("+ New Picks")).not.toBeInTheDocument();
+        expect(screen.queryByText(/create picks/i)).not.toBeInTheDocument();
       });
     });
   });
@@ -202,7 +202,7 @@ describe("<ProfilePage />", () => {
       ).toBe(3);
 
       const editBtn = await screen.findAllByRole("button", {
-        name: "Edit",
+        name: "edit",
         exact: true,
       });
       userEvent.click(editBtn[0]);
@@ -226,13 +226,13 @@ describe("<ProfilePage />", () => {
       const usersCard = await screen.findAllByRole("listitem", {
         name: /card by fakeuser1/i,
       });
-      expect(usersCard[0]).toContainHTML("Edit</button>");
+      expect(usersCard[0]).toContainHTML("edit</button>");
 
       const otherUsersCard = await screen.findByRole("listitem", {
         name: /card by A_DIFFERENT_USER/i,
       });
 
-      expect(otherUsersCard).not.toContainHTML("Edit</button>");
+      expect(otherUsersCard).not.toContainHTML("edit</button>");
     });
     it.todo("can update users card");
     it.todo("can cancel updating users card");
