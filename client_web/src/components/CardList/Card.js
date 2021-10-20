@@ -6,12 +6,13 @@ import CardForm from "components/CardForm";
 import PickList from "../PickList";
 import { nav, createLink } from "utils/history";
 import ShareBtn from "components/ShareBtn";
+import { parseDate } from "utils/parseDate";
 
 class Card extends React.Component {
   render() {
     const { loggedInUsername, card, draftCard, setEditable } = this.props;
 
-    const { createdBy, picks, comments, _id } = card;
+    const { createdBy, picks, comments, _id, createdAt } = card;
 
     const isOwnCard = loggedInUsername === createdBy.username;
 
@@ -60,6 +61,7 @@ class Card extends React.Component {
             >
               <small className="text-gray-500">{createdBy?.username}</small>
             </button>
+            <small className="text-gray-500"> · {parseDate(createdAt)}</small>
             <br />
             <small>{comments}</small>
             <hr className="md:hidden" />
