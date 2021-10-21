@@ -7,7 +7,6 @@ class PrivateRoute extends React.Component {
   render() {
     const {
       auth,
-
       render,
       component: Component,
       children,
@@ -24,14 +23,7 @@ class PrivateRoute extends React.Component {
         {...rest}
         render={(routeProps) => {
           if (!auth.isAuthenticated && !auth.isAuthenticating) {
-            return (
-              <Redirect
-                to={{
-                  pathname: "/login",
-                  state: { from: routeProps.location },
-                }}
-              />
-            );
+            return <Redirect to="/#login" />;
           }
 
           if (Component) return <Component {...routeProps} />;
