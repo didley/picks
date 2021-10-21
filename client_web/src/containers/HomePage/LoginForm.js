@@ -74,7 +74,7 @@ class LoginForm extends React.Component {
         </div>
 
         <small>
-          Dont have an account?{" "}
+          Don't have an account?{" "}
           <Link to="/" className="text-purple-500 hover:underline">
             Register
           </Link>
