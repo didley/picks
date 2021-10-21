@@ -14,6 +14,7 @@ import CardPage from "./CardPage";
 import AlertBar from "components/AlertBar";
 import AccountPage from "./AccountPage";
 import HomePage from "./HomePage";
+import PageNotFound from "./PageNotFound";
 
 class App extends React.Component {
   componentDidMount() {
@@ -47,6 +48,8 @@ class App extends React.Component {
             <Route path="/profile/:username" component={ProfilePage} />
 
             <PrivateRoute path="/account" component={AccountPage} />
+
+            <Route path="*" component={PageNotFound} />
           </Switch>
         </ErrorBoundary>
       </div>
