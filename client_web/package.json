@@ -27,8 +27,17 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "ci-test": "craco test --json 2>test-output.json",
+    "ci-test": "craco test --ci --reporters=default --reporters=jest-junit",
     "eject": "react-scripts eject"
+  },
+  "jest-junit": {
+    "outputDirectory": "../reports",
+    "outputName": "jest-junit.client_web.xml",
+    "ancestorSeparator": " › ",
+    "uniqueOutputName": "false",
+    "suiteNameTemplate": "{filepath}",
+    "classNameTemplate": "{classname}",
+    "titleTemplate": "{title}"
   },
   "eslintConfig": {
     "extends": [
@@ -50,6 +59,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^9",
+    "jest-junit": "^13.0.0",
     "msw": "^0.33.2",
     "postcss": "^7",
     "redux-saga-test-plan": "^4.0.3",
