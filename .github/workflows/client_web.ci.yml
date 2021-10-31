@@ -24,8 +24,9 @@ jobs:
         run: cd client_web && yarn run ci-test
   
       - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1.23
-        if: always()
+        uses: actions/upload-artifact@v2  # upload test results
+        if: success() || failure()        # run this step even if previous step failed
         with:
-          files: reports/*.xml
+          name: test-output
+          path: reports/jest-junit.*.xml
  
