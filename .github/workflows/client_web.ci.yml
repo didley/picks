@@ -24,8 +24,8 @@ jobs:
         run: cd client_web && yarn run ci-test
 
       - name: Upload Test Results
-          uses: actions/upload-artifact@v2  # upload test results
-          if: success() || failure()        # run this step even if previous step failed
-            with:
-              name: test-output
-              path: client_web/test-output.json
+        uses: actions/upload-artifact@v2  # upload test results
+        if: success() || failure()        # run this step even if previous step failed
+        with:
+          name: test-output
+          path: client_web/test-output.json
