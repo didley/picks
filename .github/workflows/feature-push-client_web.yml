@@ -16,4 +16,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: cd client_web && yarn install --immutable
-      - run: npm test
+      - run: cd client_web && yarn test
