@@ -1,0 +1,30 @@
+name: Run tests on push to feature branches if changes to client_web
+
+on:
+  push:
+    branches-ignore: [master, development, staging]
+    paths: [client_web/**]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: cd client_web && yarn install --immutable
+
+      - name: Run tests
+        run: cd client_web && yarn run ci-test
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1.23
+        if: always()
+        with:
+          files: test-output.json

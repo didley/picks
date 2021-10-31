@@ -27,6 +27,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
+    "ci-test": "craco test --json 2>test-output.json",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
