@@ -22,10 +22,10 @@ jobs:
 
       - name: Run tests
         run: cd client_web && yarn run ci-test
-
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v2  # upload test results
-        if: success() || failure()        # run this step even if previous step failed
+  
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1.23
+        if: always()
         with:
-          name: test-output
-          path: reports/jest-junit.*.xml
+          files: reports/*.xml
+ 
