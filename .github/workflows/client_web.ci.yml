@@ -21,10 +21,8 @@ jobs:
         run: cd client_web && yarn install --immutable
 
       - name: Run tests
-        run: cd client_web && yarn run ci-test
+        run: cd client_web && yarn run test
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1.23
         if: always()
-        with:
-          files: client_web/test-output.json
