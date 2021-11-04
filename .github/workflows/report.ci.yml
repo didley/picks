@@ -1,0 +1,23 @@
+name: Report CI results
+
+on:
+  workflow_run:
+    workflows: ["client_web CI", "backend CI"]
+    types:
+      - completed
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1.23
+        if: always()
+        with:
+          files: reports/*.xml
+          report_individual_runs: "true"
+ 
