@@ -18,6 +18,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Run client_web tests
+        if: always() 
         run: cd client_web && yarn run ci-test
 
       - name: Run backend tests
@@ -30,4 +31,3 @@ jobs:
         with:
           files: reports/*.xml
           report_individual_runs: "true"
-          check_run_annotations: "all tests"

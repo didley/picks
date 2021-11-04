@@ -22,14 +22,4 @@ jobs:
 
       - name: Run tests
         run: cd backend && yarn run ci-test
-
-      - name: Upload Test Results
-        if: always()
-        uses: actions/upload-artifact@v2.2.4
-        with:
-          name: backend Test Results
-          path: |
-            reports/*.xml         
-
-
  
