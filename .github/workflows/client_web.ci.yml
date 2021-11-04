@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.4.0
 
       - name: Install dependencies
         run: cd client_web && yarn install --immutable
@@ -25,7 +25,7 @@ jobs:
 
       - name: Upload Test Results
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2.2.4
         with:
           name: client_web Test Results
           path: |
