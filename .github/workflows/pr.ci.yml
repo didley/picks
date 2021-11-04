@@ -21,6 +21,7 @@ jobs:
         run: cd client_web && yarn run ci-test
 
       - name: Run backend tests
+        if: always()
         run: cd backend && yarn run ci-test
 
       - name: Publish Unit Test Results
