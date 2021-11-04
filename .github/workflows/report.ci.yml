@@ -3,6 +3,7 @@ name: Report CI results
 on:
   workflow_run:
     workflows: ["client_web CI", "backend CI"]
+    branches: [main, development]
     types:
       - completed
 
