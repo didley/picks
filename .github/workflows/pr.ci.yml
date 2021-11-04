@@ -17,14 +17,15 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Run tests
+      - name: Run client_web tests
         run: cd client_web && yarn run ci-test
 
-      - name: Run tests
+      - name: Run backend tests
         run: cd backend && yarn run ci-test
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1.23
         if: always()
         with:
-          files: reports/*.xml   
+          files: reports/*.xml
+          report_individual_runs: "true"
