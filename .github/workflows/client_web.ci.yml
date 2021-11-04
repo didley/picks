@@ -1,8 +1,7 @@
 name: client_web CI
 
 on:
-  push:
-    branches-ignore: [master, development, staging]
+  pull_request:
     paths: [client_web/**]
 
 jobs:
