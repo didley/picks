@@ -29,4 +29,4 @@ jobs:
         with:
           name: client_web Test Results
           path: |
-            ../reports/*.xml         
+            reports/*.xml         
