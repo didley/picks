@@ -16,6 +16,15 @@
     "open-graph-scraper": "^4.9.1",
     "validator": "^13.6.0"
   },
+  "jest-junit": {
+    "outputDirectory": "../reports",
+    "outputName": "jest-junit.backend.xml",
+    "ancestorSeparator": " › ",
+    "uniqueOutputName": "false",
+    "suiteNameTemplate": "{filepath}",
+    "classNameTemplate": "{classname}",
+    "titleTemplate": "{title}"
+  },
   "devDependencies": {
     "chalk": "^4.1.1",
     "eslint": "^7.28.0",
@@ -29,6 +38,7 @@
   },
   "scripts": {
     "start": "nodemon --experimental-specifier-resolution=node -r dotenv/config src/index.js",
-    "test": "node --experimental-vm-modules node_modules/.bin/jest --watch"
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --watch",
+    "ci-test": "node --experimental-vm-modules node_modules/.bin/jest --watch --ci --reporters=default --reporters=jest-junit"
   }
 }
