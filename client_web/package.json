@@ -27,7 +27,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "ci-test": "craco test --ci --reporters=default --reporters=jest-junit",
+    "ci-test": "craco test --verbose --ci --reporters=default --reporters=jest-junit",
     "eject": "react-scripts eject"
   },
   "jest-junit": {

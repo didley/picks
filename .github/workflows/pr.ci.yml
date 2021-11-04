@@ -30,3 +30,4 @@ jobs:
         with:
           files: reports/*.xml
           report_individual_runs: "true"
+          check_run_annotations: "all tests, skipped tests"
