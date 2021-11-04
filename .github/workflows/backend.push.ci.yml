@@ -1,7 +1,8 @@
 name: backend CI
 
 on:
-  pull_request:
+  push:
+    branches-ignore: [master, development, staging]
     paths: [backend/**]
 
 jobs:
