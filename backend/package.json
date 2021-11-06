@@ -25,6 +25,9 @@
     "classNameTemplate": "{classname}",
     "titleTemplate": "{title}"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "devDependencies": {
     "chalk": "^4.1.1",
     "eslint": "^7.28.0",
