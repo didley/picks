@@ -25,9 +25,6 @@
     "classNameTemplate": "{classname}",
     "titleTemplate": "{title}"
   },
-  "engines": {
-    "node": "16.x"
-  },
   "devDependencies": {
     "chalk": "^4.1.1",
     "eslint": "^7.28.0",
@@ -38,6 +35,9 @@
     "jest-junit": "^13.0.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.3.1"
+  },
+  "engines": {
+    "node": "17.x"
   },
   "scripts": {
     "start": "nodemon --experimental-specifier-resolution=node -r dotenv/config src/index.js",
