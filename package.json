@@ -1,7 +1,6 @@
 {
   "name": "picks-monorepo",
   "version": "0.1.0",
-  "main": "src/index.js",
   "repository": "https://github.com/didley/picks.git",
   "author": "Dylan Lamont",
   "license": "MIT",
