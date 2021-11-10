@@ -9,8 +9,4 @@ router.use("/user", userRoutes);
 router.use("/cards", cardRoutes);
 router.use("/picks", picksRoutes);
 
-router.use("/test", (req, res) => {
-  res.json({ msg: "it worked" });
-});
-
 export { router };
