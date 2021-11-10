@@ -36,6 +36,9 @@
     "nodemon": "^2.0.7",
     "prettier": "^2.3.1"
   },
+  "engines": {
+    "node": "17.x"
+  },
   "scripts": {
     "start": "nodemon --experimental-specifier-resolution=node -r dotenv/config api/index.js",
     "test": "node --experimental-vm-modules node_modules/.bin/jest --watch",
