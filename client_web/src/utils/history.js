@@ -8,7 +8,7 @@ export const nav = (loc) => {
   history.push(loc);
 };
 
-export const getRootUrl = () => {
+export const getBaseUrl = () => {
   if (process.env.NODE_ENV === "production") {
     return process.env.REACT_APP_ROOT_URL_PROD;
   } else {
@@ -16,4 +16,4 @@ export const getRootUrl = () => {
   }
 };
 
-export const createLink = (path = "") => getRootUrl() + path;
+export const createLink = (path = "") => getBaseUrl() + path;

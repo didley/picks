@@ -1,7 +1,7 @@
 import { authToken } from "utils/authToken";
 
 const defaults = {
-  baseURL: "/api",
+  baseURL: `${process.env.REACT_APP_API_URL_PROD}/api`,
   headers: () => ({
     "content-type": "application/json",
     Authorization: authToken.get() ? `Bearer ${authToken.get()}` : undefined,
