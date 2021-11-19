@@ -1,11 +1,15 @@
 # <b>picks</b>
-Picks is a link sharing web app with a limit of 5 links per post and one post a week.
+<br/>
 
-Its a work in progress and primarily built as a practice project to learn testing and older react methods.
+### <b><i>picks</i> is a link sharing web app with a limit of 5 links per post, [visit the live app](https://picks.didley.dev)</b>
+<br/>
+The client is built with react without hooks, Redux & Sagas for state management,<br/>
+React Testing Library & Mock Service Worker for client testing and the backend<br/>
+is built with express & mongoose.<br/>
+<br/>
 
-The client is built with react without hooks, Redux & Sagas for state management, React Testing Library & Mock Service Worker for client testing.
-
-The backend is built with express & mongoose 
+##### <i>The [backend API](https://github.com/didley/picks-api) has been moved to a separate repo while Heroku lacks monorepo support</i>
+<br/>
 
 ## Demo
 ![Profile page demo](demo/picks-profile.gif)
@@ -16,33 +20,18 @@ The backend is built with express & mongoose
 $ cd picks
 $ yarn install
 ```
-or
-```console
-$ cd picks
-$ npm install
-```
 
 ### Running
 
-<i>Remove .example form .env.example in /backend & /client_web</i>
+- [ ] Remove .example form .env.example in ~~/backend &~~ /client_web
 
 ```console
-# runs client & server 
-$ cd picks
-$ yarn start
-
-# runs client
+# run client
 $ cd client_web
 $ yarn start
 
-# runs server
-$ cd backend
-$ yarn start
-
-# run tests (Only client tests implemented)
+# run client tests
 $ cd client_web
 $ yarn test
-
-
 ```
 
