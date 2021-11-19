@@ -1,9 +1,7 @@
 import { authToken } from "utils/authToken";
 
 const apiBaseURL =
-  process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_API_URL_PROD
-    : "";
+  process.env.NODE_ENV === "production" ? process.env.REACT_APP_API_URL : "";
 
 const defaults = {
   baseURL: `${apiBaseURL}/api`,
