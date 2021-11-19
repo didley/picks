@@ -8,12 +8,4 @@ export const nav = (loc) => {
   history.push(loc);
 };
 
-export const getBaseUrl = () => {
-  if (process.env.NODE_ENV === "production") {
-    return process.env.REACT_APP_ROOT_URL_PROD;
-  } else {
-    return process.env.REACT_APP_ROOT_URL_DEV;
-  }
-};
-
-export const createLink = (path = "") => getBaseUrl() + path;
+export const createLink = (path = "") => process.env.REACT_APP_ROOT_URL + path;
