@@ -3,17 +3,23 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { signUpRequestAction } from "actions/authActions";
 import { selectAuth } from "reducers/selectors";
-
+import { setWarningAlert } from "actions/alertActions";
 class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       username: "",
       email: "",
       password: "",
       confirmPassword: "",
     };
+  }
+
+  componentDidMount() {
+    this.props.setWarningAlert({
+      message:
+        "This app is currently in pre release, your account and data may be deleted at any time",
+    });
   }
 
   handleChange = (e) => {
@@ -133,4 +139,6 @@ class RegisterForm extends React.Component {
 
 const mapState = (state) => ({ auth: selectAuth(state) });
 
-export default connect(mapState, { signUpRequestAction })(RegisterForm);
+export default connect(mapState, { signUpRequestAction, setWarningAlert })(
+  RegisterForm
+);
