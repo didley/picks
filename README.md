@@ -33,5 +33,13 @@ $ yarn start
 # run client tests
 $ cd client_web
 $ yarn test
+
+# build client
+$ cd client_web
+$ yarn build
+
+# serve client build locally (Great for debugging closer to a prod build)
+$ cd client_web
+$ yarn run build:serve
 ```
 

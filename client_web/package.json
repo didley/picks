@@ -26,7 +26,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build:serve": "yarn build && npx serve -s build",
+    "build:serve": "yarn build && npx -y serve -s --debug build",
     "build": "craco build",
     "test": "craco test",
     "ci-test": "craco test --verbose --ci --reporters=default --reporters=jest-junit",
