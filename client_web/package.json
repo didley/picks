@@ -12,7 +12,6 @@
     "formik": "^2.2.9",
     "history": "4.10.1",
     "immer": "^9.0.6",
-    "prepend-http": "^4.0.0",
     "psl": "^1.8.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

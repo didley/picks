@@ -1,5 +1,5 @@
 import { openInNewTab } from "utils/openInNewTab";
-import prependHttp from "prepend-http";
+import { prependHttp } from "utils/prependHttp";
 
 export const ExternalLink = ({ to, title, children }) => (
   <button

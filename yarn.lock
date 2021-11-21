@@ -9555,11 +9555,6 @@ prepend-http@^1.0.0:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
   integrity sha1-1PRWKwzjaW5BrFLQ4ALlemNdxtw=
 
-prepend-http@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-4.0.0.tgz#9fe6440f487962a8a0df3ad33f67cd2c0fc6a06f"
-  integrity sha512-s6SRDuOuRo7JXWh7115pmJdh53sX0Azuk/3znjVxSoD4GusXzzBDrLQgH0rspeHNs5f+Yihz7JIT3UBMwFEn6Q==
-
 pretty-bytes@^5.3.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.6.0.tgz#356256f643804773c82f64723fe78c92c62beaeb"

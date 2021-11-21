@@ -1,5 +1,5 @@
 import psl from "psl";
-import prependHttp from "prepend-http";
+import { prependHttp } from "utils/prependHttp";
 
 export const parseDomain = (url) => {
   try {
