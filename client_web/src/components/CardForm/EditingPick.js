@@ -42,8 +42,8 @@ const EditingPick = ({
             onChange={onChange}
             name="url"
             value={pick.url}
-            placeholder="Past your Pick URL here"
-            type="url"
+            placeholder="Paste your Pick URL here"
+            type="text"
             className="w-full"
           />
         </label>

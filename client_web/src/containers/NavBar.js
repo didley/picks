@@ -14,7 +14,7 @@ class NavBar extends React.Component {
       <>
         <li>
           <Link to={`/profile/${user?.username}`} className="hover:underline">
-            <small className="font-xs text-white">My profile</small>
+            <small className="font-xs text-white">My picks</small>
           </Link>
         </li>
         |
