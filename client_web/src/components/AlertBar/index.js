@@ -10,19 +10,22 @@ class AlertBar extends React.Component {
     let bgColor;
     switch (alert.style) {
       case "GENERAL":
-        bgColor = "blue-500";
+        bgColor = "flex w-full text-center items-center bg-blue-500 text-white";
         break;
       case "WARNING":
-        bgColor = "yellow-400";
+        bgColor =
+          "flex w-full text-center items-center bg-yellow-400 text-white";
         break;
       case "ERROR":
-        bgColor = "red-500";
+        bgColor = "flex w-full text-center items-center bg-red-500 text-white";
         break;
       case "SUCCESS":
-        bgColor = "green-400";
+        bgColor =
+          "flex w-full text-center items-center bg-green-400 text-white";
         break;
       case "LOADING":
-        bgColor = "purple-600";
+        bgColor =
+          "flex w-full text-center items-center bg-purple-600 text-white";
         break;
       default:
         bgColor = "blue-500";
@@ -38,9 +41,7 @@ class AlertBar extends React.Component {
     if (!alert.message) return <div />;
 
     return (
-      <div
-        className={`flex w-full text-center items-center bg-${bgColor} text-white`}
-      >
+      <div className={bgColor}>
         <AlertIcon
           className="flex-none items-center m-3"
           alertType={alert.style}

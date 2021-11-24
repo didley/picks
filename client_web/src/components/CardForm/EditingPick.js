@@ -69,7 +69,7 @@ const EditingPick = ({
           <button
             aria-label="move-up"
             type="button"
-            className={`mx-2${isFirstPick ? " invisible" : ""}`}
+            className={isFirstPick ? "mx-2 invisible" : "mx-2"}
             onClick={onMoveUp}
           >
             ↑
@@ -78,7 +78,7 @@ const EditingPick = ({
           <button
             aria-label="move-down"
             type="button"
-            className={`mx-2 ${isLastPick ? " invisible" : ""}`}
+            className={isLastPick ? "mx-2 invisible" : "mx-2"}
             onClick={onMoveDown}
           >
             ↓
