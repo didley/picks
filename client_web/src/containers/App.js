@@ -32,27 +32,29 @@ class App extends React.Component {
     if (auth.isAuthenticating) return <AlertBar type="LOADING" />;
 
     return (
-      <div className="bg-gray-50 h-screen">
-        <NavBar
-          isAuthenticated={auth.isAuthenticated}
-          onLogoutClick={this.handleLogout}
-          user={auth.user}
-        />
+      <>
         <AlertBar />
-        <ErrorBoundary>
-          <Switch>
-            <Route exact path="/" component={HomePage} />
+        <div className="bg-gray-50 h-screen">
+          <NavBar
+            isAuthenticated={auth.isAuthenticated}
+            onLogoutClick={this.handleLogout}
+            user={auth.user}
+          />
+          <ErrorBoundary>
+            <Switch>
+              <Route exact path="/" component={HomePage} />
 
-            <Route path="/profile/:username/:cardId" component={CardPage} />
+              <Route path="/profile/:username/:cardId" component={CardPage} />
 
-            <Route path="/profile/:username" component={ProfilePage} />
+              <Route path="/profile/:username" component={ProfilePage} />
 
-            <PrivateRoute path="/account" component={AccountPage} />
+              <PrivateRoute path="/account" component={AccountPage} />
 
-            <Route path="*" component={PageNotFound} />
-          </Switch>
-        </ErrorBoundary>
-      </div>
+              <Route path="*" component={PageNotFound} />
+            </Switch>
+          </ErrorBoundary>
+        </div>
+      </>
     );
   }
 }

@@ -102,11 +102,11 @@ class RegisterForm extends React.Component {
               Confirm password
               <br />
               <input
-                className={`rounded-lg text-sm p-1 my-1 border  ${
+                className={
                   showPwMismatchWarn
-                    ? "border-red-500"
-                    : "border-green-400 hover:border-green-600"
-                }`}
+                    ? "rounded-lg text-sm p-1 my-1 border border-red-500"
+                    : "rounded-lg text-sm p-1 my-1 border border-green-400 hover:border-green-600"
+                }
                 type="password"
                 required
                 name="confirmPassword"
