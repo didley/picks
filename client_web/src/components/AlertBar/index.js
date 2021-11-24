@@ -2,6 +2,7 @@ import React from "react";
 import AlertIcon from "./AlertIcon";
 import { connect } from "react-redux";
 import { clearAlert } from "actions/alertActions";
+import ReactDOM from "react-dom";
 
 class AlertBar extends React.Component {
   render() {
@@ -10,22 +11,24 @@ class AlertBar extends React.Component {
     let bgColor;
     switch (alert.style) {
       case "GENERAL":
-        bgColor = "flex w-full text-center items-center bg-blue-500 text-white";
+        bgColor =
+          "z-10 fixed flex w-full text-center items-center bg-blue-500 text-white";
         break;
       case "WARNING":
         bgColor =
-          "flex w-full text-center items-center bg-yellow-400 text-white";
+          "z-10 fixed flex w-full text-center items-center bg-yellow-400 text-white";
         break;
       case "ERROR":
-        bgColor = "flex w-full text-center items-center bg-red-500 text-white";
+        bgColor =
+          "z-10 fixed flex w-full text-center items-center bg-red-500 text-white";
         break;
       case "SUCCESS":
         bgColor =
-          "flex w-full text-center items-center bg-green-400 text-white";
+          "z-10 fixed flex w-full text-center items-center bg-green-400 text-white";
         break;
       case "LOADING":
         bgColor =
-          "flex w-full text-center items-center bg-purple-600 text-white";
+          "z-10 fixed flex w-full text-center items-center bg-purple-600 text-white";
         break;
       default:
         bgColor = "blue-500";
@@ -40,7 +43,7 @@ class AlertBar extends React.Component {
 
     if (!alert.message) return <div />;
 
-    return (
+    return ReactDOM.createPortal(
       <div className={bgColor}>
         <AlertIcon
           className="flex-none items-center m-3"
@@ -57,7 +60,8 @@ class AlertBar extends React.Component {
         >
           X
         </div>
-      </div>
+      </div>,
+      document.getElementById("alert-root")
     );
   }
 }
