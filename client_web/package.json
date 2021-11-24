@@ -20,12 +20,13 @@
     "react-scripts": "4.0.3",
     "redux": "^4.1.0",
     "redux-saga": "^1.1.3",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "uuid": "^8.3.2",
-    "web-vitals": "^1.0.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "craco start",
+    "build:serve": "yarn build && npx -y serve -s --debug build",
     "build": "craco build",
     "test": "craco test",
     "ci-test": "craco test --verbose --ci --reporters=default --reporters=jest-junit",
@@ -67,5 +68,8 @@
   },
   "msw": {
     "workerDirectory": "public"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }

@@ -39,11 +39,11 @@ const EditProfileForm = ({
                 <button
                   type="submit"
                   disabled={!dirty}
-                  className={`border-2 p-2 m-1 rounded-md ${
+                  className={
                     dirty
-                      ? "border-green-400 text-green-400 hover:bg-green-400 hover:text-white"
-                      : "border-gray-300 text-gray-400 cursor-not-allowed"
-                  }`}
+                      ? "border-2 p-2 m-1 rounded-md border-green-400 text-green-400 hover:bg-green-400 hover:text-white"
+                      : "border-2 p-2 m-1 rounded-md border-gray-300 text-gray-400 cursor-not-allowed"
+                  }
                 >
                   {isLoading ? "Updating..." : "Update Profile"}
                 </button>
