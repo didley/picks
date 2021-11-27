@@ -9,6 +9,7 @@ const EditingPick = ({
   onMoveDown,
   isFirstPick,
   isLastPick,
+  isOnlyPick,
 }) => {
   const loadingPreview = pick.status === "loading";
 
@@ -65,33 +66,35 @@ const EditingPick = ({
             checked={pick.nsfw}
           />
         </label>
-        <div>
-          <button
-            aria-label="move-up"
-            type="button"
-            className={isFirstPick ? "mx-2 invisible" : "mx-2"}
-            onClick={onMoveUp}
-          >
-            ↑
-          </button>
+        {!isOnlyPick && (
+          <div>
+            <button
+              aria-label="move-up"
+              type="button"
+              className={isFirstPick ? "mx-2 invisible" : "mx-2"}
+              onClick={onMoveUp}
+            >
+              ↑
+            </button>
 
-          <button
-            aria-label="move-down"
-            type="button"
-            className={isLastPick ? "mx-2 invisible" : "mx-2"}
-            onClick={onMoveDown}
-          >
-            ↓
-          </button>
+            <button
+              aria-label="move-down"
+              type="button"
+              className={isLastPick ? "mx-2 invisible" : "mx-2"}
+              onClick={onMoveDown}
+            >
+              ↓
+            </button>
 
-          <button
-            type="button"
-            onClick={removePick}
-            className="mx-2 text-red-500"
-          >
-            Remove
-          </button>
-        </div>
+            <button
+              type="button"
+              onClick={removePick}
+              className="mx-2 text-red-500"
+            >
+              Remove
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
