@@ -48,6 +48,18 @@ const EditingPick = ({
             className="w-full"
           />
         </label>
+        <br />
+        <label>
+          comments
+          <input
+            onChange={onChange}
+            name="comments"
+            value={pick.comments}
+            placeholder="Tell us about this pick"
+            type="text"
+            className="w-full"
+          />
+        </label>
       </div>
       <div>
         {loadingPreview && <p>Loading preview...</p>}
