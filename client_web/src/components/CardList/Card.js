@@ -22,7 +22,7 @@ class Card extends React.Component {
 
     return (
       <div
-        className="relative border rounded-lg p-3 m-2 hover:border-purple-300 bg-white"
+        className="relative mb-2 md:mx-2 border-t border-b md:border md:rounded-lg px-2 py-2 hover:border-purple-300 bg-white"
         onClick={(e) => {
           e.stopPropagation();
           nav(`/profile/${createdBy?.username}/${_id}`);
@@ -50,7 +50,7 @@ class Card extends React.Component {
             </button>
           )}
         </div>
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 leading-tight">
           <div className="mb-3">
             <button
               onClick={(e) => {
@@ -63,7 +63,7 @@ class Card extends React.Component {
             </button>
             <small className="text-gray-500"> · {parseDate(createdAt)}</small>
             <br />
-            <small>{comments}</small>
+            <small className="break-words">{comments}</small>
             <hr className="md:hidden" />
           </div>
           <PickList picks={picks} />
