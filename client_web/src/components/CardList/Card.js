@@ -64,10 +64,11 @@ class Card extends React.Component {
                   <small className="text-black font-black">
                     {createdBy?.name}
                   </small>
-                  {" · "}
+
                   <small className="text-gray-500">
+                    {" · "}
                     {createdBy?.username}
-                  </small>{" "}
+                  </small>
                 </>
               ) : (
                 <small className="text-black font-black">
