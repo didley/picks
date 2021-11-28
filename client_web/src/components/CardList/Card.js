@@ -59,7 +59,21 @@ class Card extends React.Component {
               }}
               className="hover:underline mb-2"
             >
-              <small className="text-gray-500">{createdBy?.username}</small>
+              {createdBy?.name ? (
+                <>
+                  <small className="text-black font-black">
+                    {createdBy?.name}
+                  </small>
+                  {" · "}
+                  <small className="text-gray-500">
+                    {createdBy?.username}
+                  </small>{" "}
+                </>
+              ) : (
+                <small className="text-black font-black">
+                  {createdBy?.username}
+                </small>
+              )}
             </button>
             <small className="text-gray-500"> · {parseDate(createdAt)}</small>
             <br />
