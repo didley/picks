@@ -31,6 +31,22 @@ class CardForm extends React.Component {
       }
     };
 
+    const hideCommentField = () => this.setState({ showCommentsField: false });
+
+    const handleCommentsChange = (e) => {
+      if (e.target.value === "") hideCommentField();
+      handleChange(e);
+    };
+
+    const handleCommentKeyDown = ({ keyCode, target }) => {
+      if (target.value === "") {
+        const backspacePressed = keyCode === 8;
+        const deletePressed = keyCode === 46;
+
+        if (backspacePressed || deletePressed) hideCommentField();
+      }
+    };
+
     if (!draftCard) return null;
 
     return (
@@ -54,7 +70,8 @@ class CardForm extends React.Component {
                   name="comments"
                   className="w-full"
                   value={draftCard.comments}
-                  onChange={handleChange}
+                  onChange={handleCommentsChange}
+                  onKeyDown={handleCommentKeyDown}
                 />
               </label>
             ) : (

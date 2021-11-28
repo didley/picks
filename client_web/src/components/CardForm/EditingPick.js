@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Preview from "./Preview";
 
 const EditingPick = ({
@@ -11,6 +11,24 @@ const EditingPick = ({
   isLastPick,
   isOnlyPick,
 }) => {
+  const [showCommentField, setShowCommentField] = useState(() =>
+    pick.comments ? true : false
+  );
+
+  const handleCommentChange = (e) => {
+    if (e.target.value === "") setShowCommentField(false);
+    onChange(e);
+  };
+
+  const handleCommentKeyDown = ({ keyCode, target }) => {
+    if (target.value === "") {
+      const backspacePressed = keyCode === 8;
+      const deletePressed = keyCode === 46;
+
+      if (backspacePressed || deletePressed) setShowCommentField(false);
+    }
+  };
+
   const loadingPreview = pick.status === "loading";
 
   const displayPreviewNotFound =
@@ -50,18 +68,27 @@ const EditingPick = ({
           />
         </label>
 
-        <label>
-          Comments
-          <input
-            onChange={onChange}
-            name="comments"
-            value={pick.comments}
-            placeholder="Tell us about this pick"
-            type="text"
-            className="w-full"
-          />
-        </label>
-
+        {showCommentField ? (
+          <label>
+            Pick Comment
+            <input
+              onChange={handleCommentChange}
+              onKeyDown={handleCommentKeyDown}
+              name="comments"
+              value={pick.comments}
+              placeholder="Tell us about this pick"
+              type="text"
+              className="w-full"
+            />
+          </label>
+        ) : (
+          <button
+            onClick={() => setShowCommentField(true)}
+            className="text-left text-purple-500 my-2"
+          >
+            + Add Comment
+          </button>
+        )}
         {loadingPreview && <p>Loading preview...</p>}
         {pick.error && <small className="text-red-500">{pick.error}</small>}
         {pick.preview && <Preview preview={pick.preview} url={pick.url} />}
