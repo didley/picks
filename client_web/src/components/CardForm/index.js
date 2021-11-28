@@ -5,6 +5,11 @@ import { selectDraftCard } from "reducers/selectors";
 import { card } from "actions/cardActions";
 
 class CardForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { showCommentsField: props.draftCard.comments ? true : false };
+  }
+
   render() {
     const {
       draftCard,
@@ -42,15 +47,24 @@ class CardForm extends React.Component {
         <br />
         <form onSubmit={handleSubmit}>
           <div className="grid md:grid-cols-2 gap-2">
-            <label className="">
-              Card Comments
-              <textarea
-                name="comments"
-                className="w-full"
-                value={draftCard.comments}
-                onChange={handleChange}
-              />
-            </label>
+            {this.state.showCommentsField ? (
+              <label>
+                Card Comments
+                <textarea
+                  name="comments"
+                  className="w-full"
+                  value={draftCard.comments}
+                  onChange={handleChange}
+                />
+              </label>
+            ) : (
+              <button
+                onClick={() => this.setState({ showCommentsField: true })}
+                className="text-left text-purple-500"
+              >
+                + Add Comments
+              </button>
+            )}
           </div>
 
           <hr className="my-4" />
