@@ -60,7 +60,7 @@ describe("<CardForm />", () => {
     };
 
     // adds comment to card
-    const postCommentsField = screen.getByLabelText(/^post comments$/i);
+    const postCommentsField = screen.getByLabelText(/^card comments$/i);
     userEvent.type(postCommentsField, cardStub.comments);
 
     // attempts to add 6 empty pick fields
@@ -147,7 +147,7 @@ describe("<CardForm />", () => {
     };
 
     // adds comment to card
-    const postCommentsField = screen.getByLabelText(/^post comments$/i);
+    const postCommentsField = screen.getByLabelText(/^card comments$/i);
     userEvent.type(postCommentsField, cardStub.comments);
 
     // adds 3 empty pick fields
@@ -217,7 +217,7 @@ describe("<CardForm />", () => {
     };
 
     // adds comment to card
-    const postCommentsField = screen.getByLabelText(/^post comments$/i);
+    const postCommentsField = screen.getByLabelText(/^card comments$/i);
     userEvent.type(postCommentsField, cardStub.comments);
 
     // adds 3 empty pick fields

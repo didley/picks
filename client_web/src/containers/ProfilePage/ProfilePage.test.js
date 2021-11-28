@@ -139,7 +139,7 @@ describe("<ProfilePage />", () => {
         userEvent.click(newPostBtn);
 
         // form field selectors
-        const postCommentField = await screen.findByText(/post comments/i);
+        const postCommentField = await screen.findByText(/card comments/i);
         const urlField = await screen.findByRole("textbox", { name: /url/i });
 
         const submitBtn = await screen.findByRole("button", {
