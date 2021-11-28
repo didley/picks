@@ -143,7 +143,7 @@ describe("<ProfilePage />", () => {
         const urlField = await screen.findByRole("textbox", { name: /url/i });
 
         const submitBtn = await screen.findByRole("button", {
-          name: /post picks/i,
+          name: /create picks/i,
         });
 
         userEvent.type(postCommentField, "CREATE_CARD_TEST1");
@@ -208,7 +208,7 @@ describe("<ProfilePage />", () => {
       userEvent.click(editBtn[0]);
 
       const deleteBtn = await screen.findByRole("button", {
-        name: /delete post/i,
+        name: /delete picks/i,
       });
       userEvent.click(deleteBtn);
 

@@ -22,7 +22,7 @@ class Card extends React.Component {
 
     return (
       <div
-        className="relative mb-2 md:mx-2 border-t border-b md:border md:rounded-lg px-2 py-2 hover:border-purple-300 bg-white"
+        className="relative mb-2 md:mx-2 border-t border-b md:border md:rounded-lg p-2 sm:p-4 hover:border-purple-300 bg-white"
         onClick={(e) => {
           e.stopPropagation();
           nav(`/profile/${createdBy?.username}/${_id}`);
@@ -40,7 +40,7 @@ class Card extends React.Component {
           </ShareBtn>
           {isOwnCard && (
             <button
-              className="ml-2 text-sm text-gray-500 hover:text-purple-500"
+              className="ml-4 text-sm text-gray-500 hover:text-purple-500"
               onClick={(e) => {
                 e.stopPropagation();
                 setEditable(card);

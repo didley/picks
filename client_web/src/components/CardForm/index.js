@@ -30,16 +30,16 @@ class CardForm extends React.Component {
 
     return (
       <div
-        className="rounded-lg p-2 m-2 border-2 border-purple-400 text-xs bg-white"
+        className="rounded-lg p-2 sm:p-4 m-2 border-2 border-purple-400 text-xs bg-white"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between">
-          <h5 className="font-bold">
-            {draftCard.editing ? "Editing Post" : "Create a Post"}
+          <h5 className="font-black">
+            {draftCard.editing ? "Editing Picks" : "Creating Picks"}
           </h5>
           <button onClick={clearDraft}>Cancel</button>
         </div>
-
+        <br />
         <form onSubmit={handleSubmit}>
           <div className="grid md:grid-cols-2 gap-2">
             <label className="font-normal">
@@ -66,16 +66,16 @@ class CardForm extends React.Component {
                 <button
                   type="button"
                   onClick={() => deleteCard(draftCard.editingId)}
-                  className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 m-1 rounded-md"
+                  className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 mx-3 rounded-md"
                 >
-                  Delete Post
+                  Delete Picks
                 </button>
 
                 <button
                   type="submit"
-                  className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 m-1 rounded-md"
+                  className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 rounded-md"
                 >
-                  Update Post
+                  Update Picks
                 </button>
               </>
             ) : (
@@ -83,7 +83,7 @@ class CardForm extends React.Component {
                 type="submit"
                 className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 m-1 rounded-md"
               >
-                Post Picks
+                Create Picks
               </button>
             )}
           </div>
