@@ -17,13 +17,14 @@ const EditingPick = ({
     (!pick.status && !pick.preview) || pick.status === "notFound";
 
   const notFoundForm = (
-    <div>
-      <div className="text-center bg-gray-100 border border-gray-300 rounded-xl p-1">
+    <>
+      <div className="text-center bg-gray-100 border border-gray-300 rounded-xl p-2">
         <p className="text-gray-500 font-bold">Preview not found</p>
-        <p className="text-gray-500">Enter a title</p>
+        <p className="text-gray-500 text-xs">Enter a title</p>
       </div>
       <label>
-        Title
+        Title{" "}
+        <span className="text-red-500 font-normal text-xs">(required)</span>
         <input
           className="w-full"
           name="userTitle"
@@ -31,12 +32,12 @@ const EditingPick = ({
           value={pick.userTitle}
         />
       </label>
-    </div>
+    </>
   );
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 border border-gray-300 rounded-md p-4 my-2">
-      <div>
+    <div className="border border-purple-300 rounded-md p-2 my-2">
+      <div className="grid md:grid-rows-2 md:grid-cols-2 gap-3 md:grid-flow-col">
         <label>
           Pick URL
           <input
@@ -48,9 +49,9 @@ const EditingPick = ({
             className="w-full"
           />
         </label>
-        <br />
+
         <label>
-          comments
+          Comments
           <input
             onChange={onChange}
             name="comments"
@@ -60,42 +61,44 @@ const EditingPick = ({
             className="w-full"
           />
         </label>
-      </div>
-      <div>
+
         {loadingPreview && <p>Loading preview...</p>}
         {pick.error && <small className="text-red-500">{pick.error}</small>}
         {pick.preview && <Preview preview={pick.preview} url={pick.url} />}
         {displayPreviewNotFound && notFoundForm}
       </div>
-
-      <div className="flex justify-between">
-        <label className="font-normal">
-          NSFW{" "}
+      <br />
+      <div className="flex justify-between pb-2">
+        <label className="font-normal text-xs">
           <input
             type="checkbox"
             name="nsfw"
             onChange={onChange}
             checked={pick.nsfw}
           />
+          {"  "}
+          NSFW
         </label>
         {!isOnlyPick && (
           <div>
             <button
               aria-label="move-up"
               type="button"
-              className={isFirstPick ? "mx-2 invisible" : "mx-2"}
+              className={
+                isFirstPick ? "mx-2 invisible" : "mx-2 text-purple-500"
+              }
               onClick={onMoveUp}
             >
-              ↑
+              Move up
             </button>
 
             <button
               aria-label="move-down"
               type="button"
-              className={isLastPick ? "mx-2 invisible" : "mx-2"}
+              className={isLastPick ? "mx-2 invisible" : "mx-2 text-purple-500"}
               onClick={onMoveDown}
             >
-              ↓
+              Move down
             </button>
 
             <button

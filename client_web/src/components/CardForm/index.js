@@ -30,7 +30,7 @@ class CardForm extends React.Component {
 
     return (
       <div
-        className="rounded-lg p-4 m-2 border-2 border-purple-400 text-xs bg-white"
+        className="rounded-lg p-2 m-2 border-2 border-purple-400 text-xs bg-white"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between">
@@ -54,7 +54,7 @@ class CardForm extends React.Component {
           </div>
 
           <hr className="my-4" />
-          <h6 className="font-normal">Picks</h6>
+          <h6 className="font-black">Picks</h6>
 
           {draftCard.picks && <EditingPicks />}
 
