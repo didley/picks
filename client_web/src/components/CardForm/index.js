@@ -42,7 +42,7 @@ class CardForm extends React.Component {
         <br />
         <form onSubmit={handleSubmit}>
           <div className="grid md:grid-cols-2 gap-2">
-            <label className="font-normal">
+            <label className="">
               Card Comments
               <textarea
                 name="comments"
