@@ -33,7 +33,7 @@ const ProfileHeader = ({
     );
 
   return (
-    <div className="flex justify-center w-full">
+    <div className="flex justify-center w-full mb-2">
       <div
         aria-label="profile"
         className="relative mx-2 w-full max-w-xl p-8 rounded-lg border border-gray-200 bg-white"

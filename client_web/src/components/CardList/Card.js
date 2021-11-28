@@ -63,7 +63,7 @@ class Card extends React.Component {
             </button>
             <small className="text-gray-500"> · {parseDate(createdAt)}</small>
             <br />
-            <small className="break-words">{comments}</small>
+            <small className="break-words text-gray-700">{comments}</small>
             <hr className="md:hidden" />
           </div>
           <PickList picks={picks} />

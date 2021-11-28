@@ -12,8 +12,8 @@ const EditProfileForm = ({
   const controlledInitialValues = { name, bio, location };
 
   return (
-    <div className="flex justify-center w-full">
-      <div className="relative mx-2 w-full max-w-xl p-8 rounded-lg border-2 border-gray-500">
+    <div className="flex justify-center w-full text-xs">
+      <div className="relative mx-2 w-full max-w-xl p-4 rounded-lg border-2 border-gray-500 bg-white">
         <div className="flex justify-between mb-2">
           <h5 className="font-bold">Editing Profile</h5>
           <button onClick={handleSetProfileEditHidden}>Cancel</button>
@@ -22,17 +22,17 @@ const EditProfileForm = ({
           {({ dirty }) => (
             <Form>
               <label>
-                Name:
+                Name
                 <Field name="name" className="w-full" />
               </label>
-
+              <br />
               <label>
-                Bio:
+                Bio
                 <Field name="bio" component="textarea" className="w-full" />
               </label>
-
+              <br />
               <label>
-                Location:
+                Location
                 <Field name="location" className="w-full" />
               </label>
               <div className="flex justify-end mt-2">
