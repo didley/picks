@@ -138,28 +138,38 @@ describe("<ProfilePage />", () => {
         const newPostBtn = await screen.findByText(/create picks/i);
         userEvent.click(newPostBtn);
 
+        // const addCardCommentBtn =
+        userEvent.click(await screen.findByText(/add comments/i));
+
         // form field selectors
-        const postCommentField = await screen.findByText(/card comments/i);
-        const urlField = await screen.findByRole("textbox", { name: /url/i });
-
-        const submitBtn = await screen.findByRole("button", {
-          name: /create picks/i,
+        const cardCommentField = await screen.findByRole("textbox", {
+          name: /comments/i,
         });
+        userEvent.type(cardCommentField, "CREATE_CARD_TEST1");
 
-        userEvent.type(postCommentField, "CREATE_CARD_TEST1");
-        userEvent.type(urlField, "http://www.CREATE_CARD_TEST.com");
+        const urlField = await screen.findByLabelText(/pick url/i);
+        userEvent.type(urlField, "CREATE_CARD_TEST.com");
 
         await waitForElementToBeRemoved(
           () => screen.queryByText("Loading preview..."),
           { timeout: 1100 }
         );
 
+        await screen.findByText("Mock preview");
+
+        const submitBtn = await screen.findByRole("button", {
+          name: /create picks/i,
+        });
+
         userEvent.click(submitBtn);
+        await waitForElementToBeRemoved(
+          () => screen.queryByText("Loading cards..."),
+          { timeout: 1100 }
+        );
 
         // it hides create form after submit
-        await waitForElementToBeRemoved(() =>
-          screen.queryByText("Create a Post")
-        );
+        const cancelBtn = screen.queryByText(/cancel/i);
+        expect(cancelBtn).toBeNull();
 
         // it displays created post on page
         const postCommentText = await screen.findByText("CREATE_CARD_TEST1");

@@ -1,5 +1,4 @@
 import { uuid } from "utils/uuid";
-import { parseDomain } from "utils/parseDomain";
 import { getCardByUsernameStub } from "./cards.mock.stubs";
 
 export const cardsMockControllers = {
@@ -23,9 +22,6 @@ export const cardsMockControllers = {
     return res(ctx.delay(), ctx.json({ data: { _id: idParam } }));
   },
   getLinkPreview: (req, res, ctx) => {
-    const urlParam = req.url.searchParams.get("url");
-    // const reqDomain = parseDomain(urlParam);
-
     const preview = {
       data: {
         ogType: "article",

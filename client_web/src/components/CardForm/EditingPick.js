@@ -16,14 +16,14 @@ const EditingPick = ({
   );
 
   const handleCommentChange = (e) => {
-    if (e.target.value === "") setShowCommentField(false);
     onChange(e);
+    if (e.target.value === "") setShowCommentField(false);
   };
 
-  const handleCommentKeyDown = ({ keyCode, target }) => {
-    if (target.value === "") {
-      const backspacePressed = keyCode === 8;
-      const deletePressed = keyCode === 46;
+  const handleCommentKeyDown = (e) => {
+    if (e.target.value === "") {
+      const backspacePressed = e.keyCode === 8;
+      const deletePressed = e.keyCode === 46;
 
       if (backspacePressed || deletePressed) setShowCommentField(false);
     }
@@ -44,6 +44,7 @@ const EditingPick = ({
         Title{" "}
         <span className="text-red-500 font-normal text-xs">(required)</span>
         <input
+          autoFocus
           className="w-full"
           name="userTitle"
           onChange={onChange}
@@ -59,6 +60,7 @@ const EditingPick = ({
         <label>
           Pick URL
           <input
+            autoFocus
             onChange={onChange}
             name="url"
             value={pick.url}
@@ -72,6 +74,7 @@ const EditingPick = ({
           <label>
             Pick Comment
             <input
+              autoFocus
               onChange={handleCommentChange}
               onKeyDown={handleCommentKeyDown}
               name="comments"
@@ -85,6 +88,7 @@ const EditingPick = ({
           <button
             onClick={() => setShowCommentField(true)}
             className="text-left text-purple-500 my-2"
+            type="button"
           >
             + Add Comment
           </button>

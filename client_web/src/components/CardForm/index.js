@@ -23,7 +23,7 @@ class CardForm extends React.Component {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-
+      e.stopPropagation();
       if (draftCard.editing) {
         updateCard();
       } else {
@@ -34,14 +34,14 @@ class CardForm extends React.Component {
     const hideCommentField = () => this.setState({ showCommentsField: false });
 
     const handleCommentsChange = (e) => {
-      if (e.target.value === "") hideCommentField();
       handleChange(e);
+      if (e.target.value === "") hideCommentField();
     };
 
-    const handleCommentKeyDown = ({ keyCode, target }) => {
-      if (target.value === "") {
-        const backspacePressed = keyCode === 8;
-        const deletePressed = keyCode === 46;
+    const handleCommentKeyDown = (e) => {
+      if (e.target.value === "") {
+        const backspacePressed = e.keyCode === 8;
+        const deletePressed = e.keyCode === 46;
 
         if (backspacePressed || deletePressed) hideCommentField();
       }
@@ -67,6 +67,7 @@ class CardForm extends React.Component {
               <label>
                 Card Comments
                 <textarea
+                  autoFocus
                   name="comments"
                   className="w-full"
                   value={draftCard.comments}
@@ -78,6 +79,7 @@ class CardForm extends React.Component {
               <button
                 onClick={() => this.setState({ showCommentsField: true })}
                 className="text-left text-purple-500"
+                type="button"
               >
                 + Add Comments
               </button>
