@@ -44,7 +44,6 @@ const EditingPick = ({
         Title{" "}
         <span className="text-red-500 font-normal text-xs">(required)</span>
         <input
-          autoFocus
           className="w-full"
           name="userTitle"
           onChange={onChange}

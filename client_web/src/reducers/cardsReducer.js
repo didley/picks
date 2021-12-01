@@ -105,6 +105,7 @@ const draftReducer = (state = null, action) => {
         picks: {
           initialCreateCardPickId: {
             url: "",
+            nsfw: false,
             preview: null,
             status: "idle",
             _id: "initialCreateCardPickId",
@@ -193,6 +194,7 @@ const draftReducer = (state = null, action) => {
     case LINK_PREVIEW_NOT_FOUND:
       return produce(state, (draft) => {
         const pick = draft.picks[action.id];
+        pick.userTitle = "";
         pick.preview = null;
         pick.status = "notFound";
         pick.error = action.error;
