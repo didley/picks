@@ -109,6 +109,7 @@ const draftReducer = (state = null, action) => {
             preview: null,
             status: "idle",
             _id: "initialCreateCardPickId",
+            comments: "",
           },
         },
       };
@@ -116,9 +117,14 @@ const draftReducer = (state = null, action) => {
     case SET_EDITING: {
       const { card } = action;
 
+      const picksStatusAppended = card.picks.map((pick) => ({
+        ...pick,
+        status: pick.userTitle ? "notFound" : "succeeded",
+      }));
+
       return {
         editingId: card._id,
-        ...{ ...card, picks: normaliseArray(card.picks) },
+        ...{ ...card, picks: normaliseArray(picksStatusAppended) },
       };
     }
     case CHANGE_DRAFT: {
@@ -145,6 +151,7 @@ const draftReducer = (state = null, action) => {
           preview: null,
           status: "idle",
           _id: action.id,
+          comments: "",
         };
       });
 

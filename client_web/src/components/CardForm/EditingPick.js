@@ -44,10 +44,12 @@ const EditingPick = ({
         Title{" "}
         <span className="text-red-500 font-normal text-xs">(required)</span>
         <input
+          required
           className="w-full"
           name="userTitle"
           onChange={onChange}
           value={pick.userTitle}
+          placeholder="Describe what this pick is"
         />
       </label>
     </>
@@ -60,6 +62,7 @@ const EditingPick = ({
           Pick URL
           <input
             autoFocus
+            required
             onChange={onChange}
             name="url"
             value={pick.url}

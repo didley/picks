@@ -47,6 +47,22 @@ class CardForm extends React.Component {
       }
     };
 
+    const checkCardIsValid = (card) => {
+      const pickIsValid = (pick) => {
+        if (pick.url) {
+          const previewSucceeded = pick.status === "succeeded";
+          const previewNotFound = pick.status === "notFound";
+          return previewSucceeded || (previewNotFound && pick.userTitle)
+            ? true
+            : false;
+        }
+        return false;
+      };
+      const allPicksValid = card.picks.every(pickIsValid);
+      return allPicksValid ? true : false;
+    };
+    const cardIsValid = checkCardIsValid(draftCard);
+
     if (!draftCard) return null;
 
     return (
@@ -106,7 +122,8 @@ class CardForm extends React.Component {
 
                 <button
                   type="submit"
-                  className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 rounded-md"
+                  className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 rounded-md disabled:text-gray-400 disabled:border-gray-300 disabled:bg-white"
+                  disabled={!cardIsValid}
                 >
                   Update Picks
                 </button>
@@ -114,7 +131,8 @@ class CardForm extends React.Component {
             ) : (
               <button
                 type="submit"
-                className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 m-1 rounded-md"
+                disabled={!cardIsValid}
+                className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 m-1 rounded-md disabled:text-gray-400 disabled:border-gray-300 disabled:bg-white"
               >
                 Create Picks
               </button>
