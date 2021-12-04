@@ -41,31 +41,40 @@ const cardsReducer = (state = {}, action) => {
   }
 };
 
-const cardStatusReducer = (state = "idle", action) => {
+const cardStatusReducer = (
+  state = { query: "idle", mutation: "idle" },
+  action
+) => {
   switch (action.type) {
     case GET_CARDS.request:
+      return { ...state, query: "loading" };
+
+    case GET_CARDS.success:
+      return { ...state, query: "succeeded" };
+
+    case GET_CARDS.failure:
+      return { ...state, query: "failed" };
+
     case CREATE_CARD.request:
     case UPDATE_CARD.request:
     case DELETE_CARD.request:
-      return "loading";
+      return { ...state, mutation: "loading" };
 
-    case GET_CARDS.success:
     case CREATE_CARD.success:
     case UPDATE_CARD.success:
     case DELETE_CARD.success:
-      return "succeeded";
+      return { ...state, mutation: "succeeded" };
 
-    case GET_CARDS.failure:
     case CREATE_CARD.failure:
     case UPDATE_CARD.failure:
     case DELETE_CARD.failure:
-      return "failed";
+      return { ...state, mutation: "failed" };
 
     case GET_CARDS.reset:
     case CREATE_CARD.reset:
     case UPDATE_CARD.reset:
     case DELETE_CARD.reset:
-      return "idle";
+      return { query: "idle", mutation: "idle" };
 
     default:
       return state;

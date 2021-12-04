@@ -1,9 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import EditingPicks from "./EditingPicks";
-import { selectDraftCard } from "reducers/selectors";
+import {
+  selectDraftCard,
+  selectCardMutationIsLoading,
+} from "reducers/selectors";
 import { card } from "actions/cardActions";
-
 class CardForm extends React.Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,7 @@ class CardForm extends React.Component {
       updateCard,
       createCard,
       draftIsLoading,
+      mutationIsLoading,
     } = this.props;
 
     const handleSubmit = (e) => {
@@ -117,7 +120,7 @@ class CardForm extends React.Component {
                   onClick={() => deleteCard(draftCard.editingId)}
                   className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 mx-3 rounded-md"
                 >
-                  Delete Picks
+                  {mutationIsLoading ? "Deleting..." : "Delete Picks"}
                 </button>
 
                 <button
@@ -125,7 +128,7 @@ class CardForm extends React.Component {
                   className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 rounded-md disabled:text-gray-400 disabled:border-gray-300 disabled:bg-white"
                   disabled={!cardIsValid}
                 >
-                  Update Picks
+                  {mutationIsLoading ? "Updating..." : "Update Picks"}
                 </button>
               </>
             ) : (
@@ -134,7 +137,7 @@ class CardForm extends React.Component {
                 disabled={!cardIsValid}
                 className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 m-1 rounded-md disabled:text-gray-400 disabled:border-gray-300 disabled:bg-white"
               >
-                Create Picks
+                {mutationIsLoading ? "Creating..." : "Create Picks"}
               </button>
             )}
           </div>
@@ -146,7 +149,7 @@ class CardForm extends React.Component {
 
 const mapState = (state) => ({
   draftCard: selectDraftCard(state),
-  // TODO draftIsLoading:
+  mutationIsLoading: selectCardMutationIsLoading(state),
 });
 
 export default connect(mapState, {
