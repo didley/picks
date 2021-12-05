@@ -1,15 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import EditingPicks from "./EditingPicks";
-import {
-  selectDraftCard,
-  selectCardMutationIsLoading,
-} from "reducers/selectors";
+import { selectDraftCard, selectCardMutationStatus } from "reducers/selectors";
 import { card } from "actions/cardActions";
 class CardForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { showCommentsField: props.draftCard.comments ? true : false };
+    this.state = {
+      showCommentsField: props.draftCard.comments ? true : false,
+      deleteConfirmationActive: false,
+    };
   }
 
   render() {
@@ -21,8 +21,9 @@ class CardForm extends React.Component {
       updateCard,
       createCard,
       draftIsLoading,
-      mutationIsLoading,
+      mutationStatus,
     } = this.props;
+    const { deleteConfirmationActive } = this.state;
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -115,29 +116,66 @@ class CardForm extends React.Component {
               <small className="text-gray-400 p-2 m-1">Loading...</small>
             ) : draftCard.editing ? (
               <>
-                <button
-                  type="button"
-                  onClick={() => deleteCard(draftCard.editingId)}
-                  className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 mx-3 rounded-md"
-                >
-                  {mutationIsLoading ? "Deleting..." : "Delete Picks"}
-                </button>
+                {deleteConfirmationActive ? (
+                  <>
+                    {mutationStatus !== "deleting" && (
+                      <button
+                        type="submit"
+                        className="border-2 p-2 rounded-md text-gray-400 border-gray-300 bg-white hover:bg-gray-100 mx-3 w-24"
+                        disabled={!cardIsValid}
+                        onClick={(s) =>
+                          this.setState({
+                            ...s,
+                            deleteConfirmationActive: false,
+                          })
+                        }
+                      >
+                        Cancel
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => deleteCard(draftCard.editingId)}
+                      className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 rounded-md w-24"
+                    >
+                      {mutationStatus === "deleting"
+                        ? "Deleting..."
+                        : "Delete Picks"}
+                    </button>
+                  </>
+                ) : (
+                  mutationStatus !== "updating" && (
+                    <button
+                      type="button"
+                      onClick={(s) =>
+                        this.setState({ ...s, deleteConfirmationActive: true })
+                      }
+                      className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 mx-3 rounded-md w-24"
+                    >
+                      Delete Picks
+                    </button>
+                  )
+                )}
 
-                <button
-                  type="submit"
-                  className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 rounded-md disabled:text-gray-400 disabled:border-gray-300 disabled:bg-white"
-                  disabled={!cardIsValid}
-                >
-                  {mutationIsLoading ? "Updating..." : "Update Picks"}
-                </button>
+                {!deleteConfirmationActive && (
+                  <button
+                    type="submit"
+                    className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 rounded-md disabled:text-gray-400 disabled:border-gray-300 disabled:bg-white w-24"
+                    disabled={!cardIsValid}
+                  >
+                    {mutationStatus === "updating"
+                      ? "Updating..."
+                      : "Update Picks"}
+                  </button>
+                )}
               </>
             ) : (
               <button
                 type="submit"
                 disabled={!cardIsValid}
-                className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 m-1 rounded-md disabled:text-gray-400 disabled:border-gray-300 disabled:bg-white"
+                className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 m-1 rounded-md disabled:text-gray-400 disabled:border-gray-300 disabled:bg-white w-24"
               >
-                {mutationIsLoading ? "Creating..." : "Create Picks"}
+                {mutationStatus === "creating" ? "Creating..." : "Create Picks"}
               </button>
             )}
           </div>
@@ -149,7 +187,7 @@ class CardForm extends React.Component {
 
 const mapState = (state) => ({
   draftCard: selectDraftCard(state),
-  mutationIsLoading: selectCardMutationIsLoading(state),
+  mutationStatus: selectCardMutationStatus(state),
 });
 
 export default connect(mapState, {

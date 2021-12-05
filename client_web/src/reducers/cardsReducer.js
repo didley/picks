@@ -56,9 +56,11 @@ const cardStatusReducer = (
       return { ...state, query: "failed" };
 
     case CREATE_CARD.request:
+      return { ...state, mutation: "creating" };
     case UPDATE_CARD.request:
+      return { ...state, mutation: "updating" };
     case DELETE_CARD.request:
-      return { ...state, mutation: "loading" };
+      return { ...state, mutation: "deleting" };
 
     case CREATE_CARD.success:
     case UPDATE_CARD.success:
