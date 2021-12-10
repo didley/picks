@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import EditingPicks from "./EditingPicks";
 import { selectDraftCard, selectCardMutationStatus } from "reducers/selectors";
 import { card } from "actions/cardActions";
+import TagInput from "./TagSection";
 class CardForm extends React.Component {
   constructor(props) {
     super(props);
@@ -104,8 +105,8 @@ class CardForm extends React.Component {
                 + Add Comments
               </button>
             )}
+            <TagInput />
           </div>
-
           <hr className="my-4" />
           <h6 className="font-black">Picks</h6>
 
