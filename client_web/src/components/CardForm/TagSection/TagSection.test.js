@@ -91,8 +91,24 @@ describe("<TagSection />", () => {
 
     expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
   });
-  it.todo("maxCharLimit option works");
-  it.todo("minCharLimit option works");
-  it.todo("error message when when special character used");
-  it.todo("error message when attempt to add tag above tagLimit");
+  it("minCharLimit option works", () => {
+    render(<TagSection opts={{ minCharLimit: 4 }} />);
+
+    const tagInput = screen.getByRole("textbox");
+    userEvent.type(tagInput, "F,o,u,r,");
+
+    const tagListItems = screen.getAllByRole("listitem");
+    const tags = tagListItems.map((li) => li.textContent);
+    expect(tags).toEqual(["Four"]);
+  });
+  it("maxCharLimit option works", () => {
+    render(<TagSection opts={{ maxCharLimit: 4 }} />);
+
+    const tagInput = screen.getByRole("textbox");
+    userEvent.type(tagInput, "Fourr,");
+
+    const tagListItems = screen.getAllByRole("listitem");
+    const tags = tagListItems.map((li) => li.textContent);
+    expect(tags).toEqual(["Four"]);
+  });
 });

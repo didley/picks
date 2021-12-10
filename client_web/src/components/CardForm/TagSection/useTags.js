@@ -1,12 +1,15 @@
 import { useState } from "react";
 
-export const useTags = (opts) => {
+const defaultOpts = { tagLimit: 5, minCharLimit: 3, maxCharLimit: 25 };
+
+export const useTags = (options = defaultOpts) => {
   const [tags, setTags] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [errorMessage, setErrMsg] = useState(null);
   const [tagBackspaced, setTagBackspaced] = useState(false); //! tagBackspaced: Workaround to prevent onChange triggering as onChange can not be suppressed after onKeyDown
 
-  const tagLimitReached = opts.tagLimit <= tags.length;
+  const { tagLimit, minCharLimit, maxCharLimit } = options;
+
+  const tagLimitReached = tagLimit <= tags.length;
 
   const addTag = (tag) => {
     const trimmedTag = tag.trim();
@@ -14,7 +17,8 @@ export const useTags = (opts) => {
       (existingTag) => existingTag.toLowerCase() === trimmedTag.toLowerCase()
     );
     if (alreadyTagged) return;
-    if (tags.length >= opts.tagLimit) return;
+    if (tags.length >= tagLimit) return;
+    if (minCharLimit > trimmedTag.length) return;
 
     if (tag) setTags([...tags, tag.trim()]);
     setInputValue("");
@@ -57,6 +61,7 @@ export const useTags = (opts) => {
     }
 
     if (isIgnoredChar || isSpecialChar) return;
+    if (maxCharLimit < e.target.value.length) return;
 
     if (tagBackspaced) {
       setTagBackspaced(false);
@@ -71,10 +76,11 @@ export const useTags = (opts) => {
       onKeyDown: handleKeyDown,
       onChange: handleChange,
       value: inputValue,
+      minLength: minCharLimit,
     },
-    handleRemoveTag: removeTag,
+    removeTag,
     tagLimitReached,
   };
 
-  return [tags, handlers, errorMessage];
+  return [tags, handlers];
 };

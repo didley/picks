@@ -1,56 +1,53 @@
 import { useTags } from "./useTags";
 
-const defaultOpts = { tagLimit: 5 };
-
-const TagSection = ({ opts = defaultOpts }) => {
-  const [tags, { inputHandlers, handleRemoveTag, tagLimitReached }] =
-    useTags(opts);
+const TagSection = ({ opts }) => {
+  const [tags, { inputHandlers, removeTag, tagLimitReached }] = useTags(opts);
 
   return (
-    <>
-      <div className="max-w-lg m-6">
-        <ul className="inline" aria-label="tags">
-          {tags &&
-            tags.map((tag) => (
-              <div
-                className="bg-green-100 inline-flex items-center text-sm rounded mt-2 mr-2 overflow-hidden"
-                key={tag}
+    <div className="m-1">
+      <label htmlFor="tags">Tags</label>
+      <ul className="inline" aria-label="tags">
+        {tags &&
+          tags.map((tag) => (
+            <div
+              className="bg-green-100 inline-flex items-center text-sm rounded mb-2 mr-2 overflow-hidden"
+              key={tag}
+            >
+              <li
+                className="ml-2 mr-1 leading-relaxed truncate max-w-xs px-1"
+                aria-label={`${tag} tag`}
               >
-                <li
-                  className="ml-2 mr-1 leading-relaxed truncate max-w-xs px-1"
-                  aria-label={`${tag} tag`}
+                {tag}
+              </li>
+              <button
+                type="button"
+                className="w-6 h-8 inline-block align-middle text-gray-500 bg-green-200 focus:outline-none"
+                onClick={(e) => removeTag(tag)}
+                aria-label={`remove ${tag} tag`}
+              >
+                <svg
+                  className="w-6 h-6 fill-current mx-auto"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
                 >
-                  {tag}
-                </li>
-                <button
-                  className="w-6 h-8 inline-block align-middle text-gray-500 bg-green-200 focus:outline-none"
-                  onClick={() => handleRemoveTag(tag)}
-                  aria-label={`remove ${tag} tag`}
-                >
-                  <svg
-                    className="w-6 h-6 fill-current mx-auto"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M15.78 14.36a1 1 0 0 1-1.42 1.42l-2.82-2.83-2.83 2.83a1 1 0 1 1-1.42-1.42l2.83-2.82L7.3 8.7a1 1 0 0 1 1.42-1.42l2.83 2.83 2.82-2.83a1 1 0 0 1 1.42 1.42l-2.83 2.83 2.83 2.82z"
-                    />
-                  </svg>
-                </button>
-              </div>
-            ))}
-        </ul>
-        {/* {!tagLimitReached && ( */}
-        <input
-          {...inputHandlers}
-          placeholder="Enter a tag to help people find your picks"
-          className="w-24 mt-2 mr-2"
-          hidden={tagLimitReached}
-        />
-        {/* )} */}
-      </div>
-    </>
+                  <path
+                    fillRule="evenodd"
+                    d="M15.78 14.36a1 1 0 0 1-1.42 1.42l-2.82-2.83-2.83 2.83a1 1 0 1 1-1.42-1.42l2.83-2.82L7.3 8.7a1 1 0 0 1 1.42-1.42l2.83 2.83 2.82-2.83a1 1 0 0 1 1.42 1.42l-2.83 2.83 2.83 2.82z"
+                  />
+                </svg>
+              </button>
+            </div>
+          ))}
+      </ul>
+      <input
+        {...inputHandlers}
+        autoFocus
+        id="tags"
+        placeholder="Enter a tag to help people find your picks"
+        className="w-full max-w-sm mr-2"
+        hidden={tagLimitReached}
+      />
+    </div>
   );
 };
 

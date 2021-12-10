@@ -9,6 +9,7 @@ class CardForm extends React.Component {
     super(props);
     this.state = {
       showCommentsField: props.draftCard.comments ? true : false,
+      showTagsField: props.draftCard.tags ? true : false,
       deleteConfirmationActive: false,
     };
   }
@@ -24,7 +25,8 @@ class CardForm extends React.Component {
       draftIsLoading,
       mutationStatus,
     } = this.props;
-    const { deleteConfirmationActive } = this.state;
+    const { deleteConfirmationActive, showCommentsField, showTagsField } =
+      this.state;
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -71,26 +73,25 @@ class CardForm extends React.Component {
     if (!draftCard) return null;
 
     return (
-      <div
-        className="rounded-lg p-2 sm:p-4 m-2 border-2 border-purple-400 text-xs bg-white"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="rounded-lg p-2 sm:p-4 m-2 border-2 border-purple-400 text-xs bg-white">
         <div className="flex justify-between">
           <h5 className="font-black">
             {draftCard.editing ? "Editing Picks" : "Creating Picks"}
           </h5>
-          <button onClick={clearDraft}>Cancel</button>
+          <button type="button" onClick={clearDraft}>
+            Cancel
+          </button>
         </div>
         <br />
         <form onSubmit={handleSubmit}>
-          <div className="grid md:grid-cols-2 gap-2">
-            {this.state.showCommentsField ? (
+          <div>
+            {showCommentsField ? (
               <label>
                 Card Comments
                 <textarea
                   autoFocus
                   name="comments"
-                  className="w-full"
+                  className="w-full max-w-sm block m-1 mb-4"
                   value={draftCard.comments}
                   onChange={handleCommentsChange}
                   onKeyDown={handleCommentKeyDown}
@@ -99,13 +100,23 @@ class CardForm extends React.Component {
             ) : (
               <button
                 onClick={() => this.setState({ showCommentsField: true })}
-                className="text-left text-purple-500"
+                className="text-left text-purple-500 mr-4 mb-2"
                 type="button"
               >
                 + Add Comments
               </button>
             )}
-            <TagInput />
+            {showTagsField ? (
+              <TagInput />
+            ) : (
+              <button
+                onClick={() => this.setState({ showTagsField: true })}
+                className="text-left text-green-400"
+                type="button"
+              >
+                + Add Tags
+              </button>
+            )}
           </div>
           <hr className="my-4" />
           <h6 className="font-black">Picks</h6>
@@ -121,7 +132,7 @@ class CardForm extends React.Component {
                   <>
                     {mutationStatus !== "deleting" && (
                       <button
-                        type="submit"
+                        type="button"
                         className="border-2 p-2 rounded-md text-gray-400 border-gray-300 bg-white hover:bg-gray-100 mx-3 w-24"
                         disabled={!cardIsValid}
                         onClick={(s) =>
