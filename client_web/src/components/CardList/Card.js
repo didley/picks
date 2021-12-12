@@ -12,7 +12,7 @@ class Card extends React.Component {
   render() {
     const { loggedInUsername, card, draftCard, setEditable } = this.props;
 
-    const { createdBy, picks, comments, _id, createdAt } = card;
+    const { createdBy, picks, comments, _id, createdAt, tags } = card;
 
     const isOwnCard = loggedInUsername === createdBy.username;
 
@@ -33,7 +33,7 @@ class Card extends React.Component {
             shareData={{
               url: createLink(`/profile/${createdBy?.username}/${_id}`),
               title: `${createdBy?.username} Picks`,
-              test: `${comments}`,
+              text: `${comments}`,
             }}
           >
             <small className="text-green-400 font-bold">share</small>
@@ -78,7 +78,23 @@ class Card extends React.Component {
             </button>
             <small className="text-gray-500"> · {parseDate(createdAt)}</small>
             <br />
-            <small className="break-words text-gray-700">{comments}</small>
+            {tags.length > 0 && (
+              <small className="my-2">
+                <span className="text-green-400">tags: </span>
+                <ul className="inline text-gray-700">
+                  {tags.map((tag) => (
+                    <li key={tag} className="inline">
+                      {tag}{" "}
+                    </li>
+                  ))}
+                </ul>
+              </small>
+            )}
+            {comments && (
+              <div>
+                <small className="break-words text-gray-700">{comments}</small>
+              </div>
+            )}
             <hr className="md:hidden" />
           </div>
           <PickList picks={picks} />
