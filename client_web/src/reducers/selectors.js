@@ -15,6 +15,12 @@ export const getProfile = (state) => {
 
 export const selectCard = (state) => state.card;
 
+export const selectCardQueryIsLoading = (state) =>
+  state.profile.profileCards.cardStatus.query === "loading";
+
+export const selectCardMutationStatus = (state) =>
+  state.profile.profileCards.cardStatus.mutation;
+
 export const selectFormPicks = (state) =>
   denormalise(state.profile.profileCards.form.picks);
 

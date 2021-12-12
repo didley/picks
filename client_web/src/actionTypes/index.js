@@ -29,5 +29,8 @@ export const DRAFT_PICK = {
   remove: "cardDraft/removePick",
   move: "cardDraft/move",
 };
+
+export const SET_TAGS = "cardDraft/setTags";
+
 export const GET_LINK_PREVIEW = createRequestTypes("cardForm/getLinkPreview");
 export const LINK_PREVIEW_NOT_FOUND = "cardForm/linkPreviewNotFound";

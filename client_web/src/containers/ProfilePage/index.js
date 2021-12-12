@@ -2,7 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { card } from "actions/cardActions";
 import { profile } from "actions/profileActions";
-import { getProfile, selectUser } from "reducers/selectors";
+import {
+  getProfile,
+  selectUser,
+  selectCardQueryIsLoading,
+} from "reducers/selectors";
 import ProfileHeader from "components/ProfileHeader";
 import CardList from "components/CardList";
 import CreateCardSection from "components/CreateCardSection";
@@ -33,7 +37,7 @@ class ProfilePage extends React.Component {
     this.setState({ profileEditFormVisible: false });
 
   render() {
-    const { user, profile } = this.props;
+    const { user, profile, cardsLoading } = this.props;
     const { profileHeader, profileCards } = profile;
     const isOwnProfile = this.props.match?.params?.username === user?.username;
 
@@ -53,7 +57,7 @@ class ProfilePage extends React.Component {
         <CardList
           cards={profileCards.cards}
           loggedInUsername={user?.username}
-          isLoading={profileCards.cardStatus === "loading"}
+          isLoading={cardsLoading}
         />
       </div>
     );
@@ -63,6 +67,7 @@ class ProfilePage extends React.Component {
 const mapState = (state) => ({
   user: selectUser(state),
   profile: getProfile(state),
+  cardsLoading: selectCardQueryIsLoading(state),
 });
 
 export default connect(mapState, {
