@@ -32,6 +32,7 @@ class EditingPicks extends React.Component {
             onChange={(e) => handleChange(e, pick._id)}
             isFirstPick={index === 0}
             isLastPick={index === picks.length - 1}
+            isOnlyPick={picks.length === 1}
           />
         ))}
         {picks.length < 5 ? (

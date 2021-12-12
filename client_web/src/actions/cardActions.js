@@ -12,6 +12,7 @@ import {
   CLEAR_DRAFT,
   DRAFT_PICK,
   CHANGE_DRAFT,
+  SET_TAGS,
 } from "actionTypes";
 
 const action = (type, payload = {}) => ({ type, ...payload });
@@ -60,6 +61,7 @@ export const card = {
       editing: (card) => action(SET_EDITING, { card }),
     },
     change: (event, id) => action(CHANGE_DRAFT, { event, id }), // supply id for picks
+    setTags: (tags) => action(SET_TAGS, { tags }),
     clear: () => action(CLEAR_DRAFT),
     pick: {
       add: () => action(DRAFT_PICK.add, { id: uuid() }),

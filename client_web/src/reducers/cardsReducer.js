@@ -11,6 +11,7 @@ import {
   CLEAR_DRAFT,
   DRAFT_PICK,
   CHANGE_DRAFT,
+  SET_TAGS,
 } from "actionTypes";
 import { combineReducers } from "redux";
 import { normaliseArray, denormalise } from "utils/normaliseArray";
@@ -41,31 +42,42 @@ const cardsReducer = (state = {}, action) => {
   }
 };
 
-const cardStatusReducer = (state = "idle", action) => {
+const cardStatusReducer = (
+  state = { query: "idle", mutation: "idle" },
+  action
+) => {
   switch (action.type) {
     case GET_CARDS.request:
-    case CREATE_CARD.request:
-    case UPDATE_CARD.request:
-    case DELETE_CARD.request:
-      return "loading";
+      return { ...state, query: "loading" };
 
     case GET_CARDS.success:
+      return { ...state, query: "succeeded" };
+
+    case GET_CARDS.failure:
+      return { ...state, query: "failed" };
+
+    case CREATE_CARD.request:
+      return { ...state, mutation: "creating" };
+    case UPDATE_CARD.request:
+      return { ...state, mutation: "updating" };
+    case DELETE_CARD.request:
+      return { ...state, mutation: "deleting" };
+
     case CREATE_CARD.success:
     case UPDATE_CARD.success:
     case DELETE_CARD.success:
-      return "succeeded";
+      return { ...state, mutation: "succeeded" };
 
-    case GET_CARDS.failure:
     case CREATE_CARD.failure:
     case UPDATE_CARD.failure:
     case DELETE_CARD.failure:
-      return "failed";
+      return { ...state, mutation: "failed" };
 
     case GET_CARDS.reset:
     case CREATE_CARD.reset:
     case UPDATE_CARD.reset:
     case DELETE_CARD.reset:
-      return "idle";
+      return { query: "idle", mutation: "idle" };
 
     default:
       return state;
@@ -105,9 +117,11 @@ const draftReducer = (state = null, action) => {
         picks: {
           initialCreateCardPickId: {
             url: "",
+            nsfw: false,
             preview: null,
             status: "idle",
             _id: "initialCreateCardPickId",
+            comments: "",
           },
         },
       };
@@ -115,9 +129,14 @@ const draftReducer = (state = null, action) => {
     case SET_EDITING: {
       const { card } = action;
 
+      const picksStatusAppended = card.picks.map((pick) => ({
+        ...pick,
+        status: pick.userTitle ? "notFound" : "succeeded",
+      }));
+
       return {
         editingId: card._id,
-        ...{ ...card, picks: normaliseArray(card.picks) },
+        ...{ ...card, picks: normaliseArray(picksStatusAppended) },
       };
     }
     case CHANGE_DRAFT: {
@@ -133,6 +152,10 @@ const draftReducer = (state = null, action) => {
       return nextState;
     }
 
+    case SET_TAGS: {
+      return { ...state, tags: action.tags };
+    }
+
     case CLEAR_DRAFT:
       return null;
 
@@ -144,6 +167,7 @@ const draftReducer = (state = null, action) => {
           preview: null,
           status: "idle",
           _id: action.id,
+          comments: "",
         };
       });
 
@@ -193,6 +217,7 @@ const draftReducer = (state = null, action) => {
     case LINK_PREVIEW_NOT_FOUND:
       return produce(state, (draft) => {
         const pick = draft.picks[action.id];
+        pick.userTitle = "";
         pick.preview = null;
         pick.status = "notFound";
         pick.error = action.error;

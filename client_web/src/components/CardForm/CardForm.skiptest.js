@@ -60,7 +60,7 @@ describe("<CardForm />", () => {
     };
 
     // adds comment to card
-    const postCommentsField = screen.getByLabelText(/^post comments$/i);
+    const postCommentsField = screen.getByLabelText(/^card comments$/i);
     userEvent.type(postCommentsField, cardStub.comments);
 
     // attempts to add 6 empty pick fields
@@ -72,7 +72,7 @@ describe("<CardForm />", () => {
     const pickUrlField = screen.getAllByLabelText(/url/i);
     const pickCommentsField = screen.getAllByLabelText(/^comments$/i);
     const pickNsfwToggle = screen.getAllByLabelText(/nsfw/i);
-    const postPicksBtn = screen.getByRole("button", { name: /post picks/i });
+    const postPicksBtn = screen.getByRole("button", { name: /create picks/i });
 
     // enters mockPick into 5 pick fields
     for (let i = 0; i < 5; i++) {
@@ -147,7 +147,7 @@ describe("<CardForm />", () => {
     };
 
     // adds comment to card
-    const postCommentsField = screen.getByLabelText(/^post comments$/i);
+    const postCommentsField = screen.getByLabelText(/^card comments$/i);
     userEvent.type(postCommentsField, cardStub.comments);
 
     // adds 3 empty pick fields
@@ -160,7 +160,7 @@ describe("<CardForm />", () => {
     const pickCommentsField = await screen.findAllByLabelText(/^comments$/i);
     const pickNsfwToggle = await screen.findAllByLabelText(/nsfw/i);
     const postPicksBtn = await screen.findByRole("button", {
-      name: /post picks/i,
+      name: /create picks/i,
     });
 
     // enters 3 pick fields
@@ -217,7 +217,7 @@ describe("<CardForm />", () => {
     };
 
     // adds comment to card
-    const postCommentsField = screen.getByLabelText(/^post comments$/i);
+    const postCommentsField = screen.getByLabelText(/^card comments$/i);
     userEvent.type(postCommentsField, cardStub.comments);
 
     // adds 3 empty pick fields
@@ -230,7 +230,7 @@ describe("<CardForm />", () => {
     const pickUrlFields = await screen.findAllByLabelText(/url/i);
     const pickNsfwToggles = await screen.findAllByLabelText(/nsfw/i);
     const postPicksBtn = await screen.findByRole("button", {
-      name: /post picks/i,
+      name: /create picks/i,
     });
 
     // enters 3 pick fields

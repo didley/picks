@@ -49,6 +49,6 @@
     @apply outline-none border border-blue-600 shadow-outline bg-opacity-100;
   } */
   label {
-    @apply block text-gray-800 text-sm font-bold;
+    @apply block text-gray-800 text-sm;
   }
 }

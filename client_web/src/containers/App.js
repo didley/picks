@@ -34,7 +34,7 @@ class App extends React.Component {
     return (
       <>
         <AlertBar />
-        <div className="bg-gray-50 h-screen">
+        <div className="bg-gray-50 min-h-screen">
           <NavBar
             isAuthenticated={auth.isAuthenticated}
             onLogoutClick={this.handleLogout}
