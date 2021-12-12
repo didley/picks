@@ -3,13 +3,12 @@ import { connect } from "react-redux";
 import EditingPicks from "./EditingPicks";
 import { selectDraftCard, selectCardMutationStatus } from "reducers/selectors";
 import { card } from "actions/cardActions";
-import TagInput from "./TagSection";
+import TagSection from "./TagSection";
 class CardForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showCommentsField: props.draftCard.comments ? true : false,
-      showTagsField: props.draftCard.tags ? true : false,
       deleteConfirmationActive: false,
     };
   }
@@ -19,14 +18,14 @@ class CardForm extends React.Component {
       draftCard,
       clearDraft,
       handleChange,
+      setTags,
       deleteCard,
       updateCard,
       createCard,
       draftIsLoading,
       mutationStatus,
     } = this.props;
-    const { deleteConfirmationActive, showCommentsField, showTagsField } =
-      this.state;
+    const { deleteConfirmationActive, showCommentsField } = this.state;
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -106,17 +105,7 @@ class CardForm extends React.Component {
                 + Add Comments
               </button>
             )}
-            {showTagsField ? (
-              <TagInput />
-            ) : (
-              <button
-                onClick={() => this.setState({ showTagsField: true })}
-                className="text-left text-green-400"
-                type="button"
-              >
-                + Add Tags
-              </button>
-            )}
+            <TagSection tagsState={draftCard.tags} tagsSetter={setTags} />
           </div>
           <hr className="my-4" />
           <h6 className="font-black">Picks</h6>
@@ -205,6 +194,7 @@ const mapState = (state) => ({
 export default connect(mapState, {
   clearDraft: card.draft.clear,
   handleChange: card.draft.change,
+  setTags: card.draft.setTags,
   deleteCard: card.delete.request,
   updateCard: card.update.request,
   createCard: card.create.request,

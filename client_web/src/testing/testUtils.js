@@ -5,7 +5,7 @@ import { configStore } from "../store/configStore";
 import { Provider } from "react-redux";
 import { rootSaga } from "sagas";
 
-const render = (component, renderOptions) => {
+const customRender = (component, renderOptions) => {
   const initialState = renderOptions?.initialState ?? null;
   const skipStoreWrap = renderOptions?.skipStoreWrap;
   const store = configStore(initialState);
@@ -21,4 +21,4 @@ const render = (component, renderOptions) => {
 };
 
 export * from "@testing-library/react";
-export { render };
+export { customRender as render };

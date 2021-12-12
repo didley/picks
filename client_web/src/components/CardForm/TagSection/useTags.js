@@ -2,8 +2,7 @@ import { useState } from "react";
 
 const defaultOpts = { tagLimit: 5, minCharLimit: 3, maxCharLimit: 25 };
 
-export const useTags = (options = defaultOpts) => {
-  const [tags, setTags] = useState([]);
+export const useTags = (tags, setTags, options = defaultOpts) => {
   const [inputValue, setInputValue] = useState("");
   const [tagBackspaced, setTagBackspaced] = useState(false); //! tagBackspaced: Workaround to prevent onChange triggering as onChange can not be suppressed after onKeyDown
 
@@ -71,7 +70,7 @@ export const useTags = (options = defaultOpts) => {
     }
   };
 
-  const handlers = {
+  return {
     inputHandlers: {
       onKeyDown: handleKeyDown,
       onChange: handleChange,
@@ -81,6 +80,4 @@ export const useTags = (options = defaultOpts) => {
     removeTag,
     tagLimitReached,
   };
-
-  return [tags, handlers];
 };

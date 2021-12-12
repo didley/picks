@@ -11,6 +11,7 @@ import {
   CLEAR_DRAFT,
   DRAFT_PICK,
   CHANGE_DRAFT,
+  SET_TAGS,
 } from "actionTypes";
 import { combineReducers } from "redux";
 import { normaliseArray, denormalise } from "utils/normaliseArray";
@@ -149,6 +150,10 @@ const draftReducer = (state = null, action) => {
       });
 
       return nextState;
+    }
+
+    case SET_TAGS: {
+      return { ...state, tags: action.tags };
     }
 
     case CLEAR_DRAFT:

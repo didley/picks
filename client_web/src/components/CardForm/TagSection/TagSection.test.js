@@ -1,11 +1,23 @@
-import { waitFor, render, screen } from "@testing-library/react";
+import React from "react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import TagSection from ".";
 
+const StateProviderMock = ({ opts = { tagLimit: 5 } }) => {
+  const [tags, setTags] = React.useState([]);
+  return (
+    <TagSection
+      tagsState={tags}
+      tagsSetter={setTags}
+      opts={opts}
+      disableHiding
+    />
+  );
+};
+
 describe("<TagSection />", () => {
   it("adds tag on enter, space, comma and period", () => {
-    render(<TagSection />);
-
+    render(<StateProviderMock />);
     const tagInput = screen.getByRole("textbox");
     userEvent.type(tagInput, "greatTag{space}amazingTag{enter}wow,cool.");
 
@@ -14,8 +26,7 @@ describe("<TagSection />", () => {
     expect(tags).toEqual(["greatTag", "amazingTag", "wow", "cool"]);
   });
   it("ignores special characters", () => {
-    render(<TagSection />);
-
+    render(<StateProviderMock />);
     const tagInput = screen.getByRole("textbox");
     userEvent.type(tagInput, "greatTag/#{[+=-*&^%$@!{space}");
 
@@ -25,8 +36,7 @@ describe("<TagSection />", () => {
   });
 
   it("the same tag can not be added twice even with different capitalisation", () => {
-    render(<TagSection />);
-
+    render(<StateProviderMock />);
     const tagInput = screen.getByRole("textbox");
     userEvent.type(tagInput, "wow{enter}wow{enter}");
 
@@ -35,8 +45,7 @@ describe("<TagSection />", () => {
     expect(tags).toEqual(["wow"]);
   });
   it("can remove tags", () => {
-    render(<TagSection />);
-
+    render(<StateProviderMock />);
     const tagInput = screen.getByRole("textbox");
     userEvent.type(tagInput, "greatTag{space}amazingTag{enter}wow,cool.");
 
@@ -49,8 +58,7 @@ describe("<TagSection />", () => {
     expect(tags).toEqual(["amazingTag", "cool"]);
   });
   it("can edit previous tag on empty input backspace", () => {
-    render(<TagSection />);
-
+    render(<StateProviderMock />);
     const tagInput = screen.getByRole("textbox");
     userEvent.type(tagInput, "greatTag{space}amazingTag{enter}{backspace}");
 
@@ -61,8 +69,7 @@ describe("<TagSection />", () => {
     expect(screen.getByRole("textbox").value).toBe("amazingTag");
   });
   it("can't add tag with space", () => {
-    render(<TagSection />);
-
+    render(<StateProviderMock />);
     const tagInput = screen.getByRole("textbox");
     userEvent.type(
       tagInput,
@@ -74,8 +81,7 @@ describe("<TagSection />", () => {
     expect(tags).toEqual(["greatTag", "amazingTag"]);
   });
   it("has a working tagLimit prop option 'opts'", () => {
-    render(<TagSection opts={{ tagLimit: 5 }} />);
-
+    render(<StateProviderMock opts={{ tagLimit: 5 }} />);
     const tagInput = screen.getByRole("textbox");
     userEvent.type(tagInput, "1,2,3,4,5,6,");
 
@@ -83,17 +89,15 @@ describe("<TagSection />", () => {
     const tags = tagListItems.map((li) => li.textContent);
     expect(tags).toEqual(["1", "2", "3", "4", "5"]);
   });
-  it("hides tag input when limit reached", async () => {
-    render(<TagSection opts={{ tagLimit: 5 }} />);
-
+  it("hides tag input when tagLimit reached", async () => {
+    render(<StateProviderMock opts={{ tagLimit: 5 }} />);
     const tagInput = screen.getByRole("textbox");
     userEvent.type(tagInput, "1,2,3,4,5,");
 
     expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
   });
   it("minCharLimit option works", () => {
-    render(<TagSection opts={{ minCharLimit: 4 }} />);
-
+    render(<StateProviderMock opts={{ minCharLimit: 4 }} />);
     const tagInput = screen.getByRole("textbox");
     userEvent.type(tagInput, "F,o,u,r,");
 
@@ -102,8 +106,7 @@ describe("<TagSection />", () => {
     expect(tags).toEqual(["Four"]);
   });
   it("maxCharLimit option works", () => {
-    render(<TagSection opts={{ maxCharLimit: 4 }} />);
-
+    render(<StateProviderMock opts={{ maxCharLimit: 4 }} />);
     const tagInput = screen.getByRole("textbox");
     userEvent.type(tagInput, "Fourr,");
 
