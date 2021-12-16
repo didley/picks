@@ -34,13 +34,13 @@
     @apply outline-none border-blue-600 bg-white shadow-outline;
   } */
   textarea {
-    @apply py-1 px-3 text-sm rounded-md border leading-tight text-gray-900;
+    @apply py-2 px-3 text-xl sm:text-sm rounded-md border leading-tight text-gray-900;
   }
   /* textarea:focus {
     @apply outline-none border-blue-600 bg-white shadow-outline;
   } */
   input {
-    @apply py-2 px-3 text-sm rounded-md border leading-tight text-gray-900;
+    @apply py-1 sm:py-2 px-3 text-xl sm:text-sm rounded-md border leading-tight text-gray-900;
   }
   /* input:focus {
     @apply outline-none border-blue-600 bg-white shadow-outline;

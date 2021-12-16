@@ -89,7 +89,7 @@ const EditingPick = ({
         ) : (
           <button
             onClick={() => setShowCommentField(true)}
-            className="text-left text-purple-500 my-2"
+            className="text-left text-purple-500"
             type="button"
           >
             + Add Comment

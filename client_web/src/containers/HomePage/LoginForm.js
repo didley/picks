@@ -42,7 +42,7 @@ class LoginForm extends React.Component {
             Email
             <br />
             <input
-              className="rounded-lg text-sm p-1 my-1 border border-purple-400 hover:border-purple-600"
+              className="rounded-lg p-1 my-1 border border-purple-400 hover:border-purple-600"
               type="email"
               name="email"
               required
@@ -57,7 +57,7 @@ class LoginForm extends React.Component {
             Password
             <br />
             <input
-              className="rounded-lg text-sm p-1 my-1 border border-purple-400 hover:border-purple-600"
+              className="rounded-lg p-1 my-1 border border-purple-400 hover:border-purple-600"
               type="password"
               name="password"
               required
