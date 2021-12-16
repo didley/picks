@@ -1,6 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectDraftCard } from "reducers/selectors";
+import {
+  selectAllNsfwVisibility,
+  selectAllNsfwVisible,
+  selectDraftCard,
+} from "reducers/selectors";
 import { card } from "actions/cardActions";
 import CardForm from "components/CardForm";
 import PickList from "../PickList";
@@ -10,7 +14,8 @@ import { parseDate } from "utils/parseDate";
 
 class Card extends React.Component {
   render() {
-    const { loggedInUsername, card, draftCard, setEditable } = this.props;
+    const { loggedInUsername, card, draftCard, setEditable, allNsfwVisible } =
+      this.props;
 
     const { createdBy, picks, comments, _id, createdAt, tags } = card;
 
@@ -97,13 +102,19 @@ class Card extends React.Component {
             )}
             <hr className="md:hidden" />
           </div>
-          <PickList picks={picks} />
+          <PickList picks={picks} allNsfwVisible={allNsfwVisible} />
         </ul>
       </div>
     );
   }
 }
 
-export default connect((state) => ({ draftCard: selectDraftCard(state) }), {
-  setEditable: card.draft.set.editing,
-})(Card);
+export default connect(
+  (state) => ({
+    draftCard: selectDraftCard(state),
+    allNsfwVisible: selectAllNsfwVisible(state),
+  }),
+  {
+    setEditable: card.draft.set.editing,
+  }
+)(Card);

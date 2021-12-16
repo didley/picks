@@ -15,7 +15,7 @@ class CreateCardSection extends React.Component {
       <button
         aria-label="create-post"
         onClick={() => setCreating()}
-        className="m-auto my-2 rounded-lg border border-green-400 text-green-400 hover:bg-green-100 bg-white flex py-4 px-8  text-xs"
+        className="m-auto my-2 rounded-lg border border-green-400 text-green-400 hover:bg-green-100 bg-white py-3 px-4  text-xs"
       >
         Create Picks
       </button>

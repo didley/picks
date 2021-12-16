@@ -18,6 +18,7 @@ export const GET_CARD = createRequestTypes("card/getCard");
 export const CREATE_CARD = createRequestTypes("card/createCard");
 export const DELETE_CARD = createRequestTypes("card/deleteCard");
 export const UPDATE_CARD = createRequestTypes("card/updateCard");
+export const SET_ALL_NSFW_VISIBILITY = "card/setAllNsfwVisibility";
 
 // card draft
 export const SET_CREATING = "cardDraft/setCreating";

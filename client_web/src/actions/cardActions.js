@@ -13,6 +13,7 @@ import {
   DRAFT_PICK,
   CHANGE_DRAFT,
   SET_TAGS,
+  SET_ALL_NSFW_VISIBILITY,
 } from "actionTypes";
 
 const action = (type, payload = {}) => ({ type, ...payload });
@@ -48,6 +49,8 @@ export const card = {
     failure: (error) => action(DELETE_CARD.failure, { error }),
     reset: () => action(DELETE_CARD.reset),
   },
+  setAllNsfwVisibility: (visible) =>
+    action(SET_ALL_NSFW_VISIBILITY, { visible }),
   getLinkPreview: {
     request: (url, id) => action(GET_LINK_PREVIEW.request, { url, id }),
     success: (preview, id) => action(GET_LINK_PREVIEW.success, { preview, id }),

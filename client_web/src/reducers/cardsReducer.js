@@ -24,8 +24,8 @@ const cardsReducer = (state = {}, action) => {
 
     case CREATE_CARD.success:
       return {
-        ...{ [action.card._id]: action.card },
         ...state,
+        ...{ [action.card._id]: action.card },
       };
     case UPDATE_CARD.success:
       return {

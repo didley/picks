@@ -10,6 +10,7 @@ import {
 import ProfileHeader from "components/ProfileHeader";
 import CardList from "components/CardList";
 import CreateCardSection from "components/CreateCardSection";
+import ShowAllNsfwBtn from "components/ShowAllNsfwBtn";
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -51,8 +52,16 @@ class ProfilePage extends React.Component {
           handleSetProfileEditVisible={this.handleSetProfileEditVisible}
           handleSetProfileEditHidden={this.handleSetProfileEditHidden}
         />
-
-        {isOwnProfile && <CreateCardSection />}
+        <div className="grid grid-cols-3 mx-2 items-center">
+          {isOwnProfile && (
+            <div className="col-start-2 justify-self-center">
+              <CreateCardSection />
+            </div>
+          )}
+          <div className="justify-self-end">
+            <ShowAllNsfwBtn />
+          </div>
+        </div>
 
         <CardList
           cards={profileCards.cards}
