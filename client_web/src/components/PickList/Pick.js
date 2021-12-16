@@ -9,12 +9,16 @@ const Pick = ({ pick }) => {
 
   const domain = parseDomain(pick.url);
 
-  const handleUnBlur = (e) => {
+  const handleShowNsfw = (e) => {
     setNsfwHidden(false);
     e.stopPropagation();
   };
 
-  if (nsfwHidden) return <NsfwHidden onClick={handleUnBlur} />;
+  const handleHideNsfw = (e) => {
+    setNsfwHidden(true);
+  };
+
+  if (nsfwHidden) return <NsfwHidden onClick={handleShowNsfw} />;
 
   return (
     <div className="relative">
@@ -35,7 +39,6 @@ const Pick = ({ pick }) => {
           <div className="inline-block align-middle">
             <p className="pb-1">
               <ExternalLink to={url}>
-                {nsfw && <span className="text-red-500 font-bold">NSFW </span>}
                 {preview?.ogTitle ? preview.ogTitle : userTitle}
               </ExternalLink>
             </p>
@@ -44,11 +47,21 @@ const Pick = ({ pick }) => {
                 {preview.ogDescription}
               </p>
             )}
-            {domain && (
-              <div>
-                <small className="text-gray-500">{domain}</small>
-              </div>
-            )}
+            <div className="flex justify-between items-center">
+              {domain && (
+                <div>
+                  <small className="text-gray-500">{domain}</small>
+                </div>
+              )}
+              {nsfw && (
+                <button
+                  className="text-red-500 text-sm hover:underline font-bold"
+                  onClick={handleHideNsfw}
+                >
+                  Hide NSFW
+                </button>
+              )}
+            </div>
           </div>
         </div>
         {comments && (
