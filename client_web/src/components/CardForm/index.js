@@ -77,7 +77,7 @@ class CardForm extends React.Component {
           <h5 className="font-black">
             {draftCard.editing ? "Editing Picks" : "Creating Picks"}
           </h5>
-          <button type="button" onClick={clearDraft}>
+          <button type="button" onClick={clearDraft} className="mx-2">
             Cancel
           </button>
         </div>
@@ -99,7 +99,7 @@ class CardForm extends React.Component {
             ) : (
               <button
                 onClick={() => this.setState({ showCommentsField: true })}
-                className="text-left text-purple-500 mr-4 mb-2"
+                className="text-left text-purple-500 mr-4"
                 type="button"
               >
                 + Add Comments
@@ -122,7 +122,7 @@ class CardForm extends React.Component {
                     {mutationStatus !== "deleting" && (
                       <button
                         type="button"
-                        className="border-2 p-2 rounded-md text-gray-400 border-gray-300 bg-white hover:bg-gray-100 mx-3 w-24"
+                        className="border-2 p-2 rounded-md text-gray-400 border-gray-300 bg-white hover:bg-gray-100 mx-3 w-28"
                         disabled={!cardIsValid}
                         onClick={(s) =>
                           this.setState({
@@ -137,7 +137,7 @@ class CardForm extends React.Component {
                     <button
                       type="button"
                       onClick={() => deleteCard(draftCard.editingId)}
-                      className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 rounded-md w-24"
+                      className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 rounded-md w-28"
                     >
                       {mutationStatus === "deleting"
                         ? "Deleting..."
@@ -151,7 +151,7 @@ class CardForm extends React.Component {
                       onClick={(s) =>
                         this.setState({ ...s, deleteConfirmationActive: true })
                       }
-                      className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 mx-3 rounded-md w-24"
+                      className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white p-2 mx-3 rounded-md w-28"
                     >
                       Delete Picks
                     </button>
@@ -161,7 +161,7 @@ class CardForm extends React.Component {
                 {!deleteConfirmationActive && (
                   <button
                     type="submit"
-                    className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 rounded-md disabled:text-gray-400 disabled:border-gray-300 disabled:bg-white w-24"
+                    className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 rounded-md disabled:text-gray-400 disabled:border-gray-300 disabled:bg-white w-28"
                     disabled={!cardIsValid}
                   >
                     {mutationStatus === "updating"
@@ -174,7 +174,7 @@ class CardForm extends React.Component {
               <button
                 type="submit"
                 disabled={!cardIsValid}
-                className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 m-1 rounded-md disabled:text-gray-400 disabled:border-gray-300 disabled:bg-white w-24"
+                className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-white p-2 m-1 rounded-md disabled:text-gray-400 disabled:border-gray-300 disabled:bg-white w-28"
               >
                 {mutationStatus === "creating" ? "Creating..." : "Create Picks"}
               </button>

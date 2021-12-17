@@ -38,3 +38,5 @@ export const selectDraftCard = (state) => {
     return { ...draft, ...editing };
   }
 };
+
+export const selectAllNsfwVisible = (state) => state.allNsfwVisible;

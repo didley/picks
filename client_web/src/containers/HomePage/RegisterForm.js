@@ -57,7 +57,7 @@ class RegisterForm extends React.Component {
               Username
               <br />
               <input
-                className="rounded-lg text-sm p-1 my-1 border border-green-400 hover:border-green-600"
+                className="rounded-lg p-1 my-1 border border-green-400 hover:border-green-600"
                 type="text"
                 required
                 name="username"
@@ -72,7 +72,7 @@ class RegisterForm extends React.Component {
               Email
               <br />
               <input
-                className="rounded-lg text-sm p-1 my-1 border border-green-400 hover:border-green-600"
+                className="rounded-lg p-1 my-1 border border-green-400 hover:border-green-600"
                 type="email"
                 required
                 name="email"
@@ -87,7 +87,7 @@ class RegisterForm extends React.Component {
               Password
               <br />
               <input
-                className="rounded-lg text-sm p-1 my-1 border border-green-400 hover:border-green-600"
+                className="rounded-lg p-1 my-1 border border-green-400 hover:border-green-600"
                 type="password"
                 required
                 name="password"
@@ -104,8 +104,8 @@ class RegisterForm extends React.Component {
               <input
                 className={
                   showPwMismatchWarn
-                    ? "rounded-lg text-sm p-1 my-1 border border-red-500"
-                    : "rounded-lg text-sm p-1 my-1 border border-green-400 hover:border-green-600"
+                    ? "rounded-lg p-1 my-1 border border-red-500"
+                    : "rounded-lg p-1 my-1 border border-green-400 hover:border-green-600"
                 }
                 type="password"
                 required
