@@ -1,4 +1,4 @@
-import { GET_CARD, UPDATE_CARD } from "actionTypes";
+import { GET_CARD, UPDATE_CARD, DELETE_CARD } from "actionTypes";
 
 const cardReducerInitState = { data: {}, error: null, status: "idle" };
 export const cardReducer = (state = cardReducerInitState, action) => {
@@ -10,7 +10,7 @@ export const cardReducer = (state = cardReducerInitState, action) => {
       return { ...state, data: action.card, error: null, status: "succeeded" };
 
     case GET_CARD.failure:
-      return { data: {}, error: action.error, statue: "failed" };
+      return { data: {}, error: action.error, status: "failed" };
 
     case GET_CARD.reset:
       return cardReducerInitState;
@@ -28,6 +28,9 @@ export const cardReducer = (state = cardReducerInitState, action) => {
         return state;
       }
     }
+
+    case DELETE_CARD.success:
+      return { data: {}, error: null, status: "deleted" };
 
     default:
       return state;

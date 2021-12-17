@@ -1,26 +1,48 @@
-import React from "react";
-import { ExternalLink } from "components/ExternalLink";
+import { useState, useEffect } from "react";
+import { ExternalLink, handleExternalLinkClick } from "components/ExternalLink";
 import { parseDomain } from "utils/parseDomain";
+import NsfwHidden from "./NsfwHidden";
 
-const Pick = ({ pick }) => {
-  const { url, nsfw, preview, userTitle, comments } = pick;
+const Pick = ({ pick, allNsfwVisible }) => {
+  let { url, nsfw, preview, userTitle, comments } = pick;
+  const [nsfwVisible, setNsfwVisible] = useState(
+    !allNsfwVisible ? false : true
+  );
+  const [imgErr, setImgErr] = useState(false);
+
+  useEffect(() => {
+    allNsfwVisible ? setNsfwVisible(true) : setNsfwVisible(false);
+  }, [allNsfwVisible]);
 
   const domain = parseDomain(pick.url);
+
+  const handleShowNsfw = (e) => {
+    setNsfwVisible(true);
+    e.stopPropagation();
+  };
+
+  const handleHideNsfw = (e) => {
+    setNsfwVisible(false);
+    e.stopPropagation(e);
+  };
+
+  if (nsfw && !nsfwVisible) return <NsfwHidden onClick={handleShowNsfw} />;
 
   return (
     <div className="grid my-1 border-l-2 border-purple-400 px-2">
       <div className="flex items-center">
-        {preview?.ogImageUrl && (
+        {preview?.ogImageUrl && !imgErr && (
           <img
+            onClick={(e) => handleExternalLinkClick(e, url)}
             src={preview.ogImageUrl}
             alt="pick"
-            className="w-24 h-24 object-cover rounded-sm mr-2"
+            onError={() => setImgErr(true)}
+            className="w-24 h-24 object-cover rounded-sm mr-2 hover:opacity-50 cursor-pointer"
           />
         )}
-        <div className="inline-block align-middle">
+        <div className="grid w-full">
           <p className="pb-1">
             <ExternalLink to={url}>
-              {nsfw && <span className="text-red-500 font-bold">NSFW </span>}
               {preview?.ogTitle ? preview.ogTitle : userTitle}
             </ExternalLink>
           </p>
@@ -29,11 +51,17 @@ const Pick = ({ pick }) => {
               {preview.ogDescription}
             </p>
           )}
-          {domain && (
-            <div>
-              <small className="text-gray-500">{domain}</small>
-            </div>
-          )}
+          <div className="flex justify-between items-center">
+            {domain && <small className="text-gray-500">{domain}</small>}
+            {nsfw && (
+              <button
+                className="text-red-500 text-sm hover:underline font-bold"
+                onClick={handleHideNsfw}
+              >
+                Hide NSFW
+              </button>
+            )}
+          </div>
         </div>
       </div>
       {comments && (

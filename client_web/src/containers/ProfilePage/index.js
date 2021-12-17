@@ -52,7 +52,7 @@ class ProfilePage extends React.Component {
           handleSetProfileEditHidden={this.handleSetProfileEditHidden}
         />
 
-        {isOwnProfile && <CreateCardSection />}
+        <CreateCardSection isOwnProfile={isOwnProfile} />
 
         <CardList
           cards={profileCards.cards}

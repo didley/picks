@@ -3,6 +3,7 @@ import { authReducer } from "./authReducer";
 import { alertReducer } from "./alertReducer";
 import { profileReducer } from "./profileReducer";
 import { cardReducer } from "./cardReducer";
+import { nsfwVisibilityReducer } from "./nsfwVisibilityReducer";
 import { LOGOUT } from "actions/authTypes";
 
 const appReducer = combineReducers({
@@ -10,6 +11,7 @@ const appReducer = combineReducers({
   alert: alertReducer,
   profile: profileReducer,
   card: cardReducer,
+  allNsfwVisible: nsfwVisibilityReducer,
 });
 
 export const rootReducer = (state, action) => {
