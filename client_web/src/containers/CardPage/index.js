@@ -4,8 +4,9 @@ import { card } from "actions/cardActions";
 import { selectCard, selectUser } from "reducers/selectors";
 import Card from "components/CardList/Card";
 import { nav } from "utils/history";
+import { Redirect } from "react-router-dom";
 
-class ProfilePage extends React.Component {
+class CardPage extends React.Component {
   componentDidMount() {
     const { cardId } = this.props.match.params;
     this.props.getCard(cardId);
@@ -14,6 +15,11 @@ class ProfilePage extends React.Component {
   render() {
     const { user, card } = this.props;
     const { username } = this.props.match.params;
+
+    if (card.status === "deleted" || card.status === "failed") {
+      this.props.resetCard();
+      return <Redirect to={`/profile/${username}`} />;
+    }
 
     return (
       <div className="max-w-6xl m-auto">
@@ -48,4 +54,5 @@ const mapState = (state) => ({
 
 export default connect(mapState, {
   getCard: card.get.request,
-})(ProfilePage);
+  resetCard: card.get.reset,
+})(CardPage);
