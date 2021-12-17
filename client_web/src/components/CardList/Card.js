@@ -97,7 +97,10 @@ class Card extends React.Component {
             )}
             {comments && (
               <div>
-                <small className="break-words text-gray-700">{comments}</small>
+                <small className="break-words text-gray-700">
+                  <span className="text-purple-400">comments: </span>
+                  {comments}
+                </small>
               </div>
             )}
             <hr className="md:hidden" />
