@@ -10,7 +10,6 @@ import {
 import ProfileHeader from "components/ProfileHeader";
 import CardList from "components/CardList";
 import CreateCardSection from "components/CreateCardSection";
-import ShowAllNsfwBtn from "components/ShowAllNsfwBtn";
 
 class ProfilePage extends React.Component {
   constructor(props) {
