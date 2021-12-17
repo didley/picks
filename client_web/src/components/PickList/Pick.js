@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
-import { ExternalLink } from "components/ExternalLink";
+import { ExternalLink, handleExternalLinkClick } from "components/ExternalLink";
 import { parseDomain } from "utils/parseDomain";
 import NsfwHidden from "./NsfwHidden";
 
 const Pick = ({ pick, allNsfwVisible }) => {
-  const { url, nsfw, preview, userTitle, comments } = pick;
+  let { url, nsfw, preview, userTitle, comments } = pick;
   const [nsfwVisible, setNsfwVisible] = useState(
     !allNsfwVisible ? false : true
   );
+  const [imgErr, setImgErr] = useState(false);
 
   useEffect(() => {
     allNsfwVisible ? setNsfwVisible(true) : setNsfwVisible(false);
@@ -30,11 +31,13 @@ const Pick = ({ pick, allNsfwVisible }) => {
   return (
     <div className="grid my-1 border-l-2 border-purple-400 px-2">
       <div className="flex items-center">
-        {preview?.ogImageUrl && (
+        {preview?.ogImageUrl && !imgErr && (
           <img
+            onClick={(e) => handleExternalLinkClick(e, url)}
             src={preview.ogImageUrl}
             alt="pick"
-            className="w-24 h-24 object-cover rounded-sm mr-2"
+            onError={() => setImgErr(true)}
+            className="w-24 h-24 object-cover rounded-sm mr-2 hover:opacity-50 cursor-pointer"
           />
         )}
         <div className="grid w-full">
