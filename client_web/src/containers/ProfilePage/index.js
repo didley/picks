@@ -52,16 +52,8 @@ class ProfilePage extends React.Component {
           handleSetProfileEditVisible={this.handleSetProfileEditVisible}
           handleSetProfileEditHidden={this.handleSetProfileEditHidden}
         />
-        <div className="grid grid-cols-3 mx-2 items-center">
-          {isOwnProfile && (
-            <div className="col-start-2 justify-self-center">
-              <CreateCardSection />
-            </div>
-          )}
-          <div className="justify-self-end">
-            <ShowAllNsfwBtn />
-          </div>
-        </div>
+
+        <CreateCardSection isOwnProfile={isOwnProfile} />
 
         <CardList
           cards={profileCards.cards}

@@ -68,7 +68,7 @@ const EditingPick = ({
             value={pick.url}
             placeholder="Paste your Pick URL here"
             type="text"
-            className="w-full max-w-sm"
+            className="w-full"
           />
         </label>
 
