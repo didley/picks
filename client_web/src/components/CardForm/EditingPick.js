@@ -69,6 +69,9 @@ const EditingPick = ({
             placeholder="Paste your Pick URL here"
             type="text"
             className="w-full"
+            autoCapitalize="none"
+            autoCorrect="off"
+            autoComplete="off"
           />
         </label>
 
