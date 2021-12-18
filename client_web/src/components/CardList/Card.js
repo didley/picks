@@ -48,8 +48,6 @@ class Card extends React.Component {
           <ShareBtn
             shareData={{
               url: createLink(`/profile/${createdBy?.username}/${_id}`),
-              title: `${createdBy?.username} Picks`,
-              text: `${comments}`,
             }}
           >
             <small className="text-green-400 font-bold">share</small>
