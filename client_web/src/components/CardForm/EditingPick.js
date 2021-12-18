@@ -61,7 +61,6 @@ const EditingPick = ({
         <label>
           Pick URL
           <input
-            autoFocus
             required
             onChange={onChange}
             name="url"
