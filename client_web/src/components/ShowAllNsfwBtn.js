@@ -16,7 +16,7 @@ class ShowAllNsfwBtn extends React.Component {
       <button
         aria-label="create-post"
         onClick={() => handleClick()}
-        className="px-1 py-3 text-xs text-right text-gray-600 hover:underline"
+        className="px-1 py-3 text-xs text-right text-gray-600 hover:underline col-start-3"
       >
         {allNsfwVisible ? "Hide all NSFW" : "Show all NSFW"}
       </button>
