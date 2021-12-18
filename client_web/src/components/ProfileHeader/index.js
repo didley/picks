@@ -39,12 +39,7 @@ const ProfileHeader = ({
         className="relative mx-2 w-full max-w-xl p-8 rounded-lg border border-gray-200 bg-white"
       >
         <div className="absolute top-0 right-0 mr-4 md:mr-6 mt-8">
-          <ShareBtn
-            shareData={{
-              url: createLink(`/profile/${username}`),
-              title: `${username} Picks profile`,
-            }}
-          >
+          <ShareBtn shareData={{ url: createLink(`/profile/${username}`) }}>
             <small className="text-purple-400 font-bold hover:underline">
               share profile
             </small>

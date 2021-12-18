@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ExternalLink, handleExternalLinkClick } from "components/ExternalLink";
+import { ExternalLink } from "components/ExternalLink";
 import { parseDomain } from "utils/parseDomain";
 import NsfwHidden from "./NsfwHidden";
 
@@ -29,18 +29,23 @@ const Pick = ({ pick, allNsfwVisible }) => {
   if (nsfw && !nsfwVisible) return <NsfwHidden onClick={handleShowNsfw} />;
 
   return (
-    <div className="grid my-1 border-l-2 border-purple-400 px-2">
+    <div className="grid my-2">
       <div className="flex items-center">
-        {preview?.ogImageUrl && !imgErr && (
-          <img
-            onClick={(e) => handleExternalLinkClick(e, url)}
-            src={preview.ogImageUrl}
-            alt="pick"
-            onError={() => setImgErr(true)}
-            className="w-24 h-24 object-cover rounded-sm mr-2 hover:opacity-50 cursor-pointer"
-          />
-        )}
-        <div className="grid w-full">
+        <div className="w-40 grid justify-center">
+          <ExternalLink to={url} className="">
+            {preview?.ogImageUrl && !imgErr ? (
+              <img
+                className="object-cover h-24 rounded-sm hover:opacity-50"
+                src={preview.ogImageUrl}
+                alt="pick"
+                onError={() => setImgErr(true)}
+              />
+            ) : (
+              <div className="h-24 bg-purple-50 w-24 rounded-full" />
+            )}
+          </ExternalLink>
+        </div>
+        <div className="grid w-full ml-2">
           <p className="pb-1">
             <ExternalLink to={url}>
               {preview?.ogTitle ? preview.ogTitle : userTitle}
@@ -55,7 +60,7 @@ const Pick = ({ pick, allNsfwVisible }) => {
             {domain && <small className="text-gray-500">{domain}</small>}
             {nsfw && (
               <button
-                className="text-red-500 text-sm hover:underline font-bold"
+                className="text-red-500 text-xs hover:underline font-bold"
                 onClick={handleHideNsfw}
               >
                 Hide NSFW

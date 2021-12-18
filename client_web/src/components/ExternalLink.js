@@ -1,14 +1,16 @@
-import { openInNewTab } from "utils/openInNewTab";
-import { prependHttp } from "utils/prependHttp";
-
-export const handleExternalLinkClick = (e, to) => {
-  e.stopPropagation();
-  openInNewTab(prependHttp(to));
-};
-
-export const ExternalLink = ({ to, title, className, children, ...rest }) => (
-  <button
-    onClick={(e) => handleExternalLinkClick(e, to)}
+export const ExternalLink = ({
+  to,
+  title,
+  samePage = false,
+  className,
+  children,
+  ...rest
+}) => (
+  <a
+    onClick={(e) => e.stopPropagation()}
+    href={to}
+    target={samePage ? null : "_blank"}
+    rel="noopener noreferrer"
     className={
       className
         ? className
@@ -17,5 +19,5 @@ export const ExternalLink = ({ to, title, className, children, ...rest }) => (
     {...rest}
   >
     {title ? title : children}
-  </button>
+  </a>
 );
