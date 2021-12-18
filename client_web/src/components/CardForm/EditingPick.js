@@ -10,6 +10,7 @@ const EditingPick = ({
   isFirstPick,
   isLastPick,
   isOnlyPick,
+  isEditing,
 }) => {
   const [showCommentField, setShowCommentField] = useState(() =>
     pick.comments ? true : false
@@ -75,7 +76,7 @@ const EditingPick = ({
           <label>
             Pick Comment
             <input
-              autoFocus
+              autoFocus={!isEditing}
               onChange={handleCommentChange}
               onKeyDown={handleCommentKeyDown}
               name="comments"

@@ -8,6 +8,7 @@ const TagSection = ({
   tagsSetter,
   opts,
   disableHiding = false,
+  disableAutoFocus = false,
 }) => {
   const [showTagsField, setShowTagsField] = useState(
     tagsState.length ? true : false
@@ -38,6 +39,7 @@ const TagSection = ({
       <TagInput
         inputHandlers={inputHandlers}
         tagLimitReached={tagLimitReached}
+        disableAutoFocus={disableAutoFocus}
       />
     </div>
   );

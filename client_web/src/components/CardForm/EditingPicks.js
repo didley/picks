@@ -33,6 +33,7 @@ class EditingPicks extends React.Component {
             isFirstPick={index === 0}
             isLastPick={index === picks.length - 1}
             isOnlyPick={picks.length === 1}
+            isEditing={draftCard.editing}
           />
         ))}
         {picks.length < 5 ? (

@@ -88,7 +88,7 @@ class CardForm extends React.Component {
               <label>
                 Card Comments
                 <textarea
-                  autoFocus
+                  autoFocus={!draftCard.editing}
                   name="comments"
                   className="w-full max-w-sm block m-1 mb-4"
                   value={draftCard.comments}
@@ -105,7 +105,11 @@ class CardForm extends React.Component {
                 + Add Comments
               </button>
             )}
-            <TagSection tagsState={draftCard.tags} tagsSetter={setTags} />
+            <TagSection
+              tagsState={draftCard.tags}
+              tagsSetter={setTags}
+              disableAutoFocus={draftCard.editing}
+            />
           </div>
           <hr className="my-4" />
           <h6 className="font-black">Picks</h6>
