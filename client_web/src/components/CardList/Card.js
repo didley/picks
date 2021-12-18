@@ -14,8 +14,14 @@ import { parseDate } from "utils/parseDate";
 
 class Card extends React.Component {
   render() {
-    const { loggedInUsername, card, draftCard, setEditable, allNsfwVisible } =
-      this.props;
+    const {
+      loggedInUsername,
+      card,
+      draftCard,
+      setEditable,
+      allNsfwVisible,
+      hoverDisabled,
+    } = this.props;
 
     const { createdBy, picks, comments, _id, createdAt, tags } = card;
 
@@ -25,9 +31,14 @@ class Card extends React.Component {
       return <CardForm />;
     }
 
+    const borderStyle =
+      "relative mb-2 md:mx-2 border-t border-b md:border md:rounded-lg p-2 sm:p-4 hover:border-purple-300 bg-white";
+    const borderStyleHoverDisabled =
+      "relative mb-2 md:mx-2 border-t border-b md:border md:rounded-lg p-2 sm:p-4 bg-white";
+
     return (
       <div
-        className="relative mb-2 md:mx-2 border-t border-b md:border md:rounded-lg p-2 sm:p-4 hover:border-purple-300 bg-white"
+        className={hoverDisabled ? borderStyleHoverDisabled : borderStyle}
         onClick={(e) => {
           e.stopPropagation();
           nav(`/profile/${createdBy?.username}/${_id}`);

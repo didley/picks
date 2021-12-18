@@ -42,7 +42,11 @@ class CardPage extends React.Component {
 
         {card.status === "succeeded" && (
           <div aria-label={`card by ${card?.createdBy?.username}`}>
-            <Card card={card.data} loggedInUsername={user?.username} />
+            <Card
+              card={card.data}
+              loggedInUsername={user?.username}
+              hoverDisabled
+            />
           </div>
         )}
       </div>
