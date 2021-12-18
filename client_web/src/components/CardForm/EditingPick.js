@@ -10,6 +10,7 @@ const EditingPick = ({
   isFirstPick,
   isLastPick,
   isOnlyPick,
+  isEditing,
 }) => {
   const [showCommentField, setShowCommentField] = useState(() =>
     pick.comments ? true : false
@@ -61,7 +62,6 @@ const EditingPick = ({
         <label>
           Pick URL
           <input
-            autoFocus
             required
             onChange={onChange}
             name="url"
@@ -69,6 +69,9 @@ const EditingPick = ({
             placeholder="Paste your Pick URL here"
             type="text"
             className="w-full"
+            autoCapitalize="none"
+            autoCorrect="off"
+            autoComplete="off"
           />
         </label>
 
@@ -76,7 +79,7 @@ const EditingPick = ({
           <label>
             Pick Comment
             <input
-              autoFocus
+              autoFocus={!isEditing}
               onChange={handleCommentChange}
               onKeyDown={handleCommentKeyDown}
               name="comments"

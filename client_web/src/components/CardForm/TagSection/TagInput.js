@@ -1,8 +1,8 @@
-const TagInput = ({ inputHandlers, tagLimitReached }) => {
+const TagInput = ({ inputHandlers, tagLimitReached, disableAutoFocus }) => {
   return (
     <input
       {...inputHandlers}
-      autoFocus
+      autoFocus={!disableAutoFocus}
       id="tags"
       name="tags"
       placeholder="Enter tags"
