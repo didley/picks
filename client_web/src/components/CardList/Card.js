@@ -1,10 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  selectAllNsfwVisibility,
-  selectAllNsfwVisible,
-  selectDraftCard,
-} from "reducers/selectors";
+import { selectAllNsfwVisible, selectDraftCard } from "reducers/selectors";
 import { card } from "actions/cardActions";
 import CardForm from "components/CardForm";
 import PickList from "../PickList";
@@ -21,6 +17,7 @@ class Card extends React.Component {
       setEditable,
       allNsfwVisible,
       hoverDisabled,
+      setCard,
     } = this.props;
 
     const { createdBy, picks, comments, _id, createdAt, tags } = card;
@@ -41,6 +38,7 @@ class Card extends React.Component {
         className={hoverDisabled ? borderStyleHoverDisabled : borderStyle}
         onClick={(e) => {
           e.stopPropagation();
+          setCard(card);
           nav(`/profile/${createdBy?.username}/${_id}`);
         }}
       >
@@ -128,5 +126,6 @@ export default connect(
   }),
   {
     setEditable: card.draft.set.editing,
+    setCard: card.set,
   }
 )(Card);

@@ -5,6 +5,7 @@ import {
   call,
   takeLeading,
   select,
+  cancel,
 } from "redux-saga/effects";
 import {
   GET_CARDS,
@@ -15,7 +16,7 @@ import {
 } from "actionTypes";
 import { card } from "actions/cardActions";
 import * as api from "utils/apiCalls/cards";
-import { selectDraftCard } from "reducers/selectors";
+import { selectDraftCard, selectCard } from "reducers/selectors";
 import {
   setSuccessAlert,
   setErrorAlert,
@@ -49,6 +50,11 @@ function* getCardsWatcher() {
 
 function* getCard(payload) {
   try {
+    const currentCard = yield select(selectCard);
+    const isSameCard = currentCard.data._id === payload.id;
+    if (isSameCard) return put(card.get.success(currentCard));
+
+    yield put(card.get.loading());
     const { data } = yield call(api.getCard, payload.id);
 
     yield put(card.get.success(data));

@@ -1,5 +1,6 @@
 const createRequestTypes = (base, additional) => ({
   request: `${base}_REQUEST`,
+  loading: `${base}_LOADING`,
   success: `${base}_SUCCESS`,
   failure: `${base}_FAILURE`,
   reset: `${base}_RESET`,
@@ -14,6 +15,7 @@ export const UPDATE_PROFILE_SUMMARY = createRequestTypes(
 
 // card
 export const GET_CARDS = createRequestTypes("card/getCards");
+export const SET_CARD = "card/setCard";
 export const GET_CARD = createRequestTypes("card/getCard");
 export const CREATE_CARD = createRequestTypes("card/createCard");
 export const DELETE_CARD = createRequestTypes("card/deleteCard");

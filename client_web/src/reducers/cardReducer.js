@@ -1,11 +1,13 @@
-import { GET_CARD, UPDATE_CARD, DELETE_CARD } from "actionTypes";
+import { GET_CARD, UPDATE_CARD, DELETE_CARD, SET_CARD } from "actionTypes";
 
 const cardReducerInitState = { data: {}, error: null, status: "idle" };
 export const cardReducer = (state = cardReducerInitState, action) => {
   switch (action.type) {
     case GET_CARD.request:
+      return { ...state, error: null, status: "requesting" };
+    case GET_CARD.loading:
       return { ...state, data: {}, error: null, status: "loading" };
-
+    case SET_CARD:
     case GET_CARD.success:
       return { ...state, data: action.card, error: null, status: "succeeded" };
 

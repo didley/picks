@@ -14,6 +14,7 @@ import {
   CHANGE_DRAFT,
   SET_TAGS,
   SET_ALL_NSFW_VISIBILITY,
+  SET_CARD,
 } from "actionTypes";
 
 const action = (type, payload = {}) => ({ type, ...payload });
@@ -30,7 +31,9 @@ export const card = {
     success: (card) => action(GET_CARD.success, { card }),
     failure: (error) => action(GET_CARD.failure, { error }),
     reset: () => action(GET_CARD.reset),
+    loading: () => action(GET_CARDS.loading),
   },
+  set: (card) => action(SET_CARD, { card }),
   create: {
     request: (card) => action(CREATE_CARD.request, { card }),
     success: (card) => action(CREATE_CARD.success, { card }),
