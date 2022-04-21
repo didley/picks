@@ -5,8 +5,6 @@ import RegisterForm from "./RegisterForm";
 const HomePage = (props) => {
   const loginView = props?.location?.hash === "#login";
 
-  console.log(process.env.NODE_ENV);
-
   return (
     <div className="flex flex-col-reverse lg:flex-row h-screen justify-center items-center">
       <div className="bg-purple-100 flex-grow w-full lg:w-auto lg:h-full" />
@@ -21,14 +19,12 @@ const HomePage = (props) => {
         </h3>
         <br />
         <br />
-        {process.env.NODE_ENV !== "production" && (
-          <Link
-            to="/profile/Test123"
-            className="rounded-2xl font-bold text-sm p-4 text-white bg-purple-500 border-b-4 border-purple-800"
-          >
-            View an example profile
-          </Link>
-        )}
+        <Link
+          to="/profile/Test123"
+          className="rounded-2xl font-bold text-sm p-4 text-white bg-purple-500 border-b-4 border-purple-800"
+        >
+          View an example profile
+        </Link>
         <br />
         <br />
         <br />
