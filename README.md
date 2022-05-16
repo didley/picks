@@ -14,6 +14,8 @@ is built with express & mongoose.<br/>
 ## Demo
 ![Profile page demo](demo/picks-profile.gif)
 
+![Tests](demo/picks-tests.png)
+
 ### Setup
 
 ```console
