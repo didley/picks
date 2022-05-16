@@ -162,14 +162,9 @@ describe("<ProfilePage />", () => {
         });
 
         userEvent.click(submitBtn);
-        await waitForElementToBeRemoved(
-          () => screen.queryByText("Loading cards..."),
-          { timeout: 1100 }
-        );
 
         // it hides create form after submit
-        const cancelBtn = screen.queryByText(/cancel/i);
-        expect(cancelBtn).toBeNull();
+        await waitForElementToBeRemoved(() => screen.queryByText(/cancel/i));
 
         // it displays created post on page
         const postCommentText = await screen.findByText("CREATE_CARD_TEST1");
@@ -222,9 +217,13 @@ describe("<ProfilePage />", () => {
       });
       userEvent.click(deleteBtn);
 
-      await waitForElementToBeRemoved(() =>
-        screen.queryByText(/loading cards/i)
-      );
+      const deleteConfirmationBtn = screen.getByRole("button", {
+        name: /delete picks/i,
+      });
+      userEvent.click(deleteConfirmationBtn);
+
+      // it hides edit form after submit
+      await waitForElementToBeRemoved(() => screen.queryByText(/cancel/i));
 
       expect(
         screen.getByRole("list", {
