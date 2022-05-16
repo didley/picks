@@ -23,10 +23,11 @@ class ErrorBoundary extends React.Component {
         <div>
           <h1>Something went wrong.</h1>
           <a href="/">
-            <button color="gray">Home</button>
+            <button color="gray">Return Home</button>
           </a>
           <br />
           <details style={{ whiteSpace: "pre-wrap" }}>
+            <summary>Error Details</summary>
             {this.state.error && this.state.error.toString()}
             <br />
             {this.state.errorInfo.componentStack}

@@ -92,7 +92,7 @@ class Card extends React.Component {
             </button>
             <small className="text-gray-500"> · {parseDate(createdAt)}</small>
             <br />
-            {tags.length > 0 && (
+            {tags?.length > 0 && (
               <small className="my-2">
                 <span className="text-green-400">tags: </span>
                 <ul className="inline text-gray-700">
